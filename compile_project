@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# Create build-directory
+mkdir build
+
+# Move into the build-directory
+cd build
+
+# Run CMake to create a Makefile
+cmake ../
+
+# Make the Makefile using two threads
+make -j2

@@ -1,0 +1,8 @@
+/Users/haas/Documents/Masters/CompPhys2/variational-monte-carlo-fys4411/build/CMakeFiles/Vmclib.dir
+/Users/haas/Documents/Masters/CompPhys2/variational-monte-carlo-fys4411/build/CMakeFiles/vmc.dir
+/Users/haas/Documents/Masters/CompPhys2/variational-monte-carlo-fys4411/build/CMakeFiles/interact.dir
+/Users/haas/Documents/Masters/CompPhys2/variational-monte-carlo-fys4411/build/CMakeFiles/parallelinteract.dir
+/Users/haas/Documents/Masters/CompPhys2/variational-monte-carlo-fys4411/build/CMakeFiles/timing.dir
+/Users/haas/Documents/Masters/CompPhys2/variational-monte-carlo-fys4411/build/CMakeFiles/gradient.dir
+/Users/haas/Documents/Masters/CompPhys2/variational-monte-carlo-fys4411/build/CMakeFiles/edit_cache.dir
+/Users/haas/Documents/Masters/CompPhys2/variational-monte-carlo-fys4411/build/CMakeFiles/rebuild_cache.dir
