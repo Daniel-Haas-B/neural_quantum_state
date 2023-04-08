@@ -1,0 +1,612 @@
+
+---
+events:
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/opt/homebrew/lib/python3.10/site-packages/cmake/data/share/cmake-3.26/Modules/CMakeDetermineSystem.cmake:204 (message)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      The system is: Darwin - 21.3.0 - arm64
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/opt/homebrew/lib/python3.10/site-packages/cmake/data/share/cmake-3.26/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "/opt/homebrew/lib/python3.10/site-packages/cmake/data/share/cmake-3.26/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "/opt/homebrew/lib/python3.10/site-packages/cmake/data/share/cmake-3.26/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
+      Compiler: /opt/homebrew/opt/llvm/bin/clang 
+      Build flags: -I;/usr/local/include;-I/usr/local/opt/llvm/include
+      Id flags:  
+      
+      The output was:
+      0
+      
+      
+      Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "a.out"
+      
+      The C compiler identification is Clang, found in:
+        /Users/haas/Documents/Masters/CompPhys2/variational-monte-carlo-fys4411/build/CMakeFiles/3.26.1/CompilerIdC/a.out
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/opt/homebrew/lib/python3.10/site-packages/cmake/data/share/cmake-3.26/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "/opt/homebrew/lib/python3.10/site-packages/cmake/data/share/cmake-3.26/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "/opt/homebrew/lib/python3.10/site-packages/cmake/data/share/cmake-3.26/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
+      Compiler: /opt/homebrew/opt/llvm/bin/clang++ 
+      Build flags: -I;/usr/local/include;-I/usr/local/opt/llvm/include
+      Id flags:  
+      
+      The output was:
+      0
+      
+      
+      Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "a.out"
+      
+      The CXX compiler identification is Clang, found in:
+        /Users/haas/Documents/Masters/CompPhys2/variational-monte-carlo-fys4411/build/CMakeFiles/3.26.1/CompilerIdCXX/a.out
+      
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/opt/homebrew/lib/python3.10/site-packages/cmake/data/share/cmake-3.26/Modules/CMakeDetermineCompilerABI.cmake:57 (try_compile)"
+      - "/opt/homebrew/lib/python3.10/site-packages/cmake/data/share/cmake-3.26/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:3 (project)"
+    checks:
+      - "Detecting C compiler ABI info"
+    directories:
+      source: "/Users/haas/Documents/Masters/CompPhys2/variational-monte-carlo-fys4411/build/CMakeFiles/CMakeScratch/TryCompile-MLZ9az"
+      binary: "/Users/haas/Documents/Masters/CompPhys2/variational-monte-carlo-fys4411/build/CMakeFiles/CMakeScratch/TryCompile-MLZ9az"
+    cmakeVariables:
+      CMAKE_C_FLAGS: "-I /usr/local/include -I/usr/local/opt/llvm/include"
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: "-L /usr/local/lib -L/usr/local/opt/llvm/lib"
+      CMAKE_OSX_ARCHITECTURES: ""
+      CMAKE_OSX_DEPLOYMENT_TARGET: ""
+      CMAKE_OSX_SYSROOT: "/Library/Developer/CommandLineTools/SDKs/MacOSX12.1.sdk"
+    buildResult:
+      variable: "CMAKE_C_ABI_COMPILED"
+      cached: true
+      stdout: |
+        Change Dir: /Users/haas/Documents/Masters/CompPhys2/variational-monte-carlo-fys4411/build/CMakeFiles/CMakeScratch/TryCompile-MLZ9az
+        
+        Run Build Command(s):/opt/homebrew/lib/python3.10/site-packages/cmake/data/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_bb288/fast && /Library/Developer/CommandLineTools/usr/bin/make  -f CMakeFiles/cmTC_bb288.dir/build.make CMakeFiles/cmTC_bb288.dir/build
+        Building C object CMakeFiles/cmTC_bb288.dir/CMakeCCompilerABI.c.o
+        /opt/homebrew/opt/llvm/bin/clang   -I /usr/local/include -I/usr/local/opt/llvm/include  -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX12.1.sdk   -v -Wl,-v -MD -MT CMakeFiles/cmTC_bb288.dir/CMakeCCompilerABI.c.o -MF CMakeFiles/cmTC_bb288.dir/CMakeCCompilerABI.c.o.d -o CMakeFiles/cmTC_bb288.dir/CMakeCCompilerABI.c.o -c /opt/homebrew/lib/python3.10/site-packages/cmake/data/share/cmake-3.26/Modules/CMakeCCompilerABI.c
+        Homebrew clang version 16.0.0
+        Target: arm64-apple-darwin21.3.0
+        Thread model: posix
+        InstalledDir: /opt/homebrew/opt/llvm/bin
+        clang-16: warning: -Wl,-v: 'linker' input unused [-Wunused-command-line-argument]
+         (in-process)
+         "/opt/homebrew/Cellar/llvm/16.0.0/bin/clang-16" -cc1 -triple arm64-apple-macosx12.0.0 -Wundef-prefix=TARGET_OS_ -Werror=undef-prefix -Wdeprecated-objc-isa-usage -Werror=deprecated-objc-isa-usage -emit-obj -mrelax-all -disable-free -clear-ast-before-backend -disable-llvm-verifier -discard-value-names -main-file-name CMakeCCompilerABI.c -mrelocation-model pic -pic-level 2 -mframe-pointer=non-leaf -ffp-contract=on -fno-rounding-math -funwind-tables=1 -target-sdk-version=12.1 -fcompatibility-qualified-id-block-type-checking -fvisibility-inlines-hidden-static-local-var -target-cpu apple-m1 -target-feature +v8.5a -target-feature +crc -target-feature +crypto -target-feature +dotprod -target-feature +fp-armv8 -target-feature +fp16fml -target-feature +lse -target-feature +ras -target-feature +rcpc -target-feature +rdm -target-feature +neon -target-feature +zcm -target-feature +zcz -target-feature +fullfp16 -target-feature +sm4 -target-feature +sha3 -target-feature +sha2 -target-feature +aes -target-abi darwinpcs -mllvm -treat-scalable-fixed-error-as-warning -debugger-tuning=lldb -target-linker-version 820.1 -v -fcoverage-compilation-dir=/Users/haas/Documents/Masters/CompPhys2/variational-monte-carlo-fys4411/build/CMakeFiles/CMakeScratch/TryCompile-MLZ9az -resource-dir /opt/homebrew/Cellar/llvm/16.0.0/lib/clang/16 -dependency-file CMakeFiles/cmTC_bb288.dir/CMakeCCompilerABI.c.o.d -MT CMakeFiles/cmTC_bb288.dir/CMakeCCompilerABI.c.o -sys-header-deps -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX12.1.sdk -I /usr/local/include -I /usr/local/opt/llvm/include -I/opt/homebrew/include -internal-isystem /Library/Developer/CommandLineTools/SDKs/MacOSX12.1.sdk/usr/local/include -internal-isystem /opt/homebrew/Cellar/llvm/16.0.0/lib/clang/16/include -internal-externc-isystem /Library/Developer/CommandLineTools/SDKs/MacOSX12.1.sdk/usr/include -fdebug-compilation-dir=/Users/haas/Documents/Masters/CompPhys2/variational-monte-carlo-fys4411/build/CMakeFiles/CMakeScratch/TryCompile-MLZ9az -ferror-limit 19 -stack-protector 1 -fblocks -fencode-extended-block-signature -fregister-global-dtors-with-atexit -fgnuc-version=4.2.1 -fmax-type-align=16 -D__GCC_HAVE_DWARF2_CFI_ASM=1 -o CMakeFiles/cmTC_bb288.dir/CMakeCCompilerABI.c.o -x c /opt/homebrew/lib/python3.10/site-packages/cmake/data/share/cmake-3.26/Modules/CMakeCCompilerABI.c
+        clang -cc1 version 16.0.0 based upon LLVM 16.0.0 default target arm64-apple-darwin21.3.0
+        ignoring nonexistent directory "/usr/local/include"
+        ignoring nonexistent directory "/usr/local/opt/llvm/include"
+        ignoring nonexistent directory "/Library/Developer/CommandLineTools/SDKs/MacOSX12.1.sdk/usr/local/include"
+        ignoring nonexistent directory "/Library/Developer/CommandLineTools/SDKs/MacOSX12.1.sdk/Library/Frameworks"
+        #include "..." search starts here:
+        #include <...> search starts here:
+         /opt/homebrew/include
+         /opt/homebrew/Cellar/llvm/16.0.0/lib/clang/16/include
+         /Library/Developer/CommandLineTools/SDKs/MacOSX12.1.sdk/usr/include
+         /Library/Developer/CommandLineTools/SDKs/MacOSX12.1.sdk/System/Library/Frameworks (framework directory)
+        End of search list.
+        Linking C executable cmTC_bb288
+        /opt/homebrew/lib/python3.10/site-packages/cmake/data/bin/cmake -E cmake_link_script CMakeFiles/cmTC_bb288.dir/link.txt --verbose=1
+        /opt/homebrew/opt/llvm/bin/clang -I /usr/local/include -I/usr/local/opt/llvm/include  -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX12.1.sdk -Wl,-search_paths_first -Wl,-headerpad_max_install_names -L /usr/local/lib -L/usr/local/opt/llvm/lib -v -Wl,-v CMakeFiles/cmTC_bb288.dir/CMakeCCompilerABI.c.o -o cmTC_bb288 
+        Homebrew clang version 16.0.0
+        Target: arm64-apple-darwin21.3.0
+        Thread model: posix
+        InstalledDir: /opt/homebrew/opt/llvm/bin
+         "/usr/bin/ld" -demangle -lto_library /opt/homebrew/Cellar/llvm/16.0.0/lib/libLTO.dylib -dynamic -arch arm64 -platform_version macos 12.0.0 12.1 -syslibroot /Library/Developer/CommandLineTools/SDKs/MacOSX12.sdk -o cmTC_bb288 -L/usr/local/lib -L/usr/local/opt/llvm/lib -L/opt/homebrew/lib -search_paths_first -headerpad_max_install_names -v CMakeFiles/cmTC_bb288.dir/CMakeCCompilerABI.c.o -lSystem /opt/homebrew/Cellar/llvm/16.0.0/lib/clang/16/lib/darwin/libclang_rt.osx.a
+        @(#)PROGRAM:ld  PROJECT:ld64-710.1
+        BUILD 08:20:25 Jul 19 2021
+        configured to support archs: armv6 armv7 armv7s arm64 arm64e arm64_32 i386 x86_64 x86_64h armv6m armv7k armv7m armv7em
+        ld: warning: directory not found for option '-L/usr/local/opt/llvm/lib'
+        Library search paths:
+        	/usr/local/lib
+        	/opt/homebrew/lib
+        	/Library/Developer/CommandLineTools/SDKs/MacOSX12.sdk/usr/lib
+        Framework search paths:
+        	/Library/Developer/CommandLineTools/SDKs/MacOSX12.sdk/System/Library/Frameworks/
+        
+      exitCode: 0
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/opt/homebrew/lib/python3.10/site-packages/cmake/data/share/cmake-3.26/Modules/CMakeDetermineCompilerABI.cmake:127 (message)"
+      - "/opt/homebrew/lib/python3.10/site-packages/cmake/data/share/cmake-3.26/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Parsed C implicit include dir info: rv=done
+        found start of include info
+        found start of implicit include info
+          add: [/opt/homebrew/include]
+          add: [/opt/homebrew/Cellar/llvm/16.0.0/lib/clang/16/include]
+          add: [/Library/Developer/CommandLineTools/SDKs/MacOSX12.1.sdk/usr/include]
+        end of search list found
+        collapse include dir [/opt/homebrew/include] ==> [/opt/homebrew/include]
+        collapse include dir [/opt/homebrew/Cellar/llvm/16.0.0/lib/clang/16/include] ==> [/opt/homebrew/Cellar/llvm/16.0.0/lib/clang/16/include]
+        collapse include dir [/Library/Developer/CommandLineTools/SDKs/MacOSX12.1.sdk/usr/include] ==> [/Library/Developer/CommandLineTools/SDKs/MacOSX12.1.sdk/usr/include]
+        implicit include dirs: [/opt/homebrew/include;/opt/homebrew/Cellar/llvm/16.0.0/lib/clang/16/include;/Library/Developer/CommandLineTools/SDKs/MacOSX12.1.sdk/usr/include]
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/opt/homebrew/lib/python3.10/site-packages/cmake/data/share/cmake-3.26/Modules/CMakeDetermineCompilerABI.cmake:152 (message)"
+      - "/opt/homebrew/lib/python3.10/site-packages/cmake/data/share/cmake-3.26/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Parsed C implicit link information:
+        link line regex: [^( *|.*[/\\])(ld|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
+        ignore line: [Change Dir: /Users/haas/Documents/Masters/CompPhys2/variational-monte-carlo-fys4411/build/CMakeFiles/CMakeScratch/TryCompile-MLZ9az]
+        ignore line: []
+        ignore line: [Run Build Command(s):/opt/homebrew/lib/python3.10/site-packages/cmake/data/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_bb288/fast && /Library/Developer/CommandLineTools/usr/bin/make  -f CMakeFiles/cmTC_bb288.dir/build.make CMakeFiles/cmTC_bb288.dir/build]
+        ignore line: [Building C object CMakeFiles/cmTC_bb288.dir/CMakeCCompilerABI.c.o]
+        ignore line: [/opt/homebrew/opt/llvm/bin/clang   -I /usr/local/include -I/usr/local/opt/llvm/include  -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX12.1.sdk   -v -Wl -v -MD -MT CMakeFiles/cmTC_bb288.dir/CMakeCCompilerABI.c.o -MF CMakeFiles/cmTC_bb288.dir/CMakeCCompilerABI.c.o.d -o CMakeFiles/cmTC_bb288.dir/CMakeCCompilerABI.c.o -c /opt/homebrew/lib/python3.10/site-packages/cmake/data/share/cmake-3.26/Modules/CMakeCCompilerABI.c]
+        ignore line: [Homebrew clang version 16.0.0]
+        ignore line: [Target: arm64-apple-darwin21.3.0]
+        ignore line: [Thread model: posix]
+        ignore line: [InstalledDir: /opt/homebrew/opt/llvm/bin]
+        ignore line: [clang-16: warning: -Wl -v: 'linker' input unused [-Wunused-command-line-argument]]
+        ignore line: [ (in-process)]
+        ignore line: [ "/opt/homebrew/Cellar/llvm/16.0.0/bin/clang-16" -cc1 -triple arm64-apple-macosx12.0.0 -Wundef-prefix=TARGET_OS_ -Werror=undef-prefix -Wdeprecated-objc-isa-usage -Werror=deprecated-objc-isa-usage -emit-obj -mrelax-all -disable-free -clear-ast-before-backend -disable-llvm-verifier -discard-value-names -main-file-name CMakeCCompilerABI.c -mrelocation-model pic -pic-level 2 -mframe-pointer=non-leaf -ffp-contract=on -fno-rounding-math -funwind-tables=1 -target-sdk-version=12.1 -fcompatibility-qualified-id-block-type-checking -fvisibility-inlines-hidden-static-local-var -target-cpu apple-m1 -target-feature +v8.5a -target-feature +crc -target-feature +crypto -target-feature +dotprod -target-feature +fp-armv8 -target-feature +fp16fml -target-feature +lse -target-feature +ras -target-feature +rcpc -target-feature +rdm -target-feature +neon -target-feature +zcm -target-feature +zcz -target-feature +fullfp16 -target-feature +sm4 -target-feature +sha3 -target-feature +sha2 -target-feature +aes -target-abi darwinpcs -mllvm -treat-scalable-fixed-error-as-warning -debugger-tuning=lldb -target-linker-version 820.1 -v -fcoverage-compilation-dir=/Users/haas/Documents/Masters/CompPhys2/variational-monte-carlo-fys4411/build/CMakeFiles/CMakeScratch/TryCompile-MLZ9az -resource-dir /opt/homebrew/Cellar/llvm/16.0.0/lib/clang/16 -dependency-file CMakeFiles/cmTC_bb288.dir/CMakeCCompilerABI.c.o.d -MT CMakeFiles/cmTC_bb288.dir/CMakeCCompilerABI.c.o -sys-header-deps -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX12.1.sdk -I /usr/local/include -I /usr/local/opt/llvm/include -I/opt/homebrew/include -internal-isystem /Library/Developer/CommandLineTools/SDKs/MacOSX12.1.sdk/usr/local/include -internal-isystem /opt/homebrew/Cellar/llvm/16.0.0/lib/clang/16/include -internal-externc-isystem /Library/Developer/CommandLineTools/SDKs/MacOSX12.1.sdk/usr/include -fdebug-compilation-dir=/Users/haas/Documents/Masters/CompPhys2/variational-monte-carlo-fys4411/build/CMakeFiles/CMakeScratch/TryCompile-MLZ9az -ferror-limit 19 -stack-protector 1 -fblocks -fencode-extended-block-signature -fregister-global-dtors-with-atexit -fgnuc-version=4.2.1 -fmax-type-align=16 -D__GCC_HAVE_DWARF2_CFI_ASM=1 -o CMakeFiles/cmTC_bb288.dir/CMakeCCompilerABI.c.o -x c /opt/homebrew/lib/python3.10/site-packages/cmake/data/share/cmake-3.26/Modules/CMakeCCompilerABI.c]
+        ignore line: [clang -cc1 version 16.0.0 based upon LLVM 16.0.0 default target arm64-apple-darwin21.3.0]
+        ignore line: [ignoring nonexistent directory "/usr/local/include"]
+        ignore line: [ignoring nonexistent directory "/usr/local/opt/llvm/include"]
+        ignore line: [ignoring nonexistent directory "/Library/Developer/CommandLineTools/SDKs/MacOSX12.1.sdk/usr/local/include"]
+        ignore line: [ignoring nonexistent directory "/Library/Developer/CommandLineTools/SDKs/MacOSX12.1.sdk/Library/Frameworks"]
+        ignore line: [#include "..." search starts here:]
+        ignore line: [#include <...> search starts here:]
+        ignore line: [ /opt/homebrew/include]
+        ignore line: [ /opt/homebrew/Cellar/llvm/16.0.0/lib/clang/16/include]
+        ignore line: [ /Library/Developer/CommandLineTools/SDKs/MacOSX12.1.sdk/usr/include]
+        ignore line: [ /Library/Developer/CommandLineTools/SDKs/MacOSX12.1.sdk/System/Library/Frameworks (framework directory)]
+        ignore line: [End of search list.]
+        ignore line: [Linking C executable cmTC_bb288]
+        ignore line: [/opt/homebrew/lib/python3.10/site-packages/cmake/data/bin/cmake -E cmake_link_script CMakeFiles/cmTC_bb288.dir/link.txt --verbose=1]
+        ignore line: [/opt/homebrew/opt/llvm/bin/clang -I /usr/local/include -I/usr/local/opt/llvm/include  -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX12.1.sdk -Wl -search_paths_first -Wl -headerpad_max_install_names -L /usr/local/lib -L/usr/local/opt/llvm/lib -v -Wl -v CMakeFiles/cmTC_bb288.dir/CMakeCCompilerABI.c.o -o cmTC_bb288 ]
+        ignore line: [Homebrew clang version 16.0.0]
+        ignore line: [Target: arm64-apple-darwin21.3.0]
+        ignore line: [Thread model: posix]
+        ignore line: [InstalledDir: /opt/homebrew/opt/llvm/bin]
+        link line: [ "/usr/bin/ld" -demangle -lto_library /opt/homebrew/Cellar/llvm/16.0.0/lib/libLTO.dylib -dynamic -arch arm64 -platform_version macos 12.0.0 12.1 -syslibroot /Library/Developer/CommandLineTools/SDKs/MacOSX12.sdk -o cmTC_bb288 -L/usr/local/lib -L/usr/local/opt/llvm/lib -L/opt/homebrew/lib -search_paths_first -headerpad_max_install_names -v CMakeFiles/cmTC_bb288.dir/CMakeCCompilerABI.c.o -lSystem /opt/homebrew/Cellar/llvm/16.0.0/lib/clang/16/lib/darwin/libclang_rt.osx.a]
+          arg [/usr/bin/ld] ==> ignore
+          arg [-demangle] ==> ignore
+          arg [-lto_library] ==> ignore, skip following value
+          arg [/opt/homebrew/Cellar/llvm/16.0.0/lib/libLTO.dylib] ==> skip value of -lto_library
+          arg [-dynamic] ==> ignore
+          arg [-arch] ==> ignore
+          arg [arm64] ==> ignore
+          arg [-platform_version] ==> ignore
+          arg [macos] ==> ignore
+          arg [12.0.0] ==> ignore
+          arg [12.1] ==> ignore
+          arg [-syslibroot] ==> ignore
+          arg [/Library/Developer/CommandLineTools/SDKs/MacOSX12.sdk] ==> ignore
+          arg [-o] ==> ignore
+          arg [cmTC_bb288] ==> ignore
+          arg [-L/usr/local/lib] ==> dir [/usr/local/lib]
+          arg [-L/usr/local/opt/llvm/lib] ==> dir [/usr/local/opt/llvm/lib]
+          arg [-L/opt/homebrew/lib] ==> dir [/opt/homebrew/lib]
+          arg [-search_paths_first] ==> ignore
+          arg [-headerpad_max_install_names] ==> ignore
+          arg [-v] ==> ignore
+          arg [CMakeFiles/cmTC_bb288.dir/CMakeCCompilerABI.c.o] ==> ignore
+          arg [-lSystem] ==> lib [System]
+          arg [/opt/homebrew/Cellar/llvm/16.0.0/lib/clang/16/lib/darwin/libclang_rt.osx.a] ==> lib [/opt/homebrew/Cellar/llvm/16.0.0/lib/clang/16/lib/darwin/libclang_rt.osx.a]
+        Library search paths: [;/usr/local/lib;/opt/homebrew/lib;/Library/Developer/CommandLineTools/SDKs/MacOSX12.sdk/usr/lib]
+        Framework search paths: [;/Library/Developer/CommandLineTools/SDKs/MacOSX12.sdk/System/Library/Frameworks/]
+        remove lib [System]
+        remove lib [/opt/homebrew/Cellar/llvm/16.0.0/lib/clang/16/lib/darwin/libclang_rt.osx.a]
+        collapse library dir [/usr/local/lib] ==> [/usr/local/lib]
+        collapse library dir [/usr/local/opt/llvm/lib] ==> [/usr/local/opt/llvm/lib]
+        collapse library dir [/opt/homebrew/lib] ==> [/opt/homebrew/lib]
+        collapse library dir [/usr/local/lib] ==> [/usr/local/lib]
+        collapse library dir [/opt/homebrew/lib] ==> [/opt/homebrew/lib]
+        collapse library dir [/Library/Developer/CommandLineTools/SDKs/MacOSX12.sdk/usr/lib] ==> [/Library/Developer/CommandLineTools/SDKs/MacOSX12.sdk/usr/lib]
+        collapse framework dir [/Library/Developer/CommandLineTools/SDKs/MacOSX12.sdk/System/Library/Frameworks/] ==> [/Library/Developer/CommandLineTools/SDKs/MacOSX12.sdk/System/Library/Frameworks]
+        implicit libs: []
+        implicit objs: []
+        implicit dirs: [/usr/local/lib;/usr/local/opt/llvm/lib;/opt/homebrew/lib;/Library/Developer/CommandLineTools/SDKs/MacOSX12.sdk/usr/lib]
+        implicit fwks: [/Library/Developer/CommandLineTools/SDKs/MacOSX12.sdk/System/Library/Frameworks]
+      
+      
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/opt/homebrew/lib/python3.10/site-packages/cmake/data/share/cmake-3.26/Modules/CMakeDetermineCompilerABI.cmake:57 (try_compile)"
+      - "/opt/homebrew/lib/python3.10/site-packages/cmake/data/share/cmake-3.26/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:3 (project)"
+    checks:
+      - "Detecting CXX compiler ABI info"
+    directories:
+      source: "/Users/haas/Documents/Masters/CompPhys2/variational-monte-carlo-fys4411/build/CMakeFiles/CMakeScratch/TryCompile-eUuTKs"
+      binary: "/Users/haas/Documents/Masters/CompPhys2/variational-monte-carlo-fys4411/build/CMakeFiles/CMakeScratch/TryCompile-eUuTKs"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: "-I /usr/local/include -I/usr/local/opt/llvm/include"
+      CMAKE_CXX_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: "-L /usr/local/lib -L/usr/local/opt/llvm/lib"
+      CMAKE_OSX_ARCHITECTURES: ""
+      CMAKE_OSX_DEPLOYMENT_TARGET: ""
+      CMAKE_OSX_SYSROOT: "/Library/Developer/CommandLineTools/SDKs/MacOSX12.1.sdk"
+    buildResult:
+      variable: "CMAKE_CXX_ABI_COMPILED"
+      cached: true
+      stdout: |
+        Change Dir: /Users/haas/Documents/Masters/CompPhys2/variational-monte-carlo-fys4411/build/CMakeFiles/CMakeScratch/TryCompile-eUuTKs
+        
+        Run Build Command(s):/opt/homebrew/lib/python3.10/site-packages/cmake/data/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_8da23/fast && /Library/Developer/CommandLineTools/usr/bin/make  -f CMakeFiles/cmTC_8da23.dir/build.make CMakeFiles/cmTC_8da23.dir/build
+        Building CXX object CMakeFiles/cmTC_8da23.dir/CMakeCXXCompilerABI.cpp.o
+        /opt/homebrew/opt/llvm/bin/clang++   -I /usr/local/include -I/usr/local/opt/llvm/include  -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX12.1.sdk   -v -Wl,-v -MD -MT CMakeFiles/cmTC_8da23.dir/CMakeCXXCompilerABI.cpp.o -MF CMakeFiles/cmTC_8da23.dir/CMakeCXXCompilerABI.cpp.o.d -o CMakeFiles/cmTC_8da23.dir/CMakeCXXCompilerABI.cpp.o -c /opt/homebrew/lib/python3.10/site-packages/cmake/data/share/cmake-3.26/Modules/CMakeCXXCompilerABI.cpp
+        Homebrew clang version 16.0.0
+        Target: arm64-apple-darwin21.3.0
+        Thread model: posix
+        InstalledDir: /opt/homebrew/opt/llvm/bin
+        clang-16: warning: -Wl,-v: 'linker' input unused [-Wunused-command-line-argument]
+         (in-process)
+         "/opt/homebrew/Cellar/llvm/16.0.0/bin/clang-16" -cc1 -triple arm64-apple-macosx12.0.0 -Wundef-prefix=TARGET_OS_ -Werror=undef-prefix -Wdeprecated-objc-isa-usage -Werror=deprecated-objc-isa-usage -emit-obj -mrelax-all -disable-free -clear-ast-before-backend -disable-llvm-verifier -discard-value-names -main-file-name CMakeCXXCompilerABI.cpp -mrelocation-model pic -pic-level 2 -mframe-pointer=non-leaf -ffp-contract=on -fno-rounding-math -funwind-tables=1 -target-sdk-version=12.1 -fcompatibility-qualified-id-block-type-checking -fvisibility-inlines-hidden-static-local-var -target-cpu apple-m1 -target-feature +v8.5a -target-feature +crc -target-feature +crypto -target-feature +dotprod -target-feature +fp-armv8 -target-feature +fp16fml -target-feature +lse -target-feature +ras -target-feature +rcpc -target-feature +rdm -target-feature +neon -target-feature +zcm -target-feature +zcz -target-feature +fullfp16 -target-feature +sm4 -target-feature +sha3 -target-feature +sha2 -target-feature +aes -target-abi darwinpcs -mllvm -treat-scalable-fixed-error-as-warning -debugger-tuning=lldb -target-linker-version 820.1 -v -fcoverage-compilation-dir=/Users/haas/Documents/Masters/CompPhys2/variational-monte-carlo-fys4411/build/CMakeFiles/CMakeScratch/TryCompile-eUuTKs -resource-dir /opt/homebrew/Cellar/llvm/16.0.0/lib/clang/16 -dependency-file CMakeFiles/cmTC_8da23.dir/CMakeCXXCompilerABI.cpp.o.d -MT CMakeFiles/cmTC_8da23.dir/CMakeCXXCompilerABI.cpp.o -sys-header-deps -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX12.1.sdk -I /usr/local/include -I /usr/local/opt/llvm/include -I/opt/homebrew/include -internal-isystem /opt/homebrew/opt/llvm/bin/../include/c++/v1 -internal-isystem /Library/Developer/CommandLineTools/SDKs/MacOSX12.1.sdk/usr/local/include -internal-isystem /opt/homebrew/Cellar/llvm/16.0.0/lib/clang/16/include -internal-externc-isystem /Library/Developer/CommandLineTools/SDKs/MacOSX12.1.sdk/usr/include -fdeprecated-macro -fdebug-compilation-dir=/Users/haas/Documents/Masters/CompPhys2/variational-monte-carlo-fys4411/build/CMakeFiles/CMakeScratch/TryCompile-eUuTKs -ferror-limit 19 -stack-protector 1 -fblocks -fencode-extended-block-signature -fregister-global-dtors-with-atexit -fgnuc-version=4.2.1 -fcxx-exceptions -fexceptions -fmax-type-align=16 -D__GCC_HAVE_DWARF2_CFI_ASM=1 -o CMakeFiles/cmTC_8da23.dir/CMakeCXXCompilerABI.cpp.o -x c++ /opt/homebrew/lib/python3.10/site-packages/cmake/data/share/cmake-3.26/Modules/CMakeCXXCompilerABI.cpp
+        clang -cc1 version 16.0.0 based upon LLVM 16.0.0 default target arm64-apple-darwin21.3.0
+        ignoring nonexistent directory "/usr/local/include"
+        ignoring nonexistent directory "/usr/local/opt/llvm/include"
+        ignoring nonexistent directory "/Library/Developer/CommandLineTools/SDKs/MacOSX12.1.sdk/usr/local/include"
+        ignoring nonexistent directory "/Library/Developer/CommandLineTools/SDKs/MacOSX12.1.sdk/Library/Frameworks"
+        #include "..." search starts here:
+        #include <...> search starts here:
+         /opt/homebrew/include
+         /opt/homebrew/opt/llvm/bin/../include/c++/v1
+         /opt/homebrew/Cellar/llvm/16.0.0/lib/clang/16/include
+         /Library/Developer/CommandLineTools/SDKs/MacOSX12.1.sdk/usr/include
+         /Library/Developer/CommandLineTools/SDKs/MacOSX12.1.sdk/System/Library/Frameworks (framework directory)
+        End of search list.
+        Linking CXX executable cmTC_8da23
+        /opt/homebrew/lib/python3.10/site-packages/cmake/data/bin/cmake -E cmake_link_script CMakeFiles/cmTC_8da23.dir/link.txt --verbose=1
+        /opt/homebrew/opt/llvm/bin/clang++ -I /usr/local/include -I/usr/local/opt/llvm/include  -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX12.1.sdk -Wl,-search_paths_first -Wl,-headerpad_max_install_names -L /usr/local/lib -L/usr/local/opt/llvm/lib -v -Wl,-v CMakeFiles/cmTC_8da23.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_8da23 
+        Homebrew clang version 16.0.0
+        Target: arm64-apple-darwin21.3.0
+        Thread model: posix
+        InstalledDir: /opt/homebrew/opt/llvm/bin
+         "/usr/bin/ld" -demangle -lto_library /opt/homebrew/Cellar/llvm/16.0.0/lib/libLTO.dylib -dynamic -arch arm64 -platform_version macos 12.0.0 12.1 -syslibroot /Library/Developer/CommandLineTools/SDKs/MacOSX12.sdk -o cmTC_8da23 -L/usr/local/lib -L/usr/local/opt/llvm/lib -L/opt/homebrew/lib -search_paths_first -headerpad_max_install_names -v CMakeFiles/cmTC_8da23.dir/CMakeCXXCompilerABI.cpp.o -lc++ -lSystem /opt/homebrew/Cellar/llvm/16.0.0/lib/clang/16/lib/darwin/libclang_rt.osx.a
+        @(#)PROGRAM:ld  PROJECT:ld64-710.1
+        BUILD 08:20:25 Jul 19 2021
+        configured to support archs: armv6 armv7 armv7s arm64 arm64e arm64_32 i386 x86_64 x86_64h armv6m armv7k armv7m armv7em
+        ld: warning: directory not found for option '-L/usr/local/opt/llvm/lib'
+        Library search paths:
+        	/usr/local/lib
+        	/opt/homebrew/lib
+        	/Library/Developer/CommandLineTools/SDKs/MacOSX12.sdk/usr/lib
+        Framework search paths:
+        	/Library/Developer/CommandLineTools/SDKs/MacOSX12.sdk/System/Library/Frameworks/
+        
+      exitCode: 0
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/opt/homebrew/lib/python3.10/site-packages/cmake/data/share/cmake-3.26/Modules/CMakeDetermineCompilerABI.cmake:127 (message)"
+      - "/opt/homebrew/lib/python3.10/site-packages/cmake/data/share/cmake-3.26/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Parsed CXX implicit include dir info: rv=done
+        found start of include info
+        found start of implicit include info
+          add: [/opt/homebrew/include]
+          add: [/opt/homebrew/opt/llvm/bin/../include/c++/v1]
+          add: [/opt/homebrew/Cellar/llvm/16.0.0/lib/clang/16/include]
+          add: [/Library/Developer/CommandLineTools/SDKs/MacOSX12.1.sdk/usr/include]
+        end of search list found
+        collapse include dir [/opt/homebrew/include] ==> [/opt/homebrew/include]
+        collapse include dir [/opt/homebrew/opt/llvm/bin/../include/c++/v1] ==> [/opt/homebrew/opt/llvm/include/c++/v1]
+        collapse include dir [/opt/homebrew/Cellar/llvm/16.0.0/lib/clang/16/include] ==> [/opt/homebrew/Cellar/llvm/16.0.0/lib/clang/16/include]
+        collapse include dir [/Library/Developer/CommandLineTools/SDKs/MacOSX12.1.sdk/usr/include] ==> [/Library/Developer/CommandLineTools/SDKs/MacOSX12.1.sdk/usr/include]
+        implicit include dirs: [/opt/homebrew/include;/opt/homebrew/opt/llvm/include/c++/v1;/opt/homebrew/Cellar/llvm/16.0.0/lib/clang/16/include;/Library/Developer/CommandLineTools/SDKs/MacOSX12.1.sdk/usr/include]
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/opt/homebrew/lib/python3.10/site-packages/cmake/data/share/cmake-3.26/Modules/CMakeDetermineCompilerABI.cmake:152 (message)"
+      - "/opt/homebrew/lib/python3.10/site-packages/cmake/data/share/cmake-3.26/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Parsed CXX implicit link information:
+        link line regex: [^( *|.*[/\\])(ld|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
+        ignore line: [Change Dir: /Users/haas/Documents/Masters/CompPhys2/variational-monte-carlo-fys4411/build/CMakeFiles/CMakeScratch/TryCompile-eUuTKs]
+        ignore line: []
+        ignore line: [Run Build Command(s):/opt/homebrew/lib/python3.10/site-packages/cmake/data/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_8da23/fast && /Library/Developer/CommandLineTools/usr/bin/make  -f CMakeFiles/cmTC_8da23.dir/build.make CMakeFiles/cmTC_8da23.dir/build]
+        ignore line: [Building CXX object CMakeFiles/cmTC_8da23.dir/CMakeCXXCompilerABI.cpp.o]
+        ignore line: [/opt/homebrew/opt/llvm/bin/clang++   -I /usr/local/include -I/usr/local/opt/llvm/include  -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX12.1.sdk   -v -Wl -v -MD -MT CMakeFiles/cmTC_8da23.dir/CMakeCXXCompilerABI.cpp.o -MF CMakeFiles/cmTC_8da23.dir/CMakeCXXCompilerABI.cpp.o.d -o CMakeFiles/cmTC_8da23.dir/CMakeCXXCompilerABI.cpp.o -c /opt/homebrew/lib/python3.10/site-packages/cmake/data/share/cmake-3.26/Modules/CMakeCXXCompilerABI.cpp]
+        ignore line: [Homebrew clang version 16.0.0]
+        ignore line: [Target: arm64-apple-darwin21.3.0]
+        ignore line: [Thread model: posix]
+        ignore line: [InstalledDir: /opt/homebrew/opt/llvm/bin]
+        ignore line: [clang-16: warning: -Wl -v: 'linker' input unused [-Wunused-command-line-argument]]
+        ignore line: [ (in-process)]
+        ignore line: [ "/opt/homebrew/Cellar/llvm/16.0.0/bin/clang-16" -cc1 -triple arm64-apple-macosx12.0.0 -Wundef-prefix=TARGET_OS_ -Werror=undef-prefix -Wdeprecated-objc-isa-usage -Werror=deprecated-objc-isa-usage -emit-obj -mrelax-all -disable-free -clear-ast-before-backend -disable-llvm-verifier -discard-value-names -main-file-name CMakeCXXCompilerABI.cpp -mrelocation-model pic -pic-level 2 -mframe-pointer=non-leaf -ffp-contract=on -fno-rounding-math -funwind-tables=1 -target-sdk-version=12.1 -fcompatibility-qualified-id-block-type-checking -fvisibility-inlines-hidden-static-local-var -target-cpu apple-m1 -target-feature +v8.5a -target-feature +crc -target-feature +crypto -target-feature +dotprod -target-feature +fp-armv8 -target-feature +fp16fml -target-feature +lse -target-feature +ras -target-feature +rcpc -target-feature +rdm -target-feature +neon -target-feature +zcm -target-feature +zcz -target-feature +fullfp16 -target-feature +sm4 -target-feature +sha3 -target-feature +sha2 -target-feature +aes -target-abi darwinpcs -mllvm -treat-scalable-fixed-error-as-warning -debugger-tuning=lldb -target-linker-version 820.1 -v -fcoverage-compilation-dir=/Users/haas/Documents/Masters/CompPhys2/variational-monte-carlo-fys4411/build/CMakeFiles/CMakeScratch/TryCompile-eUuTKs -resource-dir /opt/homebrew/Cellar/llvm/16.0.0/lib/clang/16 -dependency-file CMakeFiles/cmTC_8da23.dir/CMakeCXXCompilerABI.cpp.o.d -MT CMakeFiles/cmTC_8da23.dir/CMakeCXXCompilerABI.cpp.o -sys-header-deps -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX12.1.sdk -I /usr/local/include -I /usr/local/opt/llvm/include -I/opt/homebrew/include -internal-isystem /opt/homebrew/opt/llvm/bin/../include/c++/v1 -internal-isystem /Library/Developer/CommandLineTools/SDKs/MacOSX12.1.sdk/usr/local/include -internal-isystem /opt/homebrew/Cellar/llvm/16.0.0/lib/clang/16/include -internal-externc-isystem /Library/Developer/CommandLineTools/SDKs/MacOSX12.1.sdk/usr/include -fdeprecated-macro -fdebug-compilation-dir=/Users/haas/Documents/Masters/CompPhys2/variational-monte-carlo-fys4411/build/CMakeFiles/CMakeScratch/TryCompile-eUuTKs -ferror-limit 19 -stack-protector 1 -fblocks -fencode-extended-block-signature -fregister-global-dtors-with-atexit -fgnuc-version=4.2.1 -fcxx-exceptions -fexceptions -fmax-type-align=16 -D__GCC_HAVE_DWARF2_CFI_ASM=1 -o CMakeFiles/cmTC_8da23.dir/CMakeCXXCompilerABI.cpp.o -x c++ /opt/homebrew/lib/python3.10/site-packages/cmake/data/share/cmake-3.26/Modules/CMakeCXXCompilerABI.cpp]
+        ignore line: [clang -cc1 version 16.0.0 based upon LLVM 16.0.0 default target arm64-apple-darwin21.3.0]
+        ignore line: [ignoring nonexistent directory "/usr/local/include"]
+        ignore line: [ignoring nonexistent directory "/usr/local/opt/llvm/include"]
+        ignore line: [ignoring nonexistent directory "/Library/Developer/CommandLineTools/SDKs/MacOSX12.1.sdk/usr/local/include"]
+        ignore line: [ignoring nonexistent directory "/Library/Developer/CommandLineTools/SDKs/MacOSX12.1.sdk/Library/Frameworks"]
+        ignore line: [#include "..." search starts here:]
+        ignore line: [#include <...> search starts here:]
+        ignore line: [ /opt/homebrew/include]
+        ignore line: [ /opt/homebrew/opt/llvm/bin/../include/c++/v1]
+        ignore line: [ /opt/homebrew/Cellar/llvm/16.0.0/lib/clang/16/include]
+        ignore line: [ /Library/Developer/CommandLineTools/SDKs/MacOSX12.1.sdk/usr/include]
+        ignore line: [ /Library/Developer/CommandLineTools/SDKs/MacOSX12.1.sdk/System/Library/Frameworks (framework directory)]
+        ignore line: [End of search list.]
+        ignore line: [Linking CXX executable cmTC_8da23]
+        ignore line: [/opt/homebrew/lib/python3.10/site-packages/cmake/data/bin/cmake -E cmake_link_script CMakeFiles/cmTC_8da23.dir/link.txt --verbose=1]
+        ignore line: [/opt/homebrew/opt/llvm/bin/clang++ -I /usr/local/include -I/usr/local/opt/llvm/include  -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX12.1.sdk -Wl -search_paths_first -Wl -headerpad_max_install_names -L /usr/local/lib -L/usr/local/opt/llvm/lib -v -Wl -v CMakeFiles/cmTC_8da23.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_8da23 ]
+        ignore line: [Homebrew clang version 16.0.0]
+        ignore line: [Target: arm64-apple-darwin21.3.0]
+        ignore line: [Thread model: posix]
+        ignore line: [InstalledDir: /opt/homebrew/opt/llvm/bin]
+        link line: [ "/usr/bin/ld" -demangle -lto_library /opt/homebrew/Cellar/llvm/16.0.0/lib/libLTO.dylib -dynamic -arch arm64 -platform_version macos 12.0.0 12.1 -syslibroot /Library/Developer/CommandLineTools/SDKs/MacOSX12.sdk -o cmTC_8da23 -L/usr/local/lib -L/usr/local/opt/llvm/lib -L/opt/homebrew/lib -search_paths_first -headerpad_max_install_names -v CMakeFiles/cmTC_8da23.dir/CMakeCXXCompilerABI.cpp.o -lc++ -lSystem /opt/homebrew/Cellar/llvm/16.0.0/lib/clang/16/lib/darwin/libclang_rt.osx.a]
+          arg [/usr/bin/ld] ==> ignore
+          arg [-demangle] ==> ignore
+          arg [-lto_library] ==> ignore, skip following value
+          arg [/opt/homebrew/Cellar/llvm/16.0.0/lib/libLTO.dylib] ==> skip value of -lto_library
+          arg [-dynamic] ==> ignore
+          arg [-arch] ==> ignore
+          arg [arm64] ==> ignore
+          arg [-platform_version] ==> ignore
+          arg [macos] ==> ignore
+          arg [12.0.0] ==> ignore
+          arg [12.1] ==> ignore
+          arg [-syslibroot] ==> ignore
+          arg [/Library/Developer/CommandLineTools/SDKs/MacOSX12.sdk] ==> ignore
+          arg [-o] ==> ignore
+          arg [cmTC_8da23] ==> ignore
+          arg [-L/usr/local/lib] ==> dir [/usr/local/lib]
+          arg [-L/usr/local/opt/llvm/lib] ==> dir [/usr/local/opt/llvm/lib]
+          arg [-L/opt/homebrew/lib] ==> dir [/opt/homebrew/lib]
+          arg [-search_paths_first] ==> ignore
+          arg [-headerpad_max_install_names] ==> ignore
+          arg [-v] ==> ignore
+          arg [CMakeFiles/cmTC_8da23.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
+          arg [-lc++] ==> lib [c++]
+          arg [-lSystem] ==> lib [System]
+          arg [/opt/homebrew/Cellar/llvm/16.0.0/lib/clang/16/lib/darwin/libclang_rt.osx.a] ==> lib [/opt/homebrew/Cellar/llvm/16.0.0/lib/clang/16/lib/darwin/libclang_rt.osx.a]
+        Library search paths: [;/usr/local/lib;/opt/homebrew/lib;/Library/Developer/CommandLineTools/SDKs/MacOSX12.sdk/usr/lib]
+        Framework search paths: [;/Library/Developer/CommandLineTools/SDKs/MacOSX12.sdk/System/Library/Frameworks/]
+        remove lib [System]
+        remove lib [/opt/homebrew/Cellar/llvm/16.0.0/lib/clang/16/lib/darwin/libclang_rt.osx.a]
+        collapse library dir [/usr/local/lib] ==> [/usr/local/lib]
+        collapse library dir [/usr/local/opt/llvm/lib] ==> [/usr/local/opt/llvm/lib]
+        collapse library dir [/opt/homebrew/lib] ==> [/opt/homebrew/lib]
+        collapse library dir [/usr/local/lib] ==> [/usr/local/lib]
+        collapse library dir [/opt/homebrew/lib] ==> [/opt/homebrew/lib]
+        collapse library dir [/Library/Developer/CommandLineTools/SDKs/MacOSX12.sdk/usr/lib] ==> [/Library/Developer/CommandLineTools/SDKs/MacOSX12.sdk/usr/lib]
+        collapse framework dir [/Library/Developer/CommandLineTools/SDKs/MacOSX12.sdk/System/Library/Frameworks/] ==> [/Library/Developer/CommandLineTools/SDKs/MacOSX12.sdk/System/Library/Frameworks]
+        implicit libs: [c++]
+        implicit objs: []
+        implicit dirs: [/usr/local/lib;/usr/local/opt/llvm/lib;/opt/homebrew/lib;/Library/Developer/CommandLineTools/SDKs/MacOSX12.sdk/usr/lib]
+        implicit fwks: [/Library/Developer/CommandLineTools/SDKs/MacOSX12.sdk/System/Library/Frameworks]
+      
+      
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/opt/homebrew/lib/python3.10/site-packages/cmake/data/share/cmake-3.26/Modules/FindOpenMP.cmake:219 (try_compile)"
+      - "/opt/homebrew/lib/python3.10/site-packages/cmake/data/share/cmake-3.26/Modules/FindOpenMP.cmake:483 (_OPENMP_GET_FLAGS)"
+      - "CMakeLists.txt:60 (find_package)"
+    description: "Detecting C OpenMP compiler info"
+    directories:
+      source: "/Users/haas/Documents/Masters/CompPhys2/variational-monte-carlo-fys4411/build/CMakeFiles/CMakeScratch/TryCompile-Ig3hCX"
+      binary: "/Users/haas/Documents/Masters/CompPhys2/variational-monte-carlo-fys4411/build/CMakeFiles/CMakeScratch/TryCompile-Ig3hCX"
+    cmakeVariables:
+      CMAKE_C_FLAGS: "-I /usr/local/include -I/usr/local/opt/llvm/include"
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: "-L /usr/local/lib -L/usr/local/opt/llvm/lib"
+      CMAKE_OSX_ARCHITECTURES: ""
+      CMAKE_OSX_DEPLOYMENT_TARGET: ""
+      CMAKE_OSX_SYSROOT: "/Library/Developer/CommandLineTools/SDKs/MacOSX12.1.sdk"
+    buildResult:
+      variable: "OpenMP_COMPILE_RESULT_C_fopenmplibomp"
+      cached: true
+      stdout: |
+        Change Dir: /Users/haas/Documents/Masters/CompPhys2/variational-monte-carlo-fys4411/build/CMakeFiles/CMakeScratch/TryCompile-Ig3hCX
+        
+        Run Build Command(s):/opt/homebrew/lib/python3.10/site-packages/cmake/data/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_fb6b8/fast && /Library/Developer/CommandLineTools/usr/bin/make  -f CMakeFiles/cmTC_fb6b8.dir/build.make CMakeFiles/cmTC_fb6b8.dir/build
+        Building C object CMakeFiles/cmTC_fb6b8.dir/OpenMPTryFlag.c.o
+        /opt/homebrew/opt/llvm/bin/clang   -I /usr/local/include -I/usr/local/opt/llvm/include -fopenmp=libomp -v -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX12.1.sdk -MD -MT CMakeFiles/cmTC_fb6b8.dir/OpenMPTryFlag.c.o -MF CMakeFiles/cmTC_fb6b8.dir/OpenMPTryFlag.c.o.d -o CMakeFiles/cmTC_fb6b8.dir/OpenMPTryFlag.c.o -c /Users/haas/Documents/Masters/CompPhys2/variational-monte-carlo-fys4411/build/CMakeFiles/CMakeScratch/TryCompile-Ig3hCX/OpenMPTryFlag.c
+        Homebrew clang version 16.0.0
+        Target: arm64-apple-darwin21.3.0
+        Thread model: posix
+        InstalledDir: /opt/homebrew/opt/llvm/bin
+         (in-process)
+         "/opt/homebrew/Cellar/llvm/16.0.0/bin/clang-16" -cc1 -triple arm64-apple-macosx12.0.0 -Wundef-prefix=TARGET_OS_ -Werror=undef-prefix -Wdeprecated-objc-isa-usage -Werror=deprecated-objc-isa-usage -emit-obj -mrelax-all -disable-free -clear-ast-before-backend -disable-llvm-verifier -discard-value-names -main-file-name OpenMPTryFlag.c -mrelocation-model pic -pic-level 2 -mframe-pointer=non-leaf -ffp-contract=on -fno-rounding-math -funwind-tables=1 -target-sdk-version=12.1 -fcompatibility-qualified-id-block-type-checking -fvisibility-inlines-hidden-static-local-var -target-cpu apple-m1 -target-feature +v8.5a -target-feature +crc -target-feature +crypto -target-feature +dotprod -target-feature +fp-armv8 -target-feature +fp16fml -target-feature +lse -target-feature +ras -target-feature +rcpc -target-feature +rdm -target-feature +neon -target-feature +zcm -target-feature +zcz -target-feature +fullfp16 -target-feature +sm4 -target-feature +sha3 -target-feature +sha2 -target-feature +aes -target-abi darwinpcs -mllvm -treat-scalable-fixed-error-as-warning -debugger-tuning=lldb -target-linker-version 820.1 -v -fcoverage-compilation-dir=/Users/haas/Documents/Masters/CompPhys2/variational-monte-carlo-fys4411/build/CMakeFiles/CMakeScratch/TryCompile-Ig3hCX -resource-dir /opt/homebrew/Cellar/llvm/16.0.0/lib/clang/16 -dependency-file CMakeFiles/cmTC_fb6b8.dir/OpenMPTryFlag.c.o.d -MT CMakeFiles/cmTC_fb6b8.dir/OpenMPTryFlag.c.o -sys-header-deps -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX12.1.sdk -I /usr/local/include -I /usr/local/opt/llvm/include -I/opt/homebrew/include -internal-isystem /Library/Developer/CommandLineTools/SDKs/MacOSX12.1.sdk/usr/local/include -internal-isystem /opt/homebrew/Cellar/llvm/16.0.0/lib/clang/16/include -internal-externc-isystem /Library/Developer/CommandLineTools/SDKs/MacOSX12.1.sdk/usr/include -fdebug-compilation-dir=/Users/haas/Documents/Masters/CompPhys2/variational-monte-carlo-fys4411/build/CMakeFiles/CMakeScratch/TryCompile-Ig3hCX -ferror-limit 19 -fopenmp -stack-protector 1 -fblocks -fencode-extended-block-signature -fregister-global-dtors-with-atexit -fgnuc-version=4.2.1 -fmax-type-align=16 -D__GCC_HAVE_DWARF2_CFI_ASM=1 -o CMakeFiles/cmTC_fb6b8.dir/OpenMPTryFlag.c.o -x c /Users/haas/Documents/Masters/CompPhys2/variational-monte-carlo-fys4411/build/CMakeFiles/CMakeScratch/TryCompile-Ig3hCX/OpenMPTryFlag.c
+        clang -cc1 version 16.0.0 based upon LLVM 16.0.0 default target arm64-apple-darwin21.3.0
+        ignoring nonexistent directory "/usr/local/include"
+        ignoring nonexistent directory "/usr/local/opt/llvm/include"
+        ignoring nonexistent directory "/Library/Developer/CommandLineTools/SDKs/MacOSX12.1.sdk/usr/local/include"
+        ignoring nonexistent directory "/Library/Developer/CommandLineTools/SDKs/MacOSX12.1.sdk/Library/Frameworks"
+        #include "..." search starts here:
+        #include <...> search starts here:
+         /opt/homebrew/include
+         /opt/homebrew/Cellar/llvm/16.0.0/lib/clang/16/include
+         /Library/Developer/CommandLineTools/SDKs/MacOSX12.1.sdk/usr/include
+         /Library/Developer/CommandLineTools/SDKs/MacOSX12.1.sdk/System/Library/Frameworks (framework directory)
+        End of search list.
+        Linking C executable cmTC_fb6b8
+        /opt/homebrew/lib/python3.10/site-packages/cmake/data/bin/cmake -E cmake_link_script CMakeFiles/cmTC_fb6b8.dir/link.txt --verbose=1
+        /opt/homebrew/opt/llvm/bin/clang -I /usr/local/include -I/usr/local/opt/llvm/include -fopenmp=libomp -v -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX12.1.sdk -Wl,-search_paths_first -Wl,-headerpad_max_install_names -L /usr/local/lib -L/usr/local/opt/llvm/lib  CMakeFiles/cmTC_fb6b8.dir/OpenMPTryFlag.c.o -o cmTC_fb6b8  -v -Wl,-v 
+        Homebrew clang version 16.0.0
+        Target: arm64-apple-darwin21.3.0
+        Thread model: posix
+        InstalledDir: /opt/homebrew/opt/llvm/bin
+         "/usr/bin/ld" -demangle -lto_library /opt/homebrew/Cellar/llvm/16.0.0/lib/libLTO.dylib -dynamic -arch arm64 -platform_version macos 12.0.0 12.1 -syslibroot /Library/Developer/CommandLineTools/SDKs/MacOSX12.sdk -o cmTC_fb6b8 -L/usr/local/lib -L/usr/local/opt/llvm/lib -L/opt/homebrew/lib -search_paths_first -headerpad_max_install_names CMakeFiles/cmTC_fb6b8.dir/OpenMPTryFlag.c.o -v -lomp -rpath /opt/homebrew/Cellar/llvm/16.0.0/lib -L/opt/homebrew/Cellar/llvm/16.0.0/lib -lSystem /opt/homebrew/Cellar/llvm/16.0.0/lib/clang/16/lib/darwin/libclang_rt.osx.a
+        @(#)PROGRAM:ld  PROJECT:ld64-710.1
+        BUILD 08:20:25 Jul 19 2021
+        configured to support archs: armv6 armv7 armv7s arm64 arm64e arm64_32 i386 x86_64 x86_64h armv6m armv7k armv7m armv7em
+        ld: warning: directory not found for option '-L/usr/local/opt/llvm/lib'
+        Library search paths:
+        	/usr/local/lib
+        	/opt/homebrew/lib
+        	/opt/homebrew/Cellar/llvm/16.0.0/lib
+        	/Library/Developer/CommandLineTools/SDKs/MacOSX12.sdk/usr/lib
+        Framework search paths:
+        	/Library/Developer/CommandLineTools/SDKs/MacOSX12.sdk/System/Library/Frameworks/
+        
+      exitCode: 0
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/opt/homebrew/lib/python3.10/site-packages/cmake/data/share/cmake-3.26/Modules/FindOpenMP.cmake:262 (message)"
+      - "/opt/homebrew/lib/python3.10/site-packages/cmake/data/share/cmake-3.26/Modules/FindOpenMP.cmake:483 (_OPENMP_GET_FLAGS)"
+      - "CMakeLists.txt:60 (find_package)"
+    message: |
+      Parsed C OpenMP implicit link information from above output:
+        link line regex: [^( *|.*[/\\])(ld|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
+        ignore line: [Change Dir: /Users/haas/Documents/Masters/CompPhys2/variational-monte-carlo-fys4411/build/CMakeFiles/CMakeScratch/TryCompile-Ig3hCX]
+        ignore line: []
+        ignore line: [Run Build Command(s):/opt/homebrew/lib/python3.10/site-packages/cmake/data/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_fb6b8/fast && /Library/Developer/CommandLineTools/usr/bin/make  -f CMakeFiles/cmTC_fb6b8.dir/build.make CMakeFiles/cmTC_fb6b8.dir/build]
+        ignore line: [Building C object CMakeFiles/cmTC_fb6b8.dir/OpenMPTryFlag.c.o]
+        ignore line: [/opt/homebrew/opt/llvm/bin/clang   -I /usr/local/include -I/usr/local/opt/llvm/include -fopenmp=libomp -v -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX12.1.sdk -MD -MT CMakeFiles/cmTC_fb6b8.dir/OpenMPTryFlag.c.o -MF CMakeFiles/cmTC_fb6b8.dir/OpenMPTryFlag.c.o.d -o CMakeFiles/cmTC_fb6b8.dir/OpenMPTryFlag.c.o -c /Users/haas/Documents/Masters/CompPhys2/variational-monte-carlo-fys4411/build/CMakeFiles/CMakeScratch/TryCompile-Ig3hCX/OpenMPTryFlag.c]
+        ignore line: [Homebrew clang version 16.0.0]
+        ignore line: [Target: arm64-apple-darwin21.3.0]
+        ignore line: [Thread model: posix]
+        ignore line: [InstalledDir: /opt/homebrew/opt/llvm/bin]
+        ignore line: [ (in-process)]
+        ignore line: [ "/opt/homebrew/Cellar/llvm/16.0.0/bin/clang-16" -cc1 -triple arm64-apple-macosx12.0.0 -Wundef-prefix=TARGET_OS_ -Werror=undef-prefix -Wdeprecated-objc-isa-usage -Werror=deprecated-objc-isa-usage -emit-obj -mrelax-all -disable-free -clear-ast-before-backend -disable-llvm-verifier -discard-value-names -main-file-name OpenMPTryFlag.c -mrelocation-model pic -pic-level 2 -mframe-pointer=non-leaf -ffp-contract=on -fno-rounding-math -funwind-tables=1 -target-sdk-version=12.1 -fcompatibility-qualified-id-block-type-checking -fvisibility-inlines-hidden-static-local-var -target-cpu apple-m1 -target-feature +v8.5a -target-feature +crc -target-feature +crypto -target-feature +dotprod -target-feature +fp-armv8 -target-feature +fp16fml -target-feature +lse -target-feature +ras -target-feature +rcpc -target-feature +rdm -target-feature +neon -target-feature +zcm -target-feature +zcz -target-feature +fullfp16 -target-feature +sm4 -target-feature +sha3 -target-feature +sha2 -target-feature +aes -target-abi darwinpcs -mllvm -treat-scalable-fixed-error-as-warning -debugger-tuning=lldb -target-linker-version 820.1 -v -fcoverage-compilation-dir=/Users/haas/Documents/Masters/CompPhys2/variational-monte-carlo-fys4411/build/CMakeFiles/CMakeScratch/TryCompile-Ig3hCX -resource-dir /opt/homebrew/Cellar/llvm/16.0.0/lib/clang/16 -dependency-file CMakeFiles/cmTC_fb6b8.dir/OpenMPTryFlag.c.o.d -MT CMakeFiles/cmTC_fb6b8.dir/OpenMPTryFlag.c.o -sys-header-deps -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX12.1.sdk -I /usr/local/include -I /usr/local/opt/llvm/include -I/opt/homebrew/include -internal-isystem /Library/Developer/CommandLineTools/SDKs/MacOSX12.1.sdk/usr/local/include -internal-isystem /opt/homebrew/Cellar/llvm/16.0.0/lib/clang/16/include -internal-externc-isystem /Library/Developer/CommandLineTools/SDKs/MacOSX12.1.sdk/usr/include -fdebug-compilation-dir=/Users/haas/Documents/Masters/CompPhys2/variational-monte-carlo-fys4411/build/CMakeFiles/CMakeScratch/TryCompile-Ig3hCX -ferror-limit 19 -fopenmp -stack-protector 1 -fblocks -fencode-extended-block-signature -fregister-global-dtors-with-atexit -fgnuc-version=4.2.1 -fmax-type-align=16 -D__GCC_HAVE_DWARF2_CFI_ASM=1 -o CMakeFiles/cmTC_fb6b8.dir/OpenMPTryFlag.c.o -x c /Users/haas/Documents/Masters/CompPhys2/variational-monte-carlo-fys4411/build/CMakeFiles/CMakeScratch/TryCompile-Ig3hCX/OpenMPTryFlag.c]
+        ignore line: [clang -cc1 version 16.0.0 based upon LLVM 16.0.0 default target arm64-apple-darwin21.3.0]
+        ignore line: [ignoring nonexistent directory "/usr/local/include"]
+        ignore line: [ignoring nonexistent directory "/usr/local/opt/llvm/include"]
+        ignore line: [ignoring nonexistent directory "/Library/Developer/CommandLineTools/SDKs/MacOSX12.1.sdk/usr/local/include"]
+        ignore line: [ignoring nonexistent directory "/Library/Developer/CommandLineTools/SDKs/MacOSX12.1.sdk/Library/Frameworks"]
+        ignore line: [#include "..." search starts here:]
+        ignore line: [#include <...> search starts here:]
+        ignore line: [ /opt/homebrew/include]
+        ignore line: [ /opt/homebrew/Cellar/llvm/16.0.0/lib/clang/16/include]
+        ignore line: [ /Library/Developer/CommandLineTools/SDKs/MacOSX12.1.sdk/usr/include]
+        ignore line: [ /Library/Developer/CommandLineTools/SDKs/MacOSX12.1.sdk/System/Library/Frameworks (framework directory)]
+        ignore line: [End of search list.]
+        ignore line: [Linking C executable cmTC_fb6b8]
+        ignore line: [/opt/homebrew/lib/python3.10/site-packages/cmake/data/bin/cmake -E cmake_link_script CMakeFiles/cmTC_fb6b8.dir/link.txt --verbose=1]
+        ignore line: [/opt/homebrew/opt/llvm/bin/clang -I /usr/local/include -I/usr/local/opt/llvm/include -fopenmp=libomp -v -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX12.1.sdk -Wl -search_paths_first -Wl -headerpad_max_install_names -L /usr/local/lib -L/usr/local/opt/llvm/lib  CMakeFiles/cmTC_fb6b8.dir/OpenMPTryFlag.c.o -o cmTC_fb6b8  -v -Wl -v ]
+        ignore line: [Homebrew clang version 16.0.0]
+        ignore line: [Target: arm64-apple-darwin21.3.0]
+        ignore line: [Thread model: posix]
+        ignore line: [InstalledDir: /opt/homebrew/opt/llvm/bin]
+        link line: [ "/usr/bin/ld" -demangle -lto_library /opt/homebrew/Cellar/llvm/16.0.0/lib/libLTO.dylib -dynamic -arch arm64 -platform_version macos 12.0.0 12.1 -syslibroot /Library/Developer/CommandLineTools/SDKs/MacOSX12.sdk -o cmTC_fb6b8 -L/usr/local/lib -L/usr/local/opt/llvm/lib -L/opt/homebrew/lib -search_paths_first -headerpad_max_install_names CMakeFiles/cmTC_fb6b8.dir/OpenMPTryFlag.c.o -v -lomp -rpath /opt/homebrew/Cellar/llvm/16.0.0/lib -L/opt/homebrew/Cellar/llvm/16.0.0/lib -lSystem /opt/homebrew/Cellar/llvm/16.0.0/lib/clang/16/lib/darwin/libclang_rt.osx.a]
+          arg [/usr/bin/ld] ==> ignore
+          arg [-demangle] ==> ignore
+          arg [-lto_library] ==> ignore, skip following value
+          arg [/opt/homebrew/Cellar/llvm/16.0.0/lib/libLTO.dylib] ==> skip value of -lto_library
+          arg [-dynamic] ==> ignore
+          arg [-arch] ==> ignore
+          arg [arm64] ==> ignore
+          arg [-platform_version] ==> ignore
+          arg [macos] ==> ignore
+          arg [12.0.0] ==> ignore
+          arg [12.1] ==> ignore
+          arg [-syslibroot] ==> ignore
+          arg [/Library/Developer/CommandLineTools/SDKs/MacOSX12.sdk] ==> ignore
+          arg [-o] ==> ignore
+          arg [cmTC_fb6b8] ==> ignore
+          arg [-L/usr/local/lib] ==> dir [/usr/local/lib]
+          arg [-L/usr/local/opt/llvm/lib] ==> dir [/usr/local/opt/llvm/lib]
+          arg [-L/opt/homebrew/lib] ==> dir [/opt/homebrew/lib]
+          arg [-search_paths_first] ==> ignore
+          arg [-headerpad_max_install_names] ==> ignore
+          arg [CMakeFiles/cmTC_fb6b8.dir/OpenMPTryFlag.c.o] ==> ignore
+          arg [-v] ==> ignore
+          arg [-lomp] ==> lib [omp]
+          arg [-rpath] ==> ignore
+          arg [/opt/homebrew/Cellar/llvm/16.0.0/lib] ==> ignore
+          arg [-L/opt/homebrew/Cellar/llvm/16.0.0/lib] ==> dir [/opt/homebrew/Cellar/llvm/16.0.0/lib]
+          arg [-lSystem] ==> lib [System]
+          arg [/opt/homebrew/Cellar/llvm/16.0.0/lib/clang/16/lib/darwin/libclang_rt.osx.a] ==> lib [/opt/homebrew/Cellar/llvm/16.0.0/lib/clang/16/lib/darwin/libclang_rt.osx.a]
+        Library search paths: [;/usr/local/lib;/opt/homebrew/lib;/opt/homebrew/Cellar/llvm/16.0.0/lib;/Library/Developer/CommandLineTools/SDKs/MacOSX12.sdk/usr/lib]
+        Framework search paths: [;/Library/Developer/CommandLineTools/SDKs/MacOSX12.sdk/System/Library/Frameworks/]
+        remove lib [System]
+        remove lib [/opt/homebrew/Cellar/llvm/16.0.0/lib/clang/16/lib/darwin/libclang_rt.osx.a]
+        collapse library dir [/usr/local/lib] ==> [/usr/local/lib]
+        collapse library dir [/usr/local/opt/llvm/lib] ==> [/usr/local/opt/llvm/lib]
+        collapse library dir [/opt/homebrew/lib] ==> [/opt/homebrew/lib]
+        collapse library dir [/opt/homebrew/Cellar/llvm/16.0.0/lib] ==> [/opt/homebrew/Cellar/llvm/16.0.0/lib]
+        collapse library dir [/usr/local/lib] ==> [/usr/local/lib]
+        collapse library dir [/opt/homebrew/lib] ==> [/opt/homebrew/lib]
+        collapse library dir [/opt/homebrew/Cellar/llvm/16.0.0/lib] ==> [/opt/homebrew/Cellar/llvm/16.0.0/lib]
+        collapse library dir [/Library/Developer/CommandLineTools/SDKs/MacOSX12.sdk/usr/lib] ==> [/Library/Developer/CommandLineTools/SDKs/MacOSX12.sdk/usr/lib]
+        collapse framework dir [/Library/Developer/CommandLineTools/SDKs/MacOSX12.sdk/System/Library/Frameworks/] ==> [/Library/Developer/CommandLineTools/SDKs/MacOSX12.sdk/System/Library/Frameworks]
+        implicit libs: [omp]
+        implicit objs: []
+        implicit dirs: [/usr/local/lib;/usr/local/opt/llvm/lib;/opt/homebrew/lib;/opt/homebrew/Cellar/llvm/16.0.0/lib;/Library/Developer/CommandLineTools/SDKs/MacOSX12.sdk/usr/lib]
+        implicit fwks: [/Library/Developer/CommandLineTools/SDKs/MacOSX12.sdk/System/Library/Frameworks]
+      
+      
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/opt/homebrew/lib/python3.10/site-packages/cmake/data/share/cmake-3.26/Modules/FindOpenMP.cmake:419 (try_compile)"
+      - "/opt/homebrew/lib/python3.10/site-packages/cmake/data/share/cmake-3.26/Modules/FindOpenMP.cmake:557 (_OPENMP_GET_SPEC_DATE)"
+      - "CMakeLists.txt:60 (find_package)"
+    description: "Detecting C OpenMP version"
+    directories:
+      source: "/Users/haas/Documents/Masters/CompPhys2/variational-monte-carlo-fys4411/build/CMakeFiles/CMakeScratch/TryCompile-QhvPYc"
+      binary: "/Users/haas/Documents/Masters/CompPhys2/variational-monte-carlo-fys4411/build/CMakeFiles/CMakeScratch/TryCompile-QhvPYc"
+    cmakeVariables:
+      CMAKE_C_FLAGS: "-I /usr/local/include -I/usr/local/opt/llvm/include"
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: "-L /usr/local/lib -L/usr/local/opt/llvm/lib"
+      CMAKE_OSX_ARCHITECTURES: ""
+      CMAKE_OSX_DEPLOYMENT_TARGET: ""
+      CMAKE_OSX_SYSROOT: "/Library/Developer/CommandLineTools/SDKs/MacOSX12.1.sdk"
+    buildResult:
+      variable: "OpenMP_SPECTEST_C_"
+      cached: true
+      stdout: |
+        Change Dir: /Users/haas/Documents/Masters/CompPhys2/variational-monte-carlo-fys4411/build/CMakeFiles/CMakeScratch/TryCompile-QhvPYc
+        
+        Run Build Command(s):/opt/homebrew/lib/python3.10/site-packages/cmake/data/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_9d7cf/fast && /Library/Developer/CommandLineTools/usr/bin/make  -f CMakeFiles/cmTC_9d7cf.dir/build.make CMakeFiles/cmTC_9d7cf.dir/build
+        Building C object CMakeFiles/cmTC_9d7cf.dir/OpenMPCheckVersion.c.o
+        /opt/homebrew/opt/llvm/bin/clang   -I /usr/local/include -I/usr/local/opt/llvm/include -fopenmp=libomp -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX12.1.sdk -MD -MT CMakeFiles/cmTC_9d7cf.dir/OpenMPCheckVersion.c.o -MF CMakeFiles/cmTC_9d7cf.dir/OpenMPCheckVersion.c.o.d -o CMakeFiles/cmTC_9d7cf.dir/OpenMPCheckVersion.c.o -c /Users/haas/Documents/Masters/CompPhys2/variational-monte-carlo-fys4411/build/CMakeFiles/CMakeScratch/TryCompile-QhvPYc/OpenMPCheckVersion.c
+        Linking C executable cmTC_9d7cf
+        /opt/homebrew/lib/python3.10/site-packages/cmake/data/bin/cmake -E cmake_link_script CMakeFiles/cmTC_9d7cf.dir/link.txt --verbose=1
+        /opt/homebrew/opt/llvm/bin/clang -I /usr/local/include -I/usr/local/opt/llvm/include -fopenmp=libomp -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX12.1.sdk -Wl,-search_paths_first -Wl,-headerpad_max_install_names -L /usr/local/lib -L/usr/local/opt/llvm/lib  CMakeFiles/cmTC_9d7cf.dir/OpenMPCheckVersion.c.o -o cmTC_9d7cf 
+        ld: warning: directory not found for option '-L/usr/local/opt/llvm/lib'
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/opt/homebrew/lib/python3.10/site-packages/cmake/data/share/cmake-3.26/Modules/FindOpenMP.cmake:419 (try_compile)"
+      - "/opt/homebrew/lib/python3.10/site-packages/cmake/data/share/cmake-3.26/Modules/FindOpenMP.cmake:557 (_OPENMP_GET_SPEC_DATE)"
+      - "CMakeLists.txt:60 (find_package)"
+    description: "Detecting CXX OpenMP version"
+    directories:
+      source: "/Users/haas/Documents/Masters/CompPhys2/variational-monte-carlo-fys4411/build/CMakeFiles/CMakeScratch/TryCompile-QMfBvQ"
+      binary: "/Users/haas/Documents/Masters/CompPhys2/variational-monte-carlo-fys4411/build/CMakeFiles/CMakeScratch/TryCompile-QMfBvQ"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: "-Wall -Wextra"
+      CMAKE_CXX_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: "-L /usr/local/lib -L/usr/local/opt/llvm/lib"
+      CMAKE_OSX_ARCHITECTURES: ""
+      CMAKE_OSX_DEPLOYMENT_TARGET: ""
+      CMAKE_OSX_SYSROOT: "/Library/Developer/CommandLineTools/SDKs/MacOSX12.1.sdk"
+    buildResult:
+      variable: "OpenMP_SPECTEST_CXX_"
+      cached: true
+      stdout: |
+        Change Dir: /Users/haas/Documents/Masters/CompPhys2/variational-monte-carlo-fys4411/build/CMakeFiles/CMakeScratch/TryCompile-QMfBvQ
+        
+        Run Build Command(s):/opt/homebrew/lib/python3.10/site-packages/cmake/data/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_d12c0/fast && /Library/Developer/CommandLineTools/usr/bin/make  -f CMakeFiles/cmTC_d12c0.dir/build.make CMakeFiles/cmTC_d12c0.dir/build
+        Building CXX object CMakeFiles/cmTC_d12c0.dir/OpenMPCheckVersion.cpp.o
+        /opt/homebrew/opt/llvm/bin/clang++   -Wall -Wextra -fopenmp -std=gnu++14 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX12.1.sdk -MD -MT CMakeFiles/cmTC_d12c0.dir/OpenMPCheckVersion.cpp.o -MF CMakeFiles/cmTC_d12c0.dir/OpenMPCheckVersion.cpp.o.d -o CMakeFiles/cmTC_d12c0.dir/OpenMPCheckVersion.cpp.o -c /Users/haas/Documents/Masters/CompPhys2/variational-monte-carlo-fys4411/build/CMakeFiles/CMakeScratch/TryCompile-QMfBvQ/OpenMPCheckVersion.cpp
+        Linking CXX executable cmTC_d12c0
+        /opt/homebrew/lib/python3.10/site-packages/cmake/data/bin/cmake -E cmake_link_script CMakeFiles/cmTC_d12c0.dir/link.txt --verbose=1
+        /opt/homebrew/opt/llvm/bin/clang++ -Wall -Wextra -fopenmp -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX12.1.sdk -Wl,-search_paths_first -Wl,-headerpad_max_install_names -L /usr/local/lib -L/usr/local/opt/llvm/lib  CMakeFiles/cmTC_d12c0.dir/OpenMPCheckVersion.cpp.o -o cmTC_d12c0 
+        ld: warning: directory not found for option '-L/usr/local/opt/llvm/lib'
+        
+      exitCode: 0
+...
