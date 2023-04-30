@@ -1,8 +1,5 @@
-/Users/haas/Documents/Masters/CompPhys2/variational-monte-carlo-fys4411/build/CMakeFiles/Vmclib.dir
-/Users/haas/Documents/Masters/CompPhys2/variational-monte-carlo-fys4411/build/CMakeFiles/vmc.dir
-/Users/haas/Documents/Masters/CompPhys2/variational-monte-carlo-fys4411/build/CMakeFiles/interact.dir
-/Users/haas/Documents/Masters/CompPhys2/variational-monte-carlo-fys4411/build/CMakeFiles/parallelinteract.dir
-/Users/haas/Documents/Masters/CompPhys2/variational-monte-carlo-fys4411/build/CMakeFiles/timing.dir
-/Users/haas/Documents/Masters/CompPhys2/variational-monte-carlo-fys4411/build/CMakeFiles/gradient.dir
-/Users/haas/Documents/Masters/CompPhys2/variational-monte-carlo-fys4411/build/CMakeFiles/edit_cache.dir
-/Users/haas/Documents/Masters/CompPhys2/variational-monte-carlo-fys4411/build/CMakeFiles/rebuild_cache.dir
+/Users/haas/Documents/Masters/CompPhys2/neural_quantum_state/build/CMakeFiles/Vmclib.dir
+/Users/haas/Documents/Masters/CompPhys2/neural_quantum_state/build/CMakeFiles/nqs.dir
+/Users/haas/Documents/Masters/CompPhys2/neural_quantum_state/build/CMakeFiles/tests.dir
+/Users/haas/Documents/Masters/CompPhys2/neural_quantum_state/build/CMakeFiles/edit_cache.dir
+/Users/haas/Documents/Masters/CompPhys2/neural_quantum_state/build/CMakeFiles/rebuild_cache.dir

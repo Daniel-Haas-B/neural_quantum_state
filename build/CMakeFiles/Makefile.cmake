@@ -7,7 +7,7 @@ set(CMAKE_DEPENDS_GENERATOR "Unix Makefiles")
 # The top level Makefile was generated from the following files:
 set(CMAKE_MAKEFILE_DEPENDS
   "CMakeCache.txt"
-  "/Users/haas/Documents/Masters/CompPhys2/variational-monte-carlo-fys4411/CMakeLists.txt"
+  "/Users/haas/Documents/Masters/CompPhys2/neural_quantum_state/CMakeLists.txt"
   "CMakeFiles/3.26.1/CMakeCCompiler.cmake"
   "CMakeFiles/3.26.1/CMakeCXXCompiler.cmake"
   "CMakeFiles/3.26.1/CMakeSystem.cmake"
@@ -20,14 +20,16 @@ set(CMAKE_MAKEFILE_DEPENDS
   "/opt/homebrew/lib/python3.10/site-packages/cmake/data/share/cmake-3.26/Modules/CMakeParseImplicitLinkInfo.cmake"
   "/opt/homebrew/lib/python3.10/site-packages/cmake/data/share/cmake-3.26/Modules/CMakeSystemSpecificInformation.cmake"
   "/opt/homebrew/lib/python3.10/site-packages/cmake/data/share/cmake-3.26/Modules/CMakeSystemSpecificInitialize.cmake"
+  "/opt/homebrew/lib/python3.10/site-packages/cmake/data/share/cmake-3.26/Modules/Compiler/AppleClang-C.cmake"
+  "/opt/homebrew/lib/python3.10/site-packages/cmake/data/share/cmake-3.26/Modules/Compiler/AppleClang-CXX.cmake"
   "/opt/homebrew/lib/python3.10/site-packages/cmake/data/share/cmake-3.26/Modules/Compiler/CMakeCommonCompilerMacros.cmake"
-  "/opt/homebrew/lib/python3.10/site-packages/cmake/data/share/cmake-3.26/Modules/Compiler/Clang-C.cmake"
-  "/opt/homebrew/lib/python3.10/site-packages/cmake/data/share/cmake-3.26/Modules/Compiler/Clang-CXX.cmake"
   "/opt/homebrew/lib/python3.10/site-packages/cmake/data/share/cmake-3.26/Modules/Compiler/Clang.cmake"
   "/opt/homebrew/lib/python3.10/site-packages/cmake/data/share/cmake-3.26/Modules/Compiler/GNU.cmake"
   "/opt/homebrew/lib/python3.10/site-packages/cmake/data/share/cmake-3.26/Modules/FindOpenMP.cmake"
   "/opt/homebrew/lib/python3.10/site-packages/cmake/data/share/cmake-3.26/Modules/FindPackageHandleStandardArgs.cmake"
   "/opt/homebrew/lib/python3.10/site-packages/cmake/data/share/cmake-3.26/Modules/FindPackageMessage.cmake"
+  "/opt/homebrew/lib/python3.10/site-packages/cmake/data/share/cmake-3.26/Modules/Platform/Apple-AppleClang-C.cmake"
+  "/opt/homebrew/lib/python3.10/site-packages/cmake/data/share/cmake-3.26/Modules/Platform/Apple-AppleClang-CXX.cmake"
   "/opt/homebrew/lib/python3.10/site-packages/cmake/data/share/cmake-3.26/Modules/Platform/Apple-Clang-C.cmake"
   "/opt/homebrew/lib/python3.10/site-packages/cmake/data/share/cmake-3.26/Modules/Platform/Apple-Clang-CXX.cmake"
   "/opt/homebrew/lib/python3.10/site-packages/cmake/data/share/cmake-3.26/Modules/Platform/Apple-Clang.cmake"
@@ -50,9 +52,6 @@ set(CMAKE_MAKEFILE_PRODUCTS
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
   "CMakeFiles/Vmclib.dir/DependInfo.cmake"
-  "CMakeFiles/vmc.dir/DependInfo.cmake"
-  "CMakeFiles/interact.dir/DependInfo.cmake"
-  "CMakeFiles/parallelinteract.dir/DependInfo.cmake"
-  "CMakeFiles/timing.dir/DependInfo.cmake"
-  "CMakeFiles/gradient.dir/DependInfo.cmake"
+  "CMakeFiles/nqs.dir/DependInfo.cmake"
+  "CMakeFiles/tests.dir/DependInfo.cmake"
   )

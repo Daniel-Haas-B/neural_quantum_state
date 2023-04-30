@@ -57,10 +57,10 @@ RM = /opt/homebrew/lib/python3.10/site-packages/cmake/data/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/haas/Documents/Masters/CompPhys2/variational-monte-carlo-fys4411
+CMAKE_SOURCE_DIR = /Users/haas/Documents/Masters/CompPhys2/neural_quantum_state
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/haas/Documents/Masters/CompPhys2/variational-monte-carlo-fys4411/build
+CMAKE_BINARY_DIR = /Users/haas/Documents/Masters/CompPhys2/neural_quantum_state/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -87,9 +87,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/haas/Documents/Masters/CompPhys2/variational-monte-carlo-fys4411/build/CMakeFiles /Users/haas/Documents/Masters/CompPhys2/variational-monte-carlo-fys4411/build//CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/haas/Documents/Masters/CompPhys2/neural_quantum_state/build/CMakeFiles /Users/haas/Documents/Masters/CompPhys2/neural_quantum_state/build//CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/haas/Documents/Masters/CompPhys2/variational-monte-carlo-fys4411/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/haas/Documents/Masters/CompPhys2/neural_quantum_state/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -130,93 +130,30 @@ Vmclib/fast:
 .PHONY : Vmclib/fast
 
 #=============================================================================
-# Target rules for targets named vmc
+# Target rules for targets named nqs
 
 # Build rule for target.
-vmc: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 vmc
-.PHONY : vmc
+nqs: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 nqs
+.PHONY : nqs
 
 # fast build rule for target.
-vmc/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/vmc.dir/build.make CMakeFiles/vmc.dir/build
-.PHONY : vmc/fast
+nqs/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/nqs.dir/build.make CMakeFiles/nqs.dir/build
+.PHONY : nqs/fast
 
 #=============================================================================
-# Target rules for targets named interact
+# Target rules for targets named tests
 
 # Build rule for target.
-interact: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 interact
-.PHONY : interact
+tests: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 tests
+.PHONY : tests
 
 # fast build rule for target.
-interact/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/interact.dir/build.make CMakeFiles/interact.dir/build
-.PHONY : interact/fast
-
-#=============================================================================
-# Target rules for targets named parallelinteract
-
-# Build rule for target.
-parallelinteract: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 parallelinteract
-.PHONY : parallelinteract
-
-# fast build rule for target.
-parallelinteract/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/parallelinteract.dir/build.make CMakeFiles/parallelinteract.dir/build
-.PHONY : parallelinteract/fast
-
-#=============================================================================
-# Target rules for targets named timing
-
-# Build rule for target.
-timing: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 timing
-.PHONY : timing
-
-# fast build rule for target.
-timing/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/timing.dir/build.make CMakeFiles/timing.dir/build
-.PHONY : timing/fast
-
-#=============================================================================
-# Target rules for targets named gradient
-
-# Build rule for target.
-gradient: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 gradient
-.PHONY : gradient
-
-# fast build rule for target.
-gradient/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/gradient.dir/build.make CMakeFiles/gradient.dir/build
-.PHONY : gradient/fast
-
-Hamiltonians/anharmonicoscillator.o: Hamiltonians/anharmonicoscillator.cpp.o
-.PHONY : Hamiltonians/anharmonicoscillator.o
-
-# target to build an object file
-Hamiltonians/anharmonicoscillator.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vmclib.dir/build.make CMakeFiles/Vmclib.dir/Hamiltonians/anharmonicoscillator.cpp.o
-.PHONY : Hamiltonians/anharmonicoscillator.cpp.o
-
-Hamiltonians/anharmonicoscillator.i: Hamiltonians/anharmonicoscillator.cpp.i
-.PHONY : Hamiltonians/anharmonicoscillator.i
-
-# target to preprocess a source file
-Hamiltonians/anharmonicoscillator.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vmclib.dir/build.make CMakeFiles/Vmclib.dir/Hamiltonians/anharmonicoscillator.cpp.i
-.PHONY : Hamiltonians/anharmonicoscillator.cpp.i
-
-Hamiltonians/anharmonicoscillator.s: Hamiltonians/anharmonicoscillator.cpp.s
-.PHONY : Hamiltonians/anharmonicoscillator.s
-
-# target to generate assembly for a file
-Hamiltonians/anharmonicoscillator.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vmclib.dir/build.make CMakeFiles/Vmclib.dir/Hamiltonians/anharmonicoscillator.cpp.s
-.PHONY : Hamiltonians/anharmonicoscillator.cpp.s
+tests/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tests.dir/build.make CMakeFiles/tests.dir/build
+.PHONY : tests/fast
 
 Hamiltonians/harmonicoscillator.o: Hamiltonians/harmonicoscillator.cpp.o
 .PHONY : Hamiltonians/harmonicoscillator.o
@@ -265,6 +202,102 @@ InitialStates/initialstate.s: InitialStates/initialstate.cpp.s
 InitialStates/initialstate.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vmclib.dir/build.make CMakeFiles/Vmclib.dir/InitialStates/initialstate.cpp.s
 .PHONY : InitialStates/initialstate.cpp.s
+
+Optimizers/adamGD.o: Optimizers/adamGD.cpp.o
+.PHONY : Optimizers/adamGD.o
+
+# target to build an object file
+Optimizers/adamGD.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vmclib.dir/build.make CMakeFiles/Vmclib.dir/Optimizers/adamGD.cpp.o
+.PHONY : Optimizers/adamGD.cpp.o
+
+Optimizers/adamGD.i: Optimizers/adamGD.cpp.i
+.PHONY : Optimizers/adamGD.i
+
+# target to preprocess a source file
+Optimizers/adamGD.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vmclib.dir/build.make CMakeFiles/Vmclib.dir/Optimizers/adamGD.cpp.i
+.PHONY : Optimizers/adamGD.cpp.i
+
+Optimizers/adamGD.s: Optimizers/adamGD.cpp.s
+.PHONY : Optimizers/adamGD.s
+
+# target to generate assembly for a file
+Optimizers/adamGD.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vmclib.dir/build.make CMakeFiles/Vmclib.dir/Optimizers/adamGD.cpp.s
+.PHONY : Optimizers/adamGD.cpp.s
+
+Optimizers/momentumGD.o: Optimizers/momentumGD.cpp.o
+.PHONY : Optimizers/momentumGD.o
+
+# target to build an object file
+Optimizers/momentumGD.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vmclib.dir/build.make CMakeFiles/Vmclib.dir/Optimizers/momentumGD.cpp.o
+.PHONY : Optimizers/momentumGD.cpp.o
+
+Optimizers/momentumGD.i: Optimizers/momentumGD.cpp.i
+.PHONY : Optimizers/momentumGD.i
+
+# target to preprocess a source file
+Optimizers/momentumGD.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vmclib.dir/build.make CMakeFiles/Vmclib.dir/Optimizers/momentumGD.cpp.i
+.PHONY : Optimizers/momentumGD.cpp.i
+
+Optimizers/momentumGD.s: Optimizers/momentumGD.cpp.s
+.PHONY : Optimizers/momentumGD.s
+
+# target to generate assembly for a file
+Optimizers/momentumGD.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vmclib.dir/build.make CMakeFiles/Vmclib.dir/Optimizers/momentumGD.cpp.s
+.PHONY : Optimizers/momentumGD.cpp.s
+
+Optimizers/optimizer.o: Optimizers/optimizer.cpp.o
+.PHONY : Optimizers/optimizer.o
+
+# target to build an object file
+Optimizers/optimizer.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vmclib.dir/build.make CMakeFiles/Vmclib.dir/Optimizers/optimizer.cpp.o
+.PHONY : Optimizers/optimizer.cpp.o
+
+Optimizers/optimizer.i: Optimizers/optimizer.cpp.i
+.PHONY : Optimizers/optimizer.i
+
+# target to preprocess a source file
+Optimizers/optimizer.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vmclib.dir/build.make CMakeFiles/Vmclib.dir/Optimizers/optimizer.cpp.i
+.PHONY : Optimizers/optimizer.cpp.i
+
+Optimizers/optimizer.s: Optimizers/optimizer.cpp.s
+.PHONY : Optimizers/optimizer.s
+
+# target to generate assembly for a file
+Optimizers/optimizer.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vmclib.dir/build.make CMakeFiles/Vmclib.dir/Optimizers/optimizer.cpp.s
+.PHONY : Optimizers/optimizer.cpp.s
+
+Optimizers/vanillaGD.o: Optimizers/vanillaGD.cpp.o
+.PHONY : Optimizers/vanillaGD.o
+
+# target to build an object file
+Optimizers/vanillaGD.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vmclib.dir/build.make CMakeFiles/Vmclib.dir/Optimizers/vanillaGD.cpp.o
+.PHONY : Optimizers/vanillaGD.cpp.o
+
+Optimizers/vanillaGD.i: Optimizers/vanillaGD.cpp.i
+.PHONY : Optimizers/vanillaGD.i
+
+# target to preprocess a source file
+Optimizers/vanillaGD.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vmclib.dir/build.make CMakeFiles/Vmclib.dir/Optimizers/vanillaGD.cpp.i
+.PHONY : Optimizers/vanillaGD.cpp.i
+
+Optimizers/vanillaGD.s: Optimizers/vanillaGD.cpp.s
+.PHONY : Optimizers/vanillaGD.s
+
+# target to generate assembly for a file
+Optimizers/vanillaGD.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vmclib.dir/build.make CMakeFiles/Vmclib.dir/Optimizers/vanillaGD.cpp.s
+.PHONY : Optimizers/vanillaGD.cpp.s
 
 Solvers/metropolis.o: Solvers/metropolis.cpp.o
 .PHONY : Solvers/metropolis.o
@@ -338,84 +371,60 @@ Solvers/montecarlo.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vmclib.dir/build.make CMakeFiles/Vmclib.dir/Solvers/montecarlo.cpp.s
 .PHONY : Solvers/montecarlo.cpp.s
 
-WaveFunctions/interactinggaussian.o: WaveFunctions/interactinggaussian.cpp.o
-.PHONY : WaveFunctions/interactinggaussian.o
+WaveFunctions/gaussianbinary.o: WaveFunctions/gaussianbinary.cpp.o
+.PHONY : WaveFunctions/gaussianbinary.o
 
 # target to build an object file
-WaveFunctions/interactinggaussian.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vmclib.dir/build.make CMakeFiles/Vmclib.dir/WaveFunctions/interactinggaussian.cpp.o
-.PHONY : WaveFunctions/interactinggaussian.cpp.o
+WaveFunctions/gaussianbinary.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vmclib.dir/build.make CMakeFiles/Vmclib.dir/WaveFunctions/gaussianbinary.cpp.o
+.PHONY : WaveFunctions/gaussianbinary.cpp.o
 
-WaveFunctions/interactinggaussian.i: WaveFunctions/interactinggaussian.cpp.i
-.PHONY : WaveFunctions/interactinggaussian.i
+WaveFunctions/gaussianbinary.i: WaveFunctions/gaussianbinary.cpp.i
+.PHONY : WaveFunctions/gaussianbinary.i
 
 # target to preprocess a source file
-WaveFunctions/interactinggaussian.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vmclib.dir/build.make CMakeFiles/Vmclib.dir/WaveFunctions/interactinggaussian.cpp.i
-.PHONY : WaveFunctions/interactinggaussian.cpp.i
+WaveFunctions/gaussianbinary.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vmclib.dir/build.make CMakeFiles/Vmclib.dir/WaveFunctions/gaussianbinary.cpp.i
+.PHONY : WaveFunctions/gaussianbinary.cpp.i
 
-WaveFunctions/interactinggaussian.s: WaveFunctions/interactinggaussian.cpp.s
-.PHONY : WaveFunctions/interactinggaussian.s
+WaveFunctions/gaussianbinary.s: WaveFunctions/gaussianbinary.cpp.s
+.PHONY : WaveFunctions/gaussianbinary.s
 
 # target to generate assembly for a file
-WaveFunctions/interactinggaussian.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vmclib.dir/build.make CMakeFiles/Vmclib.dir/WaveFunctions/interactinggaussian.cpp.s
-.PHONY : WaveFunctions/interactinggaussian.cpp.s
+WaveFunctions/gaussianbinary.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vmclib.dir/build.make CMakeFiles/Vmclib.dir/WaveFunctions/gaussianbinary.cpp.s
+.PHONY : WaveFunctions/gaussianbinary.cpp.s
 
-WaveFunctions/simplegaussian.o: WaveFunctions/simplegaussian.cpp.o
-.PHONY : WaveFunctions/simplegaussian.o
+WaveFunctions/neuralwavefunction.o: WaveFunctions/neuralwavefunction.cpp.o
+.PHONY : WaveFunctions/neuralwavefunction.o
 
 # target to build an object file
-WaveFunctions/simplegaussian.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vmclib.dir/build.make CMakeFiles/Vmclib.dir/WaveFunctions/simplegaussian.cpp.o
-.PHONY : WaveFunctions/simplegaussian.cpp.o
+WaveFunctions/neuralwavefunction.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vmclib.dir/build.make CMakeFiles/Vmclib.dir/WaveFunctions/neuralwavefunction.cpp.o
+.PHONY : WaveFunctions/neuralwavefunction.cpp.o
 
-WaveFunctions/simplegaussian.i: WaveFunctions/simplegaussian.cpp.i
-.PHONY : WaveFunctions/simplegaussian.i
-
-# target to preprocess a source file
-WaveFunctions/simplegaussian.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vmclib.dir/build.make CMakeFiles/Vmclib.dir/WaveFunctions/simplegaussian.cpp.i
-.PHONY : WaveFunctions/simplegaussian.cpp.i
-
-WaveFunctions/simplegaussian.s: WaveFunctions/simplegaussian.cpp.s
-.PHONY : WaveFunctions/simplegaussian.s
-
-# target to generate assembly for a file
-WaveFunctions/simplegaussian.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vmclib.dir/build.make CMakeFiles/Vmclib.dir/WaveFunctions/simplegaussian.cpp.s
-.PHONY : WaveFunctions/simplegaussian.cpp.s
-
-gradientdescent.o: gradientdescent.cpp.o
-.PHONY : gradientdescent.o
-
-# target to build an object file
-gradientdescent.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/gradient.dir/build.make CMakeFiles/gradient.dir/gradientdescent.cpp.o
-.PHONY : gradientdescent.cpp.o
-
-gradientdescent.i: gradientdescent.cpp.i
-.PHONY : gradientdescent.i
+WaveFunctions/neuralwavefunction.i: WaveFunctions/neuralwavefunction.cpp.i
+.PHONY : WaveFunctions/neuralwavefunction.i
 
 # target to preprocess a source file
-gradientdescent.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/gradient.dir/build.make CMakeFiles/gradient.dir/gradientdescent.cpp.i
-.PHONY : gradientdescent.cpp.i
+WaveFunctions/neuralwavefunction.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vmclib.dir/build.make CMakeFiles/Vmclib.dir/WaveFunctions/neuralwavefunction.cpp.i
+.PHONY : WaveFunctions/neuralwavefunction.cpp.i
 
-gradientdescent.s: gradientdescent.cpp.s
-.PHONY : gradientdescent.s
+WaveFunctions/neuralwavefunction.s: WaveFunctions/neuralwavefunction.cpp.s
+.PHONY : WaveFunctions/neuralwavefunction.s
 
 # target to generate assembly for a file
-gradientdescent.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/gradient.dir/build.make CMakeFiles/gradient.dir/gradientdescent.cpp.s
-.PHONY : gradientdescent.cpp.s
+WaveFunctions/neuralwavefunction.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vmclib.dir/build.make CMakeFiles/Vmclib.dir/WaveFunctions/neuralwavefunction.cpp.s
+.PHONY : WaveFunctions/neuralwavefunction.cpp.s
 
 main.o: main.cpp.o
 .PHONY : main.o
 
 # target to build an object file
 main.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/vmc.dir/build.make CMakeFiles/vmc.dir/main.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/nqs.dir/build.make CMakeFiles/nqs.dir/main.cpp.o
 .PHONY : main.cpp.o
 
 main.i: main.cpp.i
@@ -423,7 +432,7 @@ main.i: main.cpp.i
 
 # target to preprocess a source file
 main.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/vmc.dir/build.make CMakeFiles/vmc.dir/main.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/nqs.dir/build.make CMakeFiles/nqs.dir/main.cpp.i
 .PHONY : main.cpp.i
 
 main.s: main.cpp.s
@@ -431,56 +440,8 @@ main.s: main.cpp.s
 
 # target to generate assembly for a file
 main.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/vmc.dir/build.make CMakeFiles/vmc.dir/main.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/nqs.dir/build.make CMakeFiles/nqs.dir/main.cpp.s
 .PHONY : main.cpp.s
-
-maininteracting.o: maininteracting.cpp.o
-.PHONY : maininteracting.o
-
-# target to build an object file
-maininteracting.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/interact.dir/build.make CMakeFiles/interact.dir/maininteracting.cpp.o
-.PHONY : maininteracting.cpp.o
-
-maininteracting.i: maininteracting.cpp.i
-.PHONY : maininteracting.i
-
-# target to preprocess a source file
-maininteracting.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/interact.dir/build.make CMakeFiles/interact.dir/maininteracting.cpp.i
-.PHONY : maininteracting.cpp.i
-
-maininteracting.s: maininteracting.cpp.s
-.PHONY : maininteracting.s
-
-# target to generate assembly for a file
-maininteracting.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/interact.dir/build.make CMakeFiles/interact.dir/maininteracting.cpp.s
-.PHONY : maininteracting.cpp.s
-
-parallelmaininteracting.o: parallelmaininteracting.cpp.o
-.PHONY : parallelmaininteracting.o
-
-# target to build an object file
-parallelmaininteracting.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/parallelinteract.dir/build.make CMakeFiles/parallelinteract.dir/parallelmaininteracting.cpp.o
-.PHONY : parallelmaininteracting.cpp.o
-
-parallelmaininteracting.i: parallelmaininteracting.cpp.i
-.PHONY : parallelmaininteracting.i
-
-# target to preprocess a source file
-parallelmaininteracting.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/parallelinteract.dir/build.make CMakeFiles/parallelinteract.dir/parallelmaininteracting.cpp.i
-.PHONY : parallelmaininteracting.cpp.i
-
-parallelmaininteracting.s: parallelmaininteracting.cpp.s
-.PHONY : parallelmaininteracting.s
-
-# target to generate assembly for a file
-parallelmaininteracting.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/parallelinteract.dir/build.make CMakeFiles/parallelinteract.dir/parallelmaininteracting.cpp.s
-.PHONY : parallelmaininteracting.cpp.s
 
 particle.o: particle.cpp.o
 .PHONY : particle.o
@@ -554,29 +515,29 @@ system.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vmclib.dir/build.make CMakeFiles/Vmclib.dir/system.cpp.s
 .PHONY : system.cpp.s
 
-timing.o: timing.cpp.o
-.PHONY : timing.o
+tests.o: tests.cpp.o
+.PHONY : tests.o
 
 # target to build an object file
-timing.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/timing.dir/build.make CMakeFiles/timing.dir/timing.cpp.o
-.PHONY : timing.cpp.o
+tests.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tests.dir/build.make CMakeFiles/tests.dir/tests.cpp.o
+.PHONY : tests.cpp.o
 
-timing.i: timing.cpp.i
-.PHONY : timing.i
+tests.i: tests.cpp.i
+.PHONY : tests.i
 
 # target to preprocess a source file
-timing.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/timing.dir/build.make CMakeFiles/timing.dir/timing.cpp.i
-.PHONY : timing.cpp.i
+tests.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tests.dir/build.make CMakeFiles/tests.dir/tests.cpp.i
+.PHONY : tests.cpp.i
 
-timing.s: timing.cpp.s
-.PHONY : timing.s
+tests.s: tests.cpp.s
+.PHONY : tests.s
 
 # target to generate assembly for a file
-timing.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/timing.dir/build.make CMakeFiles/timing.dir/timing.cpp.s
-.PHONY : timing.cpp.s
+tests.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tests.dir/build.make CMakeFiles/tests.dir/tests.cpp.s
+.PHONY : tests.cpp.s
 
 # Help Target
 help:
@@ -587,20 +548,26 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... Vmclib"
-	@echo "... gradient"
-	@echo "... interact"
-	@echo "... parallelinteract"
-	@echo "... timing"
-	@echo "... vmc"
-	@echo "... Hamiltonians/anharmonicoscillator.o"
-	@echo "... Hamiltonians/anharmonicoscillator.i"
-	@echo "... Hamiltonians/anharmonicoscillator.s"
+	@echo "... nqs"
+	@echo "... tests"
 	@echo "... Hamiltonians/harmonicoscillator.o"
 	@echo "... Hamiltonians/harmonicoscillator.i"
 	@echo "... Hamiltonians/harmonicoscillator.s"
 	@echo "... InitialStates/initialstate.o"
 	@echo "... InitialStates/initialstate.i"
 	@echo "... InitialStates/initialstate.s"
+	@echo "... Optimizers/adamGD.o"
+	@echo "... Optimizers/adamGD.i"
+	@echo "... Optimizers/adamGD.s"
+	@echo "... Optimizers/momentumGD.o"
+	@echo "... Optimizers/momentumGD.i"
+	@echo "... Optimizers/momentumGD.s"
+	@echo "... Optimizers/optimizer.o"
+	@echo "... Optimizers/optimizer.i"
+	@echo "... Optimizers/optimizer.s"
+	@echo "... Optimizers/vanillaGD.o"
+	@echo "... Optimizers/vanillaGD.i"
+	@echo "... Optimizers/vanillaGD.s"
 	@echo "... Solvers/metropolis.o"
 	@echo "... Solvers/metropolis.i"
 	@echo "... Solvers/metropolis.s"
@@ -610,24 +577,15 @@ help:
 	@echo "... Solvers/montecarlo.o"
 	@echo "... Solvers/montecarlo.i"
 	@echo "... Solvers/montecarlo.s"
-	@echo "... WaveFunctions/interactinggaussian.o"
-	@echo "... WaveFunctions/interactinggaussian.i"
-	@echo "... WaveFunctions/interactinggaussian.s"
-	@echo "... WaveFunctions/simplegaussian.o"
-	@echo "... WaveFunctions/simplegaussian.i"
-	@echo "... WaveFunctions/simplegaussian.s"
-	@echo "... gradientdescent.o"
-	@echo "... gradientdescent.i"
-	@echo "... gradientdescent.s"
+	@echo "... WaveFunctions/gaussianbinary.o"
+	@echo "... WaveFunctions/gaussianbinary.i"
+	@echo "... WaveFunctions/gaussianbinary.s"
+	@echo "... WaveFunctions/neuralwavefunction.o"
+	@echo "... WaveFunctions/neuralwavefunction.i"
+	@echo "... WaveFunctions/neuralwavefunction.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
-	@echo "... maininteracting.o"
-	@echo "... maininteracting.i"
-	@echo "... maininteracting.s"
-	@echo "... parallelmaininteracting.o"
-	@echo "... parallelmaininteracting.i"
-	@echo "... parallelmaininteracting.s"
 	@echo "... particle.o"
 	@echo "... particle.i"
 	@echo "... particle.s"
@@ -637,9 +595,9 @@ help:
 	@echo "... system.o"
 	@echo "... system.i"
 	@echo "... system.s"
-	@echo "... timing.o"
-	@echo "... timing.i"
-	@echo "... timing.s"
+	@echo "... tests.o"
+	@echo "... tests.i"
+	@echo "... tests.s"
 .PHONY : help
 
 

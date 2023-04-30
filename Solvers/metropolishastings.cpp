@@ -2,7 +2,7 @@
 #include <vector>
 
 #include "metropolishastings.h"
-#include "WaveFunctions/wavefunction.h"
+#include "WaveFunctions/neuralwavefunction.h"
 #include "particle.h"
 #include "Math/random.h"
 
@@ -18,7 +18,7 @@ MetropolisHastings::MetropolisHastings(std::unique_ptr<class Random> rng, double
 
 bool MetropolisHastings::step(
     double stepLength,
-    class WaveFunction &waveFunction,
+    class NeuralWaveFunction &waveFunction,
     std::vector<std::unique_ptr<class Particle>> &particles)
 {
     /*
@@ -35,7 +35,7 @@ bool MetropolisHastings::step(
     Particle &proposed_particle = *particles.at(proposed_particle_idx); // Get a reference to the particle
     Particle old_particle = proposed_particle;
 
-    // double Psi_old = waveFunction.evaluate(particles);
+    double Psi_old = waveFunction.evaluate(particles);
     waveFunction.quantumForce(particles, proposed_particle, qForceOld); // if wave function is not interecting, particles will be ignored
 
     for (int q = 0; q < numberOfDimensions; q++)
@@ -44,21 +44,27 @@ bool MetropolisHastings::step(
             m_D * qForceOld.at(q) * m_timeStep + m_rng->nextGaussian(0.0, 1.0) * m_sqrtTimeStep, q); // Importance sampling. This formula is similar to the Metropolis algorithm (.adjustPosition(stepLength * (m_rng->nextDouble() - .5), q)), but with the addition of the quantum force term.
     }
 
-    // double Psi_new = waveFunction.evaluate(particles);
+    double Psi_new = waveFunction.evaluate(particles);
     waveFunction.quantumForce(particles, proposed_particle, qForceNew); // Calculate the quantum force at the new position
 
     double G_ratio = 0; // The expoents of the ratio of the Greens functions
+    double old_p_q, new_p_q;
     for (int q = 0; q < numberOfDimensions; q++)
     {
-        G_ratio += 0.5 * (qForceOld.at(q) + qForceNew.at(q)) * (old_particle.getPosition().at(q) - proposed_particle.getPosition().at(q) + 0.5 * m_D * m_timeStep * (qForceOld.at(q) - qForceNew.at(q)));
+        old_p_q = old_particle.getPosition().at(q);
+        new_p_q = proposed_particle.getPosition().at(q);
+        G_ratio += 0.5 * (qForceOld.at(q) + qForceNew.at(q)) * (old_p_q - new_p_q + 0.5 * m_D * m_timeStep * (qForceOld.at(q) - qForceNew.at(q)));
     }
 
     G_ratio = std::exp(G_ratio);
-    double w = G_ratio * waveFunction.evaluate_w(proposed_particle_idx,
-                                                 proposed_particle,
-                                                 old_particle,
-                                                 particles); // Metropolis test
+    double w = (Psi_new * Psi_new) / (Psi_old * Psi_old); // Metropolis test
+    w *= G_ratio;                                         // multiply with the ratio of the Greens functions
 
+    // FAST OPTION
+    // double w = G_ratio * waveFunction.evaluate_w(proposed_particle_idx, // this is a fast way of doing things
+    //                                              proposed_particle,
+    //                                              old_particle,
+    //                                              particles); // Metropolis test
     if (w >= m_rng->nextDouble()) // Accept the step
     {
         return true;

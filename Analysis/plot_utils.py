@@ -9,7 +9,7 @@ def make_figs_path(filename):
     cur_path = pl.Path(__file__)
     root_path = cur_path
 
-    while root_path.name != "variational-monte-carlo-fys4411":
+    while root_path.name != "neural_quantum_state":
         root_path = root_path.parent
 
     figs_path = root_path / pl.Path("Analysis/figs")
