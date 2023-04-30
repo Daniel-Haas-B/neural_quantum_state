@@ -12,7 +12,7 @@ public:
 
     virtual bool step(
         double stepLength,
-        class WaveFunction &waveFunction,
+        class NeuralWaveFunction &waveFunction,
         std::vector<std::unique_ptr<class Particle>> &particles) = 0;
 
 protected: // originally private?

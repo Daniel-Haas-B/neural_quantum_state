@@ -54,21 +54,18 @@ RM = /opt/homebrew/lib/python3.10/site-packages/cmake/data/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/haas/Documents/Masters/CompPhys2/variational-monte-carlo-fys4411
+CMAKE_SOURCE_DIR = /Users/haas/Documents/Masters/CompPhys2/neural_quantum_state
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/haas/Documents/Masters/CompPhys2/variational-monte-carlo-fys4411/build
+CMAKE_BINARY_DIR = /Users/haas/Documents/Masters/CompPhys2/neural_quantum_state/build
 
 #=============================================================================
 # Directory level rules for the build root directory
 
 # The main recursive "all" target.
 all: CMakeFiles/Vmclib.dir/all
-all: CMakeFiles/vmc.dir/all
-all: CMakeFiles/interact.dir/all
-all: CMakeFiles/parallelinteract.dir/all
-all: CMakeFiles/timing.dir/all
-all: CMakeFiles/gradient.dir/all
+all: CMakeFiles/nqs.dir/all
+all: CMakeFiles/tests.dir/all
 .PHONY : all
 
 # The main recursive "preinstall" target.
@@ -77,11 +74,8 @@ preinstall:
 
 # The main recursive "clean" target.
 clean: CMakeFiles/Vmclib.dir/clean
-clean: CMakeFiles/vmc.dir/clean
-clean: CMakeFiles/interact.dir/clean
-clean: CMakeFiles/parallelinteract.dir/clean
-clean: CMakeFiles/timing.dir/clean
-clean: CMakeFiles/gradient.dir/clean
+clean: CMakeFiles/nqs.dir/clean
+clean: CMakeFiles/tests.dir/clean
 .PHONY : clean
 
 #=============================================================================
@@ -91,14 +85,14 @@ clean: CMakeFiles/gradient.dir/clean
 CMakeFiles/Vmclib.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vmclib.dir/build.make CMakeFiles/Vmclib.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vmclib.dir/build.make CMakeFiles/Vmclib.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/haas/Documents/Masters/CompPhys2/variational-monte-carlo-fys4411/build/CMakeFiles --progress-num=1,2,3,4,5,6,7,8,9,10,11,12 "Built target Vmclib"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/haas/Documents/Masters/CompPhys2/neural_quantum_state/build/CMakeFiles --progress-num=1,2,3,4,5,6,7,8,9,10,11,12,13,14,15 "Built target Vmclib"
 .PHONY : CMakeFiles/Vmclib.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/Vmclib.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/haas/Documents/Masters/CompPhys2/variational-monte-carlo-fys4411/build/CMakeFiles 12
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/haas/Documents/Masters/CompPhys2/neural_quantum_state/build/CMakeFiles 15
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/Vmclib.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/haas/Documents/Masters/CompPhys2/variational-monte-carlo-fys4411/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/haas/Documents/Masters/CompPhys2/neural_quantum_state/build/CMakeFiles 0
 .PHONY : CMakeFiles/Vmclib.dir/rule
 
 # Convenience name for target.
@@ -111,134 +105,56 @@ CMakeFiles/Vmclib.dir/clean:
 .PHONY : CMakeFiles/Vmclib.dir/clean
 
 #=============================================================================
-# Target rules for target CMakeFiles/vmc.dir
+# Target rules for target CMakeFiles/nqs.dir
 
 # All Build rule for target.
-CMakeFiles/vmc.dir/all: CMakeFiles/Vmclib.dir/all
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/vmc.dir/build.make CMakeFiles/vmc.dir/depend
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/vmc.dir/build.make CMakeFiles/vmc.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/haas/Documents/Masters/CompPhys2/variational-monte-carlo-fys4411/build/CMakeFiles --progress-num=21,22 "Built target vmc"
-.PHONY : CMakeFiles/vmc.dir/all
+CMakeFiles/nqs.dir/all: CMakeFiles/Vmclib.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/nqs.dir/build.make CMakeFiles/nqs.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/nqs.dir/build.make CMakeFiles/nqs.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/haas/Documents/Masters/CompPhys2/neural_quantum_state/build/CMakeFiles --progress-num=16,17 "Built target nqs"
+.PHONY : CMakeFiles/nqs.dir/all
 
 # Build rule for subdir invocation for target.
-CMakeFiles/vmc.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/haas/Documents/Masters/CompPhys2/variational-monte-carlo-fys4411/build/CMakeFiles 14
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/vmc.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/haas/Documents/Masters/CompPhys2/variational-monte-carlo-fys4411/build/CMakeFiles 0
-.PHONY : CMakeFiles/vmc.dir/rule
+CMakeFiles/nqs.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/haas/Documents/Masters/CompPhys2/neural_quantum_state/build/CMakeFiles 17
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/nqs.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/haas/Documents/Masters/CompPhys2/neural_quantum_state/build/CMakeFiles 0
+.PHONY : CMakeFiles/nqs.dir/rule
 
 # Convenience name for target.
-vmc: CMakeFiles/vmc.dir/rule
-.PHONY : vmc
+nqs: CMakeFiles/nqs.dir/rule
+.PHONY : nqs
 
 # clean rule for target.
-CMakeFiles/vmc.dir/clean:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/vmc.dir/build.make CMakeFiles/vmc.dir/clean
-.PHONY : CMakeFiles/vmc.dir/clean
+CMakeFiles/nqs.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/nqs.dir/build.make CMakeFiles/nqs.dir/clean
+.PHONY : CMakeFiles/nqs.dir/clean
 
 #=============================================================================
-# Target rules for target CMakeFiles/interact.dir
+# Target rules for target CMakeFiles/tests.dir
 
 # All Build rule for target.
-CMakeFiles/interact.dir/all: CMakeFiles/Vmclib.dir/all
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/interact.dir/build.make CMakeFiles/interact.dir/depend
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/interact.dir/build.make CMakeFiles/interact.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/haas/Documents/Masters/CompPhys2/variational-monte-carlo-fys4411/build/CMakeFiles --progress-num=15,16 "Built target interact"
-.PHONY : CMakeFiles/interact.dir/all
+CMakeFiles/tests.dir/all: CMakeFiles/Vmclib.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tests.dir/build.make CMakeFiles/tests.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tests.dir/build.make CMakeFiles/tests.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/haas/Documents/Masters/CompPhys2/neural_quantum_state/build/CMakeFiles --progress-num=18,19 "Built target tests"
+.PHONY : CMakeFiles/tests.dir/all
 
 # Build rule for subdir invocation for target.
-CMakeFiles/interact.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/haas/Documents/Masters/CompPhys2/variational-monte-carlo-fys4411/build/CMakeFiles 14
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/interact.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/haas/Documents/Masters/CompPhys2/variational-monte-carlo-fys4411/build/CMakeFiles 0
-.PHONY : CMakeFiles/interact.dir/rule
+CMakeFiles/tests.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/haas/Documents/Masters/CompPhys2/neural_quantum_state/build/CMakeFiles 17
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/tests.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/haas/Documents/Masters/CompPhys2/neural_quantum_state/build/CMakeFiles 0
+.PHONY : CMakeFiles/tests.dir/rule
 
 # Convenience name for target.
-interact: CMakeFiles/interact.dir/rule
-.PHONY : interact
+tests: CMakeFiles/tests.dir/rule
+.PHONY : tests
 
 # clean rule for target.
-CMakeFiles/interact.dir/clean:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/interact.dir/build.make CMakeFiles/interact.dir/clean
-.PHONY : CMakeFiles/interact.dir/clean
-
-#=============================================================================
-# Target rules for target CMakeFiles/parallelinteract.dir
-
-# All Build rule for target.
-CMakeFiles/parallelinteract.dir/all: CMakeFiles/Vmclib.dir/all
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/parallelinteract.dir/build.make CMakeFiles/parallelinteract.dir/depend
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/parallelinteract.dir/build.make CMakeFiles/parallelinteract.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/haas/Documents/Masters/CompPhys2/variational-monte-carlo-fys4411/build/CMakeFiles --progress-num=17,18 "Built target parallelinteract"
-.PHONY : CMakeFiles/parallelinteract.dir/all
-
-# Build rule for subdir invocation for target.
-CMakeFiles/parallelinteract.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/haas/Documents/Masters/CompPhys2/variational-monte-carlo-fys4411/build/CMakeFiles 14
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/parallelinteract.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/haas/Documents/Masters/CompPhys2/variational-monte-carlo-fys4411/build/CMakeFiles 0
-.PHONY : CMakeFiles/parallelinteract.dir/rule
-
-# Convenience name for target.
-parallelinteract: CMakeFiles/parallelinteract.dir/rule
-.PHONY : parallelinteract
-
-# clean rule for target.
-CMakeFiles/parallelinteract.dir/clean:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/parallelinteract.dir/build.make CMakeFiles/parallelinteract.dir/clean
-.PHONY : CMakeFiles/parallelinteract.dir/clean
-
-#=============================================================================
-# Target rules for target CMakeFiles/timing.dir
-
-# All Build rule for target.
-CMakeFiles/timing.dir/all: CMakeFiles/Vmclib.dir/all
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/timing.dir/build.make CMakeFiles/timing.dir/depend
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/timing.dir/build.make CMakeFiles/timing.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/haas/Documents/Masters/CompPhys2/variational-monte-carlo-fys4411/build/CMakeFiles --progress-num=19,20 "Built target timing"
-.PHONY : CMakeFiles/timing.dir/all
-
-# Build rule for subdir invocation for target.
-CMakeFiles/timing.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/haas/Documents/Masters/CompPhys2/variational-monte-carlo-fys4411/build/CMakeFiles 14
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/timing.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/haas/Documents/Masters/CompPhys2/variational-monte-carlo-fys4411/build/CMakeFiles 0
-.PHONY : CMakeFiles/timing.dir/rule
-
-# Convenience name for target.
-timing: CMakeFiles/timing.dir/rule
-.PHONY : timing
-
-# clean rule for target.
-CMakeFiles/timing.dir/clean:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/timing.dir/build.make CMakeFiles/timing.dir/clean
-.PHONY : CMakeFiles/timing.dir/clean
-
-#=============================================================================
-# Target rules for target CMakeFiles/gradient.dir
-
-# All Build rule for target.
-CMakeFiles/gradient.dir/all: CMakeFiles/Vmclib.dir/all
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/gradient.dir/build.make CMakeFiles/gradient.dir/depend
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/gradient.dir/build.make CMakeFiles/gradient.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/haas/Documents/Masters/CompPhys2/variational-monte-carlo-fys4411/build/CMakeFiles --progress-num=13,14 "Built target gradient"
-.PHONY : CMakeFiles/gradient.dir/all
-
-# Build rule for subdir invocation for target.
-CMakeFiles/gradient.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/haas/Documents/Masters/CompPhys2/variational-monte-carlo-fys4411/build/CMakeFiles 14
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/gradient.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/haas/Documents/Masters/CompPhys2/variational-monte-carlo-fys4411/build/CMakeFiles 0
-.PHONY : CMakeFiles/gradient.dir/rule
-
-# Convenience name for target.
-gradient: CMakeFiles/gradient.dir/rule
-.PHONY : gradient
-
-# clean rule for target.
-CMakeFiles/gradient.dir/clean:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/gradient.dir/build.make CMakeFiles/gradient.dir/clean
-.PHONY : CMakeFiles/gradient.dir/clean
+CMakeFiles/tests.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tests.dir/build.make CMakeFiles/tests.dir/clean
+.PHONY : CMakeFiles/tests.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

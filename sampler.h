@@ -3,6 +3,7 @@
 #include <string>
 #include <fstream>
 #include <string>
+#include <vector>
 
 class Sampler
 {
@@ -10,17 +11,23 @@ public:
     Sampler(
         unsigned int numberOfParticles,
         unsigned int numberOfDimensions,
+        unsigned int numberOfHiddenNodes,
         double stepLength,
         unsigned int numberOfMetropolisSteps);
 
     void sample(bool acceptedStep, class System *system);
     void printOutputToTerminal(class System &system);
-    void writeOutToFile(class System &system, std::string filename, double omega, bool analytical, bool importanceSampling);
+    void writeOutToFile(class System &system, std::string filename, double omega, bool analytical, bool importanceSampling, bool interaction);
     void WriteTimingToFiles(System &system, std::string filename, bool analytical, unsigned int numberOfEquilibrationSteps, double timing);
-    void writeGradientSearchToFile(System &system, std::string filename, double alpha_0, int epoch, double alpha, double beta_0, double beta);
-    void output(System &system, std::string filename, double omega, bool analytical, bool importanceSampling);
-    void computeAverages();
-    std::vector<double> getEnergyDerivative();
+    void writeGradientSearchToFile(System &system, std::string filename, int epoch, std::vector<double> gradNormsbool, bool impoSamp, bool analytical, bool interaction, double learningRate);
+
+    void output(System &system, std::string filename, double omega, bool analytical, bool importanceSampling, bool interaction);
+    void computeAverages(double cumWeight2, double lambda_l2);
+
+    std::vector<std::vector<double>> getVisEnergyDer();
+
+    std::vector<double> getHidEnergyDer();
+    std::vector<std::vector<std::vector<double>>> getWeightEnergyDer();
 
     double getEnergy()
     {
@@ -46,16 +53,29 @@ private:
     double m_energy_std = 0;
     double m_acceptRatio = 0;
 
-    double m_cumulativeEnergy = 0;
-    double m_cumulativeEnergy2 = 0;
+    double m_cumEnergy = 0;
+    double m_cumEnergy2 = 0;
 
-    int m_numberOfParams = 2;
+    std::vector<std::vector<std::vector<double>>> m_cumWeightDerPsiE = std::vector<std::vector<std::vector<double>>>(m_numberOfParticles, std::vector<std::vector<double>>(m_numberOfDimensions, std::vector<double>(m_numberOfHiddenNodes, 0)));
+    std::vector<std::vector<std::vector<double>>> m_cumWeightDeltaPsi = std::vector<std::vector<std::vector<double>>>(m_numberOfParticles, std::vector<std::vector<double>>(m_numberOfDimensions, std::vector<double>(m_numberOfHiddenNodes, 0)));
+    std::vector<std::vector<std::vector<double>>> m_weightDerPsiE = std::vector<std::vector<std::vector<double>>>(m_numberOfParticles, std::vector<std::vector<double>>(m_numberOfDimensions, std::vector<double>(m_numberOfHiddenNodes, 0)));
+    std::vector<std::vector<std::vector<double>>> m_weightDeltaPsi = std::vector<std::vector<std::vector<double>>>(m_numberOfParticles, std::vector<std::vector<double>>(m_numberOfDimensions, std::vector<double>(m_numberOfHiddenNodes, 0)));
 
-    std::vector<double> m_energyDerivative = std::vector<double>(m_numberOfParams, 0);
-    std::vector<double> m_cumulativeDerPsiE = std::vector<double>(m_numberOfParams, 0);
-    std::vector<double> m_cumulativedeltaPsi = std::vector<double>(m_numberOfParams, 0);
-    std::vector<double> m_deltaPsi = std::vector<double>(m_numberOfParams, 0);
-    std::vector<double> m_derPsiE = std::vector<double>(m_numberOfParams, 0);
+    std::vector<double> m_cumHidDerPsiE = std::vector<double>(m_numberOfHiddenNodes, 0);
+    std::vector<double> m_cumHidDeltaPsi = std::vector<double>(m_numberOfHiddenNodes, 0);
+    std::vector<double> m_hidDerPsiE = std::vector<double>(m_numberOfHiddenNodes, 0);
+    std::vector<double> m_hidDeltaPsi = std::vector<double>(m_numberOfHiddenNodes, 0);
+
+    std::vector<std::vector<double>> m_cumVisDerPsiE = std::vector<std::vector<double>>(m_numberOfParticles, std::vector<double>(m_numberOfDimensions, 0));
+    std::vector<std::vector<double>> m_cumVisDeltaPsi = std::vector<std::vector<double>>(m_numberOfParticles, std::vector<double>(m_numberOfDimensions, 0));
+    std::vector<std::vector<double>> m_visDerPsiE = std::vector<std::vector<double>>(m_numberOfParticles, std::vector<double>(m_numberOfDimensions, 0));
+    std::vector<std::vector<double>> m_visDeltaPsi = std::vector<std::vector<double>>(m_numberOfParticles, std::vector<double>(m_numberOfDimensions, 0));
+
+    int m_numberOfHiddenNodes = 0;
+
+    std::vector<std::vector<double>> m_visEnergyDer = std::vector<std::vector<double>>(m_numberOfParticles, std::vector<double>(m_numberOfDimensions, 0));
+    std::vector<double> m_hidEnergyDer = std::vector<double>(m_numberOfHiddenNodes, 0);
+    std::vector<std::vector<std::vector<double>>> m_weightEnergyDer = std::vector<std::vector<std::vector<double>>>(m_numberOfParticles, std::vector<std::vector<double>>(m_numberOfDimensions, std::vector<double>(m_numberOfHiddenNodes, 0)));
 
     // Save samples during calculation
     std::ofstream m_saveSamplesFile;

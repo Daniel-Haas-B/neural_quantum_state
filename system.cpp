@@ -9,23 +9,35 @@
 #include "Hamiltonians/hamiltonian.h"
 #include "InitialStates/initialstate.h"
 #include "Solvers/montecarlo.h"
-#include "WaveFunctions/wavefunction.h"
+#include "WaveFunctions/neuralwavefunction.h"
+#include "Optimizers/optimizer.h"
+#include "Optimizers/vanillaGD.h"
+#include "Optimizers/momentumGD.h"
+#include "Optimizers/adamGD.h"
 #include "particle.h"
 #include "sampler.h"
 #include <fstream>
 
 using namespace std;
 System::System(std::unique_ptr<class Hamiltonian> hamiltonian,
-               std::unique_ptr<class WaveFunction> waveFunction,
+               std::unique_ptr<class NeuralWaveFunction> waveFunction,
                std::unique_ptr<class MonteCarlo> solver,
-               std::vector<std::unique_ptr<class Particle>> particles)
+               std::vector<std::unique_ptr<class Particle>> particles,
+               bool importSamples,
+               bool analytical,
+               bool interaction)
 {
   m_numberOfParticles = particles.size();
   m_numberOfDimensions = particles[0]->getNumberOfDimensions();
+  m_numberOfHiddenNodes = waveFunction->getNumberOfHiddenNodes();
   m_hamiltonian = std::move(hamiltonian);
   m_waveFunction = std::move(waveFunction);
   m_solver = std::move(solver);
   m_particles = std::move(particles);
+
+  m_importSamples = importSamples;
+  m_analytical = analytical;
+  m_interaction = interaction;
 }
 
 unsigned int System::runEquilibrationSteps(
@@ -44,19 +56,19 @@ unsigned int System::runEquilibrationSteps(
 std::unique_ptr<class Sampler> System::runMetropolisSteps(
     double stepLength, unsigned int numberOfMetropolisSteps)
 {
-  auto sampler =
-      std::make_unique<Sampler>(m_numberOfParticles, m_numberOfDimensions,
-                                stepLength, numberOfMetropolisSteps);
+  auto sampler = std::make_unique<Sampler>(m_numberOfParticles,
+                                           m_numberOfDimensions,
+                                           m_numberOfHiddenNodes,
+                                           stepLength, numberOfMetropolisSteps);
 
+  std::cout << "DEBUG runMetropolisSteps, m_numberOfParticles= " << m_numberOfParticles << std::endl;
   if (m_saveSamples)
     sampler->openSaveSample(m_saveSamplesFilename);
 
   for (unsigned int i = 0; i < numberOfMetropolisSteps; i++)
   {
-    /* Call solver method to do a single Monte-Carlo step.
-     */
-    bool acceptedStep =
-        m_solver->step(stepLength, *m_waveFunction, m_particles);
+    /* Call solver method to do a single Monte-Carlo step.*/
+    bool acceptedStep = m_solver->step(stepLength, *m_waveFunction, m_particles);
 
     // compute local energy
     sampler->sample(acceptedStep, this);
@@ -65,7 +77,10 @@ std::unique_ptr<class Sampler> System::runMetropolisSteps(
       sampler->saveSample(i);
   }
 
-  sampler->computeAverages();
+  double lambda_l2 = 0.01;
+  double cumWeight2 = m_waveFunction->computeWeightNorms();
+
+  sampler->computeAverages(cumWeight2, lambda_l2);
   if (m_saveSamples)
     sampler->closeSaveSample();
 
@@ -73,18 +88,16 @@ std::unique_ptr<class Sampler> System::runMetropolisSteps(
 }
 
 std::unique_ptr<class Sampler> System::optimizeMetropolis(
-    System &system, std::string filename, double stepLength, unsigned int numberOfMetropolisSteps, unsigned int numberOfEquilibrationSteps,
-    double epsilon, double learningRate)
+    System &system,
+    std::string filename,
+    double stepLength,
+    unsigned int numberOfMetropolisSteps,
+    unsigned int numberOfEquilibrationSteps,
+    double epsilon,
+    double learningRate)
 {
-  double gradient = 1;
-  int epoch = 0;
-  double alpha_0 = getWaveFunctionParameters()[0];
-  double alpha, beta;
-  double beta_0 = getWaveFunctionParameters()[1];
-  auto sampler =
-      std::make_unique<Sampler>(m_numberOfParticles, m_numberOfDimensions,
-                                stepLength, numberOfMetropolisSteps);
 
+  int maxiter = 20;
   // run equilibration steps and store positions into vector
   runEquilibrationSteps(stepLength, numberOfEquilibrationSteps);
 
@@ -92,49 +105,55 @@ std::unique_ptr<class Sampler> System::optimizeMetropolis(
   {
     m_particles[i]->saveEquilibrationPosition(); // by doind this, we just need to do equilibriation once in the GD
   }
+  // instantiate base class optimizer and cast to derived class VanillaGD
 
-  while (std::abs(gradient) > epsilon)
-  {
+  // auto optimizer = std::make_unique<VanillaGD>(
+  //     learningRate,
+  //     maxiter,
+  //     stepLength,
+  //     numberOfMetropolisSteps,
+  //     m_numberOfHiddenNodes);
 
-    gradient = 0;
-    /*Positions are reset to what they were after equilibration, but the parameters of the wave function should be what they were at the END of last epoch*/
+  double beta1 = 0.9;
+  double beta2 = 0.999;
+  double epsilon2 = 1e-8;
 
-    // reset position and quantum force (quantum force is reset automatically to 0 at the beggining of the metroplis step)
+  // auto optimizer = std::make_unique<VanillaGD>(
+  //     learningRate,
+  //     maxiter,
+  //     stepLength,
+  //     numberOfMetropolisSteps,
+  //     m_numberOfHiddenNodes);
 
-    for (unsigned int i = 0; i < m_numberOfParticles; i++)
-    {
-      m_particles[i]->resetEquilibrationPosition();
-    }
+  auto optimizer = std::make_unique<AdamGD>(
+      learningRate,
+      beta1,
+      beta2,
+      epsilon2,
+      maxiter,
+      stepLength,
+      numberOfMetropolisSteps,
+      m_numberOfHiddenNodes);
 
-    sampler = system.runMetropolisSteps(stepLength, numberOfMetropolisSteps);
-
-    alpha = getWaveFunctionParameters()[0];
-    beta = getWaveFunctionParameters()[1]; // this might be useless since we are not asked to optimize beta
-    std::vector<double> parameters = getWaveFunctionParameters();
-    sampler->writeGradientSearchToFile(system, filename, alpha_0, epoch, alpha, beta_0, beta);
-
-    std::vector<double> m_energyDerivative = sampler->getEnergyDerivative();
-
-    int n_params = m_waveFunction->getNumberOfParameters();
-
-    for (int i = 0; i < n_params - 1; i++) // we do not want to optimize beta because minima is given to us already. But if we want, the functionality is there!
-    {
-      parameters[i] -= learningRate * m_energyDerivative[i];
-      std::cout << "parameters post update: " << parameters[i] << "\n";
-      std::cout << "m_energyDerivative: " << m_energyDerivative[i] << "\n";
-      gradient += m_energyDerivative[i];
-    }
-    epoch++;
-    // set new wave function parameters
-    m_waveFunction->setParameters(parameters);
-  }
-
-  alpha = getWaveFunctionParameters()[0];
-  beta = getWaveFunctionParameters()[1];
-  //  get the last epoch values
-  sampler->writeGradientSearchToFile(system, filename, alpha_0, epoch, alpha, beta_0, beta);
-
+  // run optimizer
+  auto sampler = optimizer->optimize(system, *m_waveFunction, m_particles, filename);
   return sampler;
+}
+
+std::vector<std::vector<double>> System::computeVisBiasDerivative()
+{
+  // helper function to compute the derivative of the visible bias
+  return m_waveFunction->computeVisBiasDerivative(m_particles);
+}
+
+std::vector<double> System::computeHidBiasDerivative()
+{
+  return m_waveFunction->computeHidBiasDerivative(m_particles);
+}
+
+std::vector<std::vector<std::vector<double>>> System::computeWeightDerivative()
+{
+  return m_waveFunction->computeWeightDerivative(m_particles);
 }
 
 double System::computeLocalEnergy()
@@ -143,13 +162,7 @@ double System::computeLocalEnergy()
   return m_hamiltonian->computeLocalEnergy(*m_waveFunction, m_particles);
 }
 
-const std::vector<double> &System::getWaveFunctionParameters()
-{
-  // Helper function
-  return m_waveFunction->getParameters();
-}
-
-void System::setWaveFunction(std::unique_ptr<class WaveFunction> waveFunction)
+void System::setWaveFunction(std::unique_ptr<class NeuralWaveFunction> waveFunction)
 {
   m_waveFunction = std::move(waveFunction);
 }
@@ -157,12 +170,6 @@ void System::setWaveFunction(std::unique_ptr<class WaveFunction> waveFunction)
 void System::setSolver(std::unique_ptr<class MonteCarlo> solver)
 {
   m_solver = std::move(solver);
-}
-
-double System::computeParamDerivative(int paramIndex)
-{
-  // Helper function
-  return m_waveFunction->computeParamDerivative(m_particles, paramIndex);
 }
 
 void System::saveSamples(std::string filename, int skip)
@@ -184,20 +191,26 @@ void System::saveSamples(std::string filename, int skip)
 
 int System::getSkip()
 {
+  /*
+    Returns the skip value used for saving samples.
+  */
   return m_skip;
 }
 
 void System::saveFinalState(std::string filename)
 {
-    std::ofstream file(filename, std::ios::out | std::ios::trunc);
+  /*
+    Saves the final state (position) of the particles to file.
+  */
+  std::ofstream file(filename, std::ios::out | std::ios::trunc);
 
-    int w = 20;
-    file << setw(w) << "x" << setw(w) << "y" << setw(w) << "z\n";
+  int w = 20;
+  file << setw(w) << "x" << setw(w) << "y" << setw(w) << "z\n";
 
-    for(int i = 0; i < m_numberOfParticles; i++)
-    {
-        auto r = m_particles.at(i)->getPosition();
-        file << setw(w) << r.at(0) << setw(w) << r.at(1) << setw(w) << r.at(2) << "\n";
-    } 
-    file.close();
+  for (unsigned int i = 0; i < m_numberOfParticles; i++)
+  {
+    auto r = m_particles.at(i)->getPosition();
+    file << setw(w) << r.at(0) << setw(w) << r.at(1) << setw(w) << r.at(2) << "\n";
+  }
+  file.close();
 }

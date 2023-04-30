@@ -9,124 +9,48 @@ def rootPath():
     cur_path = pl.Path(__file__)
     root_path = cur_path
 
-    while root_path.name != "variational-monte-carlo-fys4411":
+    while root_path.name != "neural_quantum_state":
         root_path = root_path.parent
 
     return root_path
 
-def vmcPath():
-    vmc_path = rootPath() / pl.Path("build/vmc")
-    return vmc_path
+def nqsPath():
+    nqs_path = rootPath() / pl.Path("build/nqs")
+    return nqs_path
 
-def gradientPath():
-    gradient_path = rootPath() / pl.Path("build/gradient")
-    return gradient_path
-
-def timingPath():
-    timing_path = rootPath() / pl.Path("build/timing")
-    return timing_path
-
-def interactPath():
-    filename_interact = rootPath() / pl.Path(f"build/interact")
-    return filename_interact
-
-def parallelinteractPath():
-    filename_interact = rootPath() / pl.Path(f"build/parallelinteract")
-    return filename_interact
+def testsPath():
+    tests_path = rootPath() / pl.Path("build/tests")
+    return tests_path
 
 def dataPath(filename):
     filename_path = rootPath() / pl.Path(f"Data/{filename}")
     return filename_path
 
 
-def vmcRun(D=3, N=10, logMet=20, logEq=16, omega=1.0, alpha=0.5, stepLength=0.1, importance=False, analytical=True, timing=False, GD=False, filename="test.txt"):
-    vmc_path = vmcPath()
+def nqsRun(D=2, N=2, logMet=20, logEq=16, stepLength=0.6, importance=False, analytical=True, learnRate=0.1 ,interacting=False, filename="test.txt", detailed=False):
+    nqs_path = nqsPath()
     filename_path = dataPath(filename)
 
-    assert vmc_path.exists(), f"I cannot find {vmc_path} :((, are you sure you have compiled?"
+    assert nqs_path.exists(), f"I cannot find {nqs_path} :((, are you sure you have compiled?"
     args = [
-        vmc_path,
+        nqs_path,
         D,
         N,
         logMet,
         logEq,
-        omega,
-        alpha,
         stepLength,
         int(importance),
         int(analytical),
-        int(GD),
-        filename_path,
-    ]
-
-    if not filename:
-        args.pop()
-
-    args_run = [str(arg) for arg in args]
-
-    subprocess.run(args_run)
-
-def parallelinteractRun(D=3, N=10, logMet=20, logEq=16, beta=1.0, alpha=0.5, stepLength=0.55, importance=False, analytical=True, GD=False, filename="test.txt", detailed=False):
-    interact_path = parallelinteractPath()
-    filename_path = dataPath(filename)
-    #2^21 = 2097152
-
-    assert interact_path.exists(), f"I cannot find {interact_path} :((, are you sure you have compiled?"
-    args = [
-        interact_path,
-        D,
-        N,
-        logMet,
-        logEq,
-        alpha,
-        beta,
-        stepLength,
-        int(importance),
-        int(analytical),
-        int(GD),
+        learnRate,
+        int(interacting),
         filename_path,
         int(detailed)
     ]
 
     if not filename:
         args.pop()
-    
-    args_run = [str(arg) for arg in args]
-
-    subprocess.run(args_run)
-
-
-def gradientRun(D=3, N=10, logMet=16, logEq=14, alpha=0.5, stepLength=0.1, epsilon=0.01, lr= 0.01, importance=False, analytical=True, interacting=False, beta=1.0,  filename="gradientSearch.txt"):
-    """
-    This funcitons will run the gradient search for the best alpha parameter, as asked in the project description.
-    Notice the regular VMC can run gradient descent, but this function will run the gradient search.
-    """
-    gradient_path = gradientPath()
-    filename_path = dataPath(filename)
-
-    assert gradient_path.exists(), f"I cannot find {gradient_path} :((, are you sure you have compiled?"
-    args = [
-        gradient_path,
-        D,
-        N,
-        logMet,
-        logEq,
-        alpha,
-        beta,
-        stepLength,
-        int(importance),
-        int(analytical),
-        lr,
-        epsilon,
-        int(interacting),
-        filename_path,
-    ]
-
-    if not filename:
-        args.pop()
 
     args_run = [str(arg) for arg in args]
-
     subprocess.run(args_run)
 
 
@@ -155,56 +79,15 @@ def timingRun(D=3, N=10, logMet=6, logEq=5, omega=1.0, alpha=0.5, stepLength=0.1
 
     subprocess.run(args_run)
 
-def interactRun(D=3, N=10, logMet=20, logEq=16, beta=1.0, alpha=0.5, stepLength=0.1, importance=False, analytical=True, timing=False, GD=False, filename="test.txt",detailed=False):
-    interact_path = interactPath()
-    filename_path = dataPath(filename)
-
-    assert interact_path.exists(), f"I cannot find {interact_path} :((, are you sure you have compiled?"
-    args = [
-        interact_path,
-        D,
-        N,
-        logMet,
-        logEq,
-        alpha,
-        beta,
-        stepLength,
-        int(importance),
-        int(analytical),
-        int(GD),
-        filename_path,
-        int(detailed)
-    ]
-
-    if not filename:
-        args.pop()
-
-    args_run = [str(arg) for arg in args]
-
-    subprocess.run(args_run)
-
-
-def vmcLoad(filename):
+def nqsLoad(filename):
+    print("DEBUG: Loading file", filename)
     filename_path = dataPath(filename)
 
     df = pd.read_csv(filename_path, delim_whitespace=True)
 
-    int_cols = ["Dimensions", "Particles" ,"Metro-steps", "Analytical", "Imposampling"]
+    int_cols = ["Dimensions", "Particles" ,"Metro-steps", "Imposampling", "Analytical", "Epoch", "Interaction"]
     numeric_cols = [col for col in df.columns if col not in int_cols]
     
-    for col in numeric_cols:
-        df[col] = df[col].astype(float)
-
-    return df
-
-def gradientLoad(filename):
-    filename_path = dataPath(filename)
-
-    df = pd.read_csv(filename_path, delim_whitespace=True)
-
-    int_cols = ["Dimensions", "Particles" ,"Metro-steps", "Analytical", "Imposampling"]
-    numeric_cols = [col for col in df.columns if col not in int_cols]
-
     for col in numeric_cols:
         df[col] = df[col].astype(float)
 

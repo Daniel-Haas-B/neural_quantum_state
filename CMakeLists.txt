@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.9)
 
-project(project_1_fys4411)
+project(project_2_fys4411)
 
 # Set CXX standard to C++14
 set(CMAKE_CXX_STANDARD 14)
@@ -26,8 +26,8 @@ set(CMAKE_CXX_FLAGS_DEBUG "-g")
 # -O0, -O1, -O2.
 set(CMAKE_CXX_FLAGS_RELEASE "-O3")
 
-set(OpenMP_CXX_FLAGS "-fopenmp")
-set(OpenMP_CXX_LIB_NAMES "omp")
+# set(OpenMP_CXX_FLAGS "-Xpreprocessor -fopenmp -I$(brew --prefix libomp)/include")
+# set(OpenMP_CXX_LIB_NAMES "omp")
 
 # Add directories containing header-files
 include_directories(
@@ -37,6 +37,7 @@ include_directories(
   Math
   WaveFunctions
   Solvers
+  Optimizers
 )
 
 # Add sources from all directories
@@ -49,6 +50,7 @@ file(
   GLOB LIB_SOURCES "Math/*.cpp"
   GLOB LIB_SOURCES "Solvers/*.cpp"
   GLOB LIB_SOURCES "WaveFunctions/*.cpp"
+  GLOB LIB_SOURCES "Optimizers/*.cpp"
 )
 
 # Add libary to compile path
@@ -64,22 +66,20 @@ if(OPENMP_FOUND)
   set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${OpenMP_EXE_LINKER_FLAGS}")
 endif()
 
-# Create different executables
-add_executable(vmc main.cpp)
-target_link_libraries(vmc PRIVATE Vmclib)
-
-add_executable(interact maininteracting.cpp)
-target_link_libraries(interact PRIVATE Vmclib)
-
-add_executable(parallelinteract parallelmaininteracting.cpp)
-target_link_libraries(parallelinteract PRIVATE Vmclib)
-
-if(OpenMP_CXX_FOUND)
-  target_link_libraries(parallelinteract PUBLIC OpenMP::OpenMP_CXX)
+if(NOT OpenMP_CXX_FOUND)
+  message(FATAL_ERROR "OpenMP not found")
 endif()
 
-add_executable(timing timing.cpp)
-target_link_libraries(timing PRIVATE Vmclib)
+# Create different executables
+add_executable(nqs main.cpp)
+target_link_libraries(nqs PRIVATE Vmclib)
 
-add_executable(gradient gradientdescent.cpp)
-target_link_libraries(gradient PRIVATE Vmclib)
+add_executable(tests tests.cpp)
+target_link_libraries(tests PRIVATE Vmclib)
+
+if(OpenMP_CXX_FOUND)
+  target_link_libraries(nqs PUBLIC OpenMP::OpenMP_CXX)
+endif()
+
+# add_executable(timing timing.cpp)
+# target_link_libraries(timing PRIVATE Vmclib)

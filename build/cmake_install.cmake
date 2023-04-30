@@ -1,4 +1,4 @@
-# Install script for directory: /Users/haas/Documents/Masters/CompPhys2/variational-monte-carlo-fys4411
+# Install script for directory: /Users/haas/Documents/Masters/CompPhys2/neural_quantum_state
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -34,7 +34,7 @@ endif()
 
 # Set default install directory permissions.
 if(NOT DEFINED CMAKE_OBJDUMP)
-  set(CMAKE_OBJDUMP "/opt/homebrew/opt/llvm/bin/llvm-objdump")
+  set(CMAKE_OBJDUMP "/usr/bin/objdump")
 endif()
 
 if(CMAKE_INSTALL_COMPONENT)
@@ -45,5 +45,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/Users/haas/Documents/Masters/CompPhys2/variational-monte-carlo-fys4411/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/Users/haas/Documents/Masters/CompPhys2/neural_quantum_state/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

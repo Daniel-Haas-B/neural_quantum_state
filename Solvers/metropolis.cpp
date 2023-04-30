@@ -2,7 +2,7 @@
 #include <vector>
 
 #include "metropolis.h"
-#include "WaveFunctions/wavefunction.h"
+#include "WaveFunctions/neuralwavefunction.h"
 #include "particle.h"
 #include "Math/random.h"
 
@@ -15,7 +15,7 @@ Metropolis::Metropolis(std::unique_ptr<class Random> rng)
 
 bool Metropolis::step(
     double stepLength,
-    class WaveFunction &waveFunction,
+    class NeuralWaveFunction &waveFunction,
     std::vector<std::unique_ptr<class Particle>> &particles)
 {
     /* Perform the actual Metropolis step: Choose a particle at random and
@@ -30,11 +30,11 @@ bool Metropolis::step(
     double Psi_old = waveFunction.evaluate(particles);
 
     int proposed_particle_idx = m_rng->nextInt(0, numberOfParticles - 1); // Choose a particle at random
-    Particle &proposed_particle = *particles[proposed_particle_idx];   // Get a reference to the particle
+    Particle &proposed_particle = *particles[proposed_particle_idx];      // Get a reference to the particle
     Particle old_particle = proposed_particle;                            // Save the old position
 
     for (int q = 0; q < numberOfDimensions; q++)
-        proposed_particle.adjustPosition(2*stepLength * (m_rng->nextDouble() - .5), q);
+        proposed_particle.adjustPosition(2 * stepLength * (m_rng->nextDouble() - .5), q);
 
     double Psi_new = waveFunction.evaluate(particles);
 

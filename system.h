@@ -8,9 +8,12 @@ class System
 {
 public:
     System(std::unique_ptr<class Hamiltonian> hamiltonian,
-           std::unique_ptr<class WaveFunction> waveFunction,
+           std::unique_ptr<class NeuralWaveFunction> waveFunction,
            std::unique_ptr<class MonteCarlo> solver,
-           std::vector<std::unique_ptr<class Particle>> particles);
+           std::vector<std::unique_ptr<class Particle>> particles,
+           bool importSamples,
+           bool analytical,
+           bool interaction);
 
     unsigned int runEquilibrationSteps(double stepLength,
                                        unsigned int numberOfEquilibrationSteps);
@@ -28,21 +31,36 @@ public:
         double learningRate);
 
     double computeLocalEnergy();
-    const std::vector<double> &getWaveFunctionParameters();
+    std::vector<std::vector<double>> computeVisBiasDerivative();
+    std::vector<double> computeHidBiasDerivative();
+    std::vector<std::vector<std::vector<double>>> computeWeightDerivative();
 
-    void setWaveFunction(std::unique_ptr<class WaveFunction> waveFunction);
+    void setWaveFunction(std::unique_ptr<class NeuralWaveFunction> waveFunction);
     void setSolver(std::unique_ptr<class MonteCarlo> solver);
-    double computeParamDerivative(int paramIndex);
 
     void saveSamples(std::string filename, int skip);
     int getSkip();
     void saveFinalState(std::string filename);
+
+    bool &getImportSamples() { return m_importSamples; }
+    bool &getAnalytical() { return m_analytical; }
+    bool &getInteraction() { return m_interaction; }
+
+    // Getters
+    unsigned int getNumberOfParticles() { return m_numberOfParticles; }
+    unsigned int getNumberOfDimensions() { return m_numberOfDimensions; }
+
 private:
     unsigned int m_numberOfParticles = 0;
     unsigned int m_numberOfDimensions = 0;
+    unsigned int m_numberOfHiddenNodes = 0;
+
+    bool m_importSamples = false;
+    bool m_analytical = false;
+    bool m_interaction = false;
 
     std::unique_ptr<class Hamiltonian> m_hamiltonian;
-    std::unique_ptr<class WaveFunction> m_waveFunction;
+    std::unique_ptr<class NeuralWaveFunction> m_waveFunction;
     std::unique_ptr<class MonteCarlo> m_solver;
     std::vector<std::unique_ptr<class Particle>> m_particles;
 
