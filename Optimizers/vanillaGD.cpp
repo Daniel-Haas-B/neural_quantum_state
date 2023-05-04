@@ -15,13 +15,17 @@ VanillaGD::VanillaGD(double learningRate,
                      int maxIter,
                      double stepLength,
                      int numberOfMetropolisSteps,
-                     int numberOfHiddenNodes)
+                     int numberOfHiddenNodes,
+                     int numberOfDimensions,
+                     int numberOfParticles)
     : Optimizer(
           learningRate,
           maxIter,
           stepLength,
           numberOfMetropolisSteps,
-          numberOfHiddenNodes)
+          numberOfHiddenNodes,
+          numberOfDimensions,
+          numberOfParticles)
 {
 }
 
@@ -31,15 +35,11 @@ std::unique_ptr<class Sampler> VanillaGD::optimize(
     std::vector<std::unique_ptr<class Particle>> &particles,
     std::string filename)
 {
-    std::cout << " ####### INSIDE VanillaGD" << std::endl;
 
     int epoch = 0;
 
     m_numberOfDimensions = system.getNumberOfDimensions();
     m_numberOfParticles = system.getNumberOfParticles();
-
-    std::cout << "DEBUG VanillaGD, m_numberOfParticles= " << m_numberOfParticles << std::endl;
-    std::cout << "DEBUG VanillaGD, m_numberOfDimensions= " << m_numberOfDimensions << std::endl;
 
     std::vector<double> hidEnergyDer;
     std::vector<double> gradNorms;
@@ -130,46 +130,4 @@ std::unique_ptr<class Sampler> VanillaGD::optimize(
         std::cout << "energy: " << sampler->getEnergy() << "\n";
     }
     return sampler;
-}
-
-std::vector<double> VanillaGD::computeGradientNorms(
-    std::vector<double> hidEnergyDer,
-    std::vector<std::vector<double>> visEnergyDer,
-    std::vector<std::vector<std::vector<double>>> weightEnergyDer)
-{
-    // output norm of hidEnergyDer
-    double hidEnergyDerNorm = 0;
-    double visEnergyDerNorm = 0;
-    double weightEnergyDerNorm = 0;
-
-    for (int i = 0; i < m_numberOfHiddenNodes; i++)
-    {
-        hidEnergyDerNorm += hidEnergyDer[i] * hidEnergyDer[i];
-    }
-
-    for (int i = 0; i < m_numberOfParticles; i++)
-    {
-        for (int j = 0; j < m_numberOfDimensions; j++)
-        {
-            visEnergyDerNorm += visEnergyDer[i][j] * visEnergyDer[i][j];
-        }
-    }
-
-    // output norm of weightEnergyDer
-    for (int i = 0; i < m_numberOfParticles; i++)
-    {
-        for (int j = 0; j < m_numberOfDimensions; j++)
-        {
-            for (int k = 0; k < m_numberOfHiddenNodes; k++)
-            {
-                weightEnergyDerNorm += weightEnergyDer[i][j][k] * weightEnergyDer[i][j][k];
-            }
-        }
-    }
-
-    weightEnergyDerNorm = sqrt(weightEnergyDerNorm);
-    visEnergyDerNorm = sqrt(visEnergyDerNorm);
-    hidEnergyDerNorm = sqrt(hidEnergyDerNorm);
-
-    return {hidEnergyDerNorm, visEnergyDerNorm, weightEnergyDerNorm};
 }

@@ -23,13 +23,9 @@ int main(int argv, char **argc)
     // Set default paramters
     unsigned int numberOfDimensions = 2;
     unsigned int numberOfParticles = 2;
-    unsigned int numberOfMetropolisSteps = (unsigned int)pow(2, 20);
-    unsigned int numberOfEquilibrationSteps = (unsigned int)pow(2, 20);
-    double omega = 1.0;                                 // Oscillator frequency.
-    double stepLength = 0.6;                            // Metropolis step length.
-    double epsilon = 0.05;                              // Tolerance for gradient descent.
-    double lr = 0.02;                                   // Learning rate for gradient descent.
-    double interactionTerm = 0.0043 * sqrt(1. / omega); // Interection constant a. Notice that hbar = m = 1.
+    unsigned int numberOfHiddenNodes = 2;
+    double omega = 1.0;      // Oscillator frequency.
+    double stepLength = 0.6; // Metropolis step length.
 
     // double dx = 1e-4;
     bool importanceSampling = false;
@@ -38,7 +34,6 @@ int main(int argv, char **argc)
     string filename = "";
     string filename_samples = "";
     string filename_posistions = "";
-    bool detailed = false;
     bool interaction = false;
 
     if (argv >= 2)
@@ -46,7 +41,9 @@ int main(int argv, char **argc)
     if (argv >= 3)
         numberOfParticles = (unsigned int)atoi(argc[2]);
     if (argv >= 4)
-        interaction = (bool)atoi(argc[3]);
+        numberOfHiddenNodes = (unsigned int)atoi(argc[3]);
+    if (argv >= 5)
+        interaction = (bool)atoi(argc[4]);
 
     // Seed for the random number generator
     int seed = 2024;
@@ -59,7 +56,7 @@ int main(int argv, char **argc)
 
     // Initialize particles
     auto particles = setupRandomUniformInitialState(
-        omega, numberOfDimensions, numberOfParticles, *state_rng, interactionTerm);
+        omega, numberOfDimensions, numberOfParticles, *state_rng);
 
     // Construct a unique pointer to a new System
     std::unique_ptr<class Hamiltonian> hamiltonian;
@@ -68,8 +65,7 @@ int main(int argv, char **argc)
 
     std::unique_ptr<class NeuralWaveFunction> wavefunction; // Empty wavefunction pointer constructor (can only be moved once)
 
-    int numberOfhiddenNodes = 2; // here for now
-    wavefunction = std::make_unique<GaussianBinary>(numberOfParticles, numberOfhiddenNodes, std::move(state_rng));
+    wavefunction = std::make_unique<GaussianBinary>(numberOfParticles, numberOfHiddenNodes, std::move(state_rng));
 
     // set specific parameters for the neural network
 
@@ -88,9 +84,9 @@ int main(int argv, char **argc)
     afile.open("../tests/Data/a.txt");
     afile.precision(16);
 
-    for (int i = 0; i < a.size(); i++)
+    for (unsigned int i = 0; i < a.size(); i++)
     {
-        for (int j = 0; j < a[i].size(); j++)
+        for (unsigned int j = 0; j < a[i].size(); j++)
         {
             afile << a[i][j] << " ";
         }
@@ -102,11 +98,15 @@ int main(int argv, char **argc)
     wfile.open("../tests/Data/w.txt");
     wfile.precision(16);
 
-    for (int i = 0; i < w.size(); i++)
+    unsigned int n = w.size();
+    unsigned int m = w[0].size();
+    unsigned int p = w[0][0].size();
+
+    for (unsigned int i = 0; i < n; i++)
     {
-        for (int j = 0; j < w[i].size(); j++)
+        for (unsigned int j = 0; j < m; j++)
         {
-            for (int k = 0; k < w[i][j].size(); k++)
+            for (unsigned int k = 0; k < p; k++)
             {
                 wfile << w[i][j][k] << " ";
             }
@@ -120,7 +120,7 @@ int main(int argv, char **argc)
     bfile.open("../tests/Data/b.txt");
     bfile.precision(16);
 
-    for (int i = 0; i < hiddenBias.size(); i++)
+    for (unsigned int i = 0; i < hiddenBias.size(); i++)
     {
         bfile << hiddenBias[i] << endl;
     }
@@ -141,9 +141,9 @@ int main(int argv, char **argc)
     wfr.precision(16);
 
     // for particles and dimensions
-    for (int i = 0; i < numberOfParticles; i++)
+    for (unsigned int i = 0; i < numberOfParticles; i++)
     {
-        for (int j = 0; j < numberOfDimensions; j++)
+        for (unsigned int j = 0; j < numberOfDimensions; j++)
         {
             wfr << particles[i]->getPosition()[j] << endl;
         }
@@ -151,7 +151,7 @@ int main(int argv, char **argc)
     }
     wfr.close();
 
-    for (int i = 0; i < Q.size(); i++)
+    for (unsigned int i = 0; i < Q.size(); i++)
     {
         Qfile << Q[i] << endl;
     }
@@ -184,7 +184,7 @@ int main(int argv, char **argc)
     hidBiasDer_file.open("../tests/Data/hidBiasDer.txt");
     hidBiasDer_file.precision(16);
 
-    for (int i = 0; i < hidBiasDer.size(); i++)
+    for (unsigned int i = 0; i < hidBiasDer.size(); i++)
     {
         hidBiasDer_file << hidBiasDer[i] << endl;
     }
@@ -194,9 +194,9 @@ int main(int argv, char **argc)
     visBiasDer_file.open("../tests/Data/visBiasDer.txt");
     visBiasDer_file.precision(16);
 
-    for (int i = 0; i < visBiasDer.size(); i++)
+    for (unsigned int i = 0; i < visBiasDer.size(); i++)
     {
-        for (int j = 0; j < visBiasDer[i].size(); j++)
+        for (unsigned int j = 0; j < visBiasDer[i].size(); j++)
         {
             visBiasDer_file << visBiasDer[i][j] << " ";
         }
@@ -208,11 +208,11 @@ int main(int argv, char **argc)
     weightsDer_file.open("../tests/Data/weightsDer.txt");
     weightsDer_file.precision(16);
 
-    for (int i = 0; i < weightsDer.size(); i++)
+    for (unsigned int i = 0; i < weightsDer.size(); i++)
     {
-        for (int j = 0; j < weightsDer[i].size(); j++)
+        for (unsigned int j = 0; j < weightsDer[i].size(); j++)
         {
-            for (int k = 0; k < weightsDer[i][j].size(); k++)
+            for (unsigned int k = 0; k < weightsDer[i][j].size(); k++)
             {
                 weightsDer_file << weightsDer[i][j][k] << " ";
             }

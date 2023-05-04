@@ -15,7 +15,9 @@ public:
         int maxIter,
         double stepLength,
         int numberOfMetropolisSteps,
-        int numberOfHiddenNodes);
+        int numberOfHiddenNodes,
+        int numberOfDimensions,
+        int numberOfParticles);
     virtual ~Optimizer() = default;
 
     virtual std::unique_ptr<class Sampler> optimize(
@@ -24,15 +26,17 @@ public:
         std::vector<std::unique_ptr<class Particle>> &particles,
         std::string filename) = 0;
 
-    virtual std::vector<double> computeGradientNorms(
+    std::vector<double> computeGradientNorms(
         std::vector<double> hidEnergyDer,
         std::vector<std::vector<double>> visEnergyDer,
-        std::vector<std::vector<std::vector<double>>> weightEnergyDer) = 0;
+        std::vector<std::vector<std::vector<double>>> weightEnergyDer);
 
 protected:
     double m_learningRate;
-    int m_maxIter;
+    unsigned int m_maxIter;
     double m_stepLength;
-    int m_numberOfMetropolisSteps;
-    int m_numberOfHiddenNodes;
+    unsigned int m_numberOfMetropolisSteps;
+    unsigned int m_numberOfHiddenNodes;
+    unsigned int m_numberOfParticles;
+    unsigned int m_numberOfDimensions;
 };

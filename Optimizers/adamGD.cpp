@@ -18,13 +18,17 @@ AdamGD::AdamGD(double learningRate,
                int maxIter,
                double stepLength,
                int numberOfMetropolisSteps,
-               int numberOfHiddenNodes)
+               int numberOfHiddenNodes,
+               int numberOfDimensions,
+               int numberOfParticles)
     : Optimizer(
           learningRate,
           maxIter,
           stepLength,
           numberOfMetropolisSteps,
-          numberOfHiddenNodes)
+          numberOfHiddenNodes,
+          numberOfDimensions,
+          numberOfParticles)
 {
     m_beta1 = beta1;
     m_beta2 = beta2;
@@ -37,15 +41,8 @@ std::unique_ptr<class Sampler> AdamGD::optimize(
     std::vector<std::unique_ptr<class Particle>> &particles,
     std::string filename)
 {
-    std::cout << " ####### INSIDE AdamGD" << std::endl;
 
-    int epoch = 0;
-
-    m_numberOfDimensions = system.getNumberOfDimensions();
-    m_numberOfParticles = system.getNumberOfParticles();
-
-    std::cout << "DEBUG AdamGD, m_numberOfParticles= " << m_numberOfParticles << std::endl;
-    std::cout << "DEBUG AdamGD, m_numberOfDimensions= " << m_numberOfDimensions << std::endl;
+    unsigned int epoch = 0;
 
     std::vector<double> hidEnergyDer;
     std::vector<double> gradNorms;
@@ -83,7 +80,6 @@ std::unique_ptr<class Sampler> AdamGD::optimize(
     std::vector<std::vector<double>> s_t_hat_vis(visibleBias.size(), std::vector<double>(visibleBias[0].size(), 0));
     std::vector<double> s_t_hat_hid(hiddenBias.size(), 0);
 
-    std::cout << "DEBUG AdamGD, m_maxIter= " << m_maxIter << std::endl;
     while (epoch < m_maxIter)
     {
         // gradientNorm = 0;
@@ -114,9 +110,13 @@ std::unique_ptr<class Sampler> AdamGD::optimize(
             interaction,
             m_learningRate);
 
-        for (int i = 0; i < m_numberOfParticles; i++)
+        unsigned int i = 0;
+        unsigned int j = 0;
+        unsigned int k = 0;
+
+        for (i = 0; i < m_numberOfParticles; i++)
         {
-            for (int j = 0; j < m_numberOfDimensions; j++)
+            for (j = 0; j < m_numberOfDimensions; j++)
             {
                 m_t_vis[i][j] = m_beta1 * m_t_vis[i][j] + (1 - m_beta1) * visEnergyDer[i][j];
                 s_t_vis[i][j] = m_beta2 * s_t_vis[i][j] + (1 - m_beta2) * visEnergyDer[i][j] * visEnergyDer[i][j];
@@ -129,7 +129,7 @@ std::unique_ptr<class Sampler> AdamGD::optimize(
         }
 
         // update hidden units
-        for (int i = 0; i < m_numberOfHiddenNodes; i++)
+        for (i = 0; i < m_numberOfHiddenNodes; i++)
         {
             m_t_hid[i] = m_beta1 * m_t_hid[i] + (1 - m_beta1) * hidEnergyDer[i];
             s_t_hid[i] = m_beta2 * s_t_hid[i] + (1 - m_beta2) * hidEnergyDer[i] * hidEnergyDer[i];
@@ -141,11 +141,15 @@ std::unique_ptr<class Sampler> AdamGD::optimize(
         }
 
         // update weights
-        for (int i = 0; i < m_numberOfParticles; i++)
+
+        double w_decay;
+
+        // double l2_lambda = 0.0001;
+        for (i = 0; i < m_numberOfParticles; i++)
         {
-            for (int j = 0; j < m_numberOfDimensions; j++)
+            for (j = 0; j < m_numberOfDimensions; j++)
             {
-                for (int k = 0; k < m_numberOfHiddenNodes; k++)
+                for (k = 0; k < m_numberOfHiddenNodes; k++)
                 {
                     m_t_weights[i][j][k] = m_beta1 * m_t_weights[i][j][k] + (1 - m_beta1) * weightEnergyDer[i][j][k];
                     s_t_weights[i][j][k] = m_beta2 * s_t_weights[i][j][k] + (1 - m_beta2) * weightEnergyDer[i][j][k] * weightEnergyDer[i][j][k];
@@ -153,7 +157,11 @@ std::unique_ptr<class Sampler> AdamGD::optimize(
                     m_t_hat_weights[i][j][k] = m_t_weights[i][j][k] / (1 - pow(m_beta1, epoch + 1));
                     s_t_hat_weights[i][j][k] = s_t_weights[i][j][k] / (1 - pow(m_beta2, epoch + 1));
 
-                    weights[i][j][k] -= m_learningRate * m_t_hat_weights[i][j][k] / (sqrt(s_t_hat_weights[i][j][k]) + m_epsilon);
+                    // L2 REGULARIZATION
+
+                    w_decay = 0; // l2_lambda * weights[i][j][k];
+
+                    weights[i][j][k] -= m_learningRate * (m_t_hat_weights[i][j][k] / (sqrt(s_t_hat_weights[i][j][k]) + m_epsilon) + w_decay);
                 }
             }
         }
@@ -170,48 +178,8 @@ std::unique_ptr<class Sampler> AdamGD::optimize(
 
         std::cout << "epoch: " << epoch << "\n";
         std::cout << "energy: " << sampler->getEnergy() << "\n";
+
+        // m_learningRate *= 0.99;
     }
     return sampler;
-}
-
-std::vector<double> AdamGD::computeGradientNorms(
-    std::vector<double> hidEnergyDer,
-    std::vector<std::vector<double>> visEnergyDer,
-    std::vector<std::vector<std::vector<double>>> weightEnergyDer)
-{
-    // output norm of hidEnergyDer
-    double hidEnergyDerNorm = 0;
-    double visEnergyDerNorm = 0;
-    double weightEnergyDerNorm = 0;
-
-    for (int i = 0; i < m_numberOfHiddenNodes; i++)
-    {
-        hidEnergyDerNorm += hidEnergyDer[i] * hidEnergyDer[i];
-    }
-
-    for (int i = 0; i < m_numberOfParticles; i++)
-    {
-        for (int j = 0; j < m_numberOfDimensions; j++)
-        {
-            visEnergyDerNorm += visEnergyDer[i][j] * visEnergyDer[i][j];
-        }
-    }
-
-    // output norm of weightEnergyDer
-    for (int i = 0; i < m_numberOfParticles; i++)
-    {
-        for (int j = 0; j < m_numberOfDimensions; j++)
-        {
-            for (int k = 0; k < m_numberOfHiddenNodes; k++)
-            {
-                weightEnergyDerNorm += weightEnergyDer[i][j][k] * weightEnergyDer[i][j][k];
-            }
-        }
-    }
-
-    weightEnergyDerNorm = sqrt(weightEnergyDerNorm);
-    visEnergyDerNorm = sqrt(visEnergyDerNorm);
-    hidEnergyDerNorm = sqrt(hidEnergyDerNorm);
-
-    return {hidEnergyDerNorm, visEnergyDerNorm, weightEnergyDerNorm};
 }

@@ -86,56 +86,63 @@ from matplotlib.lines import Line2D
 
 def plot_energy_per_epoch(filename="GD_energy_per_epoch", D=2, interacting=False, importance=False, save=False):
     Ns = np.array([2])
+    hiddenNodes = np.array([5])
     
-    lr = np.array([0.01, 0.001])
-    logMet = 19 # 2 ^ 18 = 262144
-    logEq = 14 # 10 % of logMet is 2^18 * 0.1 = 26214, while 2^15 = 32768
+    lr = np.array([0.01])
+    logMet = 16 # 2 ^ 16 = 65536
+    logEq = 16 # 10 % of logMet is 2^18 * 0.1 = 26214, while 2^15 = 32768
 
     # start time measurement
     start = time.time()
-
-
-
     
     for i, N in enumerate(Ns):
         info = f"N={N}_D={D}_met={logMet}_interacting={interacting}"
-
         filename += info
-        if not cpp_utils.dataPath(filename + ".txt").exists():
-        #total = len(Ns)*len(alphas)
-            for j, l in enumerate(lr):
-                print(f"Python Running for N = {N} and lr = {l}...")
-                cpp_utils.nqsRun(D=D, N=N, logMet=logMet, logEq=logEq, stepLength=0.6, importance=importance, analytical=True, learnRate=l, interacting=interacting, filename=filename, detailed=False)
-                print(f"Python run done for N = {N} and lr = {l}...")
+        #if not cpp_utils.dataPath(filename + ".txt").exists():
+        for h, hn in enumerate(hiddenNodes):
+
+            #total = len(Ns)*len(alphas)
+                for j, l in enumerate(lr):  
+                    print(f"Python Running for N = {N} and lr = {l}...")
+                    cpp_utils.nqsRun(D=D, N=N, hiddenNodes=hn, logMet=logMet, logEq=logEq, stepLength=0.6, importance=importance, analytical=True, learnRate=l, interacting=interacting, filename=filename, detailed=False)
+                    print(f"Python run done for N = {N} and lr = {l}...")
+
     df_detailed = cpp_utils.nqsLoad(filename="detailed_" + filename+ ".txt")
 
     # remove column where lr = 1
-    df_detailed = df_detailed[df_detailed.LearningRate != 0.01]
+    df_detailed = df_detailed[df_detailed.LearningRate != 0.1]
+
+    ## get only before epoch 200
+    #df_detailed = df_detailed[df_detailed.Epoch < 50]
 
     # min energy value
     min_energy = df_detailed["Energy"].min()
+    # print where it happens
     print(f"Minimum energy: {min_energy}")
+    df_best = df_detailed[df_detailed["Energy"] == min_energy]
+    
+    # iter over columns
+    for col in df_best.columns:
+        print(f"{col}: {df_best[col].values[0]}")
 
 
-
-    ax = sns.lineplot(data=df_detailed, x="Epoch", y="Energy", hue="LearningRate", legend=True, palette="pastel")
+    ax = sns.lineplot(data=df_detailed, x="Epoch", y="Energy", hue="LearningRate", style="Hidden-nodes", legend=True, palette="pastel")
     ax.get_legend().remove()
     ax.set(xlabel=r"Epoch", ylabel=r"$\langle E_L \rangle [\hbar \omega]$")
-
     # add legend
     handles, labels = ax.get_legend_handles_labels()
     ax.legend(handles=handles, labels=labels, title="Learning rate")
 
-    # c = plot_utils.colors
-    # fig, ax = plt.subplots()
-    # for i, N in enumerate(Ns):
-    #      df_detailed_N = df_detailed[ df_detailed.Particles == N ]
-    #      E, E_std, epoch, MCCs = df_detailed_N["Energy"].to_numpy(), df_detailed_N["Energy_var"].to_numpy(), df_detailed_N["Epoch"].to_numpy(), df_detailed_N["Metro-steps"].to_numpy()
-    #      ax.errorbar(epoch, E, np.sqrt(E_std)/(MCCs), c=c[i], label=f"{N =}")
-    #      print(f"Minimum energy is {E.min():.4f} at epoch {epoch[E.argmin()]}")
+    c = plot_utils.colors
+    fig, ax = plt.subplots()
+    for i, N in enumerate(Ns):
+         df_detailed_N = df_detailed[ df_detailed.Particles == N ]
+         E, E_std, epoch, MCCs = df_detailed_N["Energy"].to_numpy(), df_detailed_N["Energy_var"].to_numpy(), df_detailed_N["Epoch"].to_numpy(), df_detailed_N["Metro-steps"].to_numpy()
+         ax.errorbar(epoch, E, np.sqrt(E_std)/(MCCs), c=c[i], label=f"{N =}")
+         print(f"Minimum energy is {E.min():.4f} at epoch {epoch[E.argmin()]}")
 
-    # ax.legend(ncol=4, bbox_to_anchor=(1.05, 1.15))
-    # ax.set(xlabel=r"Epoch", ylabel=r"$\langle E_L \rangle [\hbar \omega]$")
+    ax.legend(ncol=4, bbox_to_anchor=(1.05, 1.15))
+    ax.set(xlabel=r"Epoch", ylabel=r"$\langle E_L \rangle [\hbar \omega]$")
 
     if save:
         plot_utils.save(filename.replace(".txt",f"_plot"))

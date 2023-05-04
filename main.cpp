@@ -29,24 +29,23 @@ int main(int argv, char **argc)
 
     // Set default paramters
     unsigned int numberOfDimensions = 2;
+    unsigned int numberOfHiddenNodes = 5;
     unsigned int numberOfParticles = 2;
-    unsigned int numberOfMetropolisSteps = (unsigned int)pow(2, 20);
-    unsigned int numberOfEquilibrationSteps = (unsigned int)pow(2, 20);
-    double omega = 1.0;                                 // Oscillator frequency.
-    double stepLength = 0.6;                            // Metropolis step length.
-    double epsilon = 0.05;                              // Tolerance for gradient descent.
-    double lr = 0.02;                                   // Learning rate for gradient descent.
-    double interactionTerm = 0.0043 * sqrt(1. / omega); // Interection constant a. Notice that hbar = m = 1.
-
+    unsigned int numberOfMetropolisSteps = (unsigned int)pow(2, 14);
+    unsigned int numberOfEquilibrationSteps = (unsigned int)pow(2, 14);
+    double omega = 1.0;      // Oscillator frequency.
+    double stepLength = 0.6; // Metropolis step length.
+    double epsilon = 0.05;   // Tolerance for gradient descent.
+    double lr = 0.01;        // Learning rate for gradient descent.
     // double dx = 1e-4;
-    bool importanceSampling = false;
+    bool importanceSampling = true;
     bool analytical = true;
     double D = 0.5;
     string filename = "";
     string filename_samples = "";
     string filename_posistions = "";
     bool detailed = false;
-    bool interaction = false;
+    bool interaction = true;
 
     // If no arguments are given, show usage.
     if (argv == 1)
@@ -66,7 +65,7 @@ int main(int argv, char **argc)
         cout << "interaction?, bool: If the interacting gaussian should be used. Defaults to false" << endl;
         cout << "filename, string: If the results should be dumped to a file, give the file name. If none is given, a simple print is performed." << endl;
         cout << "detailed?, bool: If the results should be printed in detail. Defaults to false" << endl;
-        return 0;
+        // return 0;
     }
 
     // Check how many arguments are given and overwrite defaults. Works serially,
@@ -74,26 +73,38 @@ int main(int argv, char **argc)
     // overwritten, the rest will be defaults.
     if (argv >= 2)
         numberOfDimensions = (unsigned int)atoi(argc[1]);
+    std::cout << "Number of dimensions: " << numberOfDimensions << std::endl;
     if (argv >= 3)
         numberOfParticles = (unsigned int)atoi(argc[2]);
+    std::cout << "Number of particles: " << numberOfParticles << std::endl;
     if (argv >= 4)
-        numberOfMetropolisSteps = (unsigned int)pow(2, atof(argc[3]));
+        numberOfHiddenNodes = (unsigned int)atoi(argc[3]);
+    std::cout << "Number of hidden nodes: " << numberOfHiddenNodes << std::endl;
     if (argv >= 5)
-        numberOfEquilibrationSteps = (unsigned int)pow(2, atof(argc[4]));
+        numberOfMetropolisSteps = (unsigned int)pow(2, atof(argc[4]));
+    std::cout << "Number of metropolis steps: " << numberOfMetropolisSteps << std::endl;
     if (argv >= 6)
-        stepLength = (double)atof(argc[5]);
+        numberOfEquilibrationSteps = (unsigned int)pow(2, atof(argc[5]));
+    std::cout << "Number of equilibration steps: " << numberOfEquilibrationSteps << std::endl;
     if (argv >= 7)
-        importanceSampling = (bool)atoi(argc[6]);
+        stepLength = (double)atof(argc[6]);
+    std::cout << "Step length: " << stepLength << std::endl;
     if (argv >= 8)
-        analytical = (bool)atoi(argc[7]);
+        importanceSampling = (bool)atoi(argc[7]);
+    std::cout << "Importance sampling: " << importanceSampling << std::endl;
     if (argv >= 9)
-        lr = (double)atof(argc[8]);
+        analytical = (bool)atoi(argc[8]);
+    std::cout << "Analytical: " << analytical << std::endl;
     if (argv >= 10)
-        interaction = (bool)atoi(argc[9]);
+        lr = (double)atof(argc[9]);
+    std::cout << "Learning rate: " << lr << std::endl;
     if (argv >= 11)
-        filename = argc[10];
+        interaction = (bool)atoi(argc[10]);
+    std::cout << "Interaction: " << interaction << std::endl;
     if (argv >= 12)
-        detailed = (bool)atoi(argc[11]);
+        filename = argc[11];
+    if (argv >= 13)
+        detailed = (bool)atoi(argc[12]);
 
 #pragma omp parallel for firstprivate(lr, filename, filename_samples, filename_posistions, numberOfWalkers)
     for (int i = 0; i < numberOfWalkers; i++)
@@ -117,32 +128,23 @@ int main(int argv, char **argc)
 
         // Initialize particles
         auto particles = setupRandomUniformInitialState(
-            omega, numberOfDimensions, numberOfParticles, *state_rng, interactionTerm);
+            omega, numberOfDimensions, numberOfParticles, *state_rng);
 
         // Construct a unique pointer to a new System
         std::unique_ptr<class Hamiltonian> hamiltonian;
 
-        // if (beta != 1.0)
-        //{
-        //     // for now throw error if beta != 1.0
-        //
-        //    throw std::invalid_argument("Interaction is not implemented for beta != 1.0");
-        //
-        //    // double gamma = beta;
-        //    // hamiltonian = std::make_unique<AnharmonicOscillator>(gamma);
-        //}
-        // else
-        //{
         hamiltonian = std::make_unique<HarmonicOscillator>(omega, interaction);
-        //}
+        // std::cout << "DEBUG 1" << std::endl;
 
         std::unique_ptr<class NeuralWaveFunction> wavefunction; // Empty wavefunction pointer constructor (can only be moved once)
+        // std::cout << "DEBUG 2" << std::endl;
 
-        int numberOfhiddenNodes = 2; // here for now
-        wavefunction = std::make_unique<GaussianBinary>(numberOfParticles, numberOfhiddenNodes, std::move(state_rng));
+        wavefunction = std::make_unique<GaussianBinary>(numberOfParticles, numberOfHiddenNodes, std::move(state_rng));
+        // std::cout << "DEBUG 3" << std::endl;
 
         // Empty solver pointer, since it uses "rng" in its constructor
         std::unique_ptr<class MonteCarlo> solver;
+        // std::cout << "DEBUG 4" << std::endl;
 
         // Set what solver to use, pass on rng and additional parameters
         if (importanceSampling)
@@ -153,6 +155,7 @@ int main(int argv, char **argc)
         {
             solver = std::make_unique<Metropolis>(std::move(solver_rng));
         }
+        // std::cout << "DEBUG 5" << std::endl;
 
         // Create system pointer, passing in all classes.
         auto system = std::make_unique<System>(
@@ -168,6 +171,7 @@ int main(int argv, char **argc)
             importanceSampling,
             analytical,
             interaction);
+        // std::cout << "DEBUG 6" << std::endl;
 
         if (detailed)
         {
@@ -180,6 +184,7 @@ int main(int argv, char **argc)
 
         // Run the Metropolis algorithm
         std::unique_ptr<class Sampler> sampler;
+        // std::cout << "DEBUG 7" << std::endl;
 
         sampler = system->optimizeMetropolis(
             *system, filename, stepLength, numberOfMetropolisSteps, numberOfEquilibrationSteps, epsilon, lr);

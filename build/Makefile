@@ -142,19 +142,6 @@ nqs/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/nqs.dir/build.make CMakeFiles/nqs.dir/build
 .PHONY : nqs/fast
 
-#=============================================================================
-# Target rules for targets named tests
-
-# Build rule for target.
-tests: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 tests
-.PHONY : tests
-
-# fast build rule for target.
-tests/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/tests.dir/build.make CMakeFiles/tests.dir/build
-.PHONY : tests/fast
-
 Hamiltonians/harmonicoscillator.o: Hamiltonians/harmonicoscillator.cpp.o
 .PHONY : Hamiltonians/harmonicoscillator.o
 
@@ -202,6 +189,30 @@ InitialStates/initialstate.s: InitialStates/initialstate.cpp.s
 InitialStates/initialstate.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vmclib.dir/build.make CMakeFiles/Vmclib.dir/InitialStates/initialstate.cpp.s
 .PHONY : InitialStates/initialstate.cpp.s
+
+Math/pcg.o: Math/pcg.cpp.o
+.PHONY : Math/pcg.o
+
+# target to build an object file
+Math/pcg.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vmclib.dir/build.make CMakeFiles/Vmclib.dir/Math/pcg.cpp.o
+.PHONY : Math/pcg.cpp.o
+
+Math/pcg.i: Math/pcg.cpp.i
+.PHONY : Math/pcg.i
+
+# target to preprocess a source file
+Math/pcg.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vmclib.dir/build.make CMakeFiles/Vmclib.dir/Math/pcg.cpp.i
+.PHONY : Math/pcg.cpp.i
+
+Math/pcg.s: Math/pcg.cpp.s
+.PHONY : Math/pcg.s
+
+# target to generate assembly for a file
+Math/pcg.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vmclib.dir/build.make CMakeFiles/Vmclib.dir/Math/pcg.cpp.s
+.PHONY : Math/pcg.cpp.s
 
 Optimizers/adamGD.o: Optimizers/adamGD.cpp.o
 .PHONY : Optimizers/adamGD.o
@@ -274,6 +285,30 @@ Optimizers/optimizer.s: Optimizers/optimizer.cpp.s
 Optimizers/optimizer.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vmclib.dir/build.make CMakeFiles/Vmclib.dir/Optimizers/optimizer.cpp.s
 .PHONY : Optimizers/optimizer.cpp.s
+
+Optimizers/rmspropGD.o: Optimizers/rmspropGD.cpp.o
+.PHONY : Optimizers/rmspropGD.o
+
+# target to build an object file
+Optimizers/rmspropGD.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vmclib.dir/build.make CMakeFiles/Vmclib.dir/Optimizers/rmspropGD.cpp.o
+.PHONY : Optimizers/rmspropGD.cpp.o
+
+Optimizers/rmspropGD.i: Optimizers/rmspropGD.cpp.i
+.PHONY : Optimizers/rmspropGD.i
+
+# target to preprocess a source file
+Optimizers/rmspropGD.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vmclib.dir/build.make CMakeFiles/Vmclib.dir/Optimizers/rmspropGD.cpp.i
+.PHONY : Optimizers/rmspropGD.cpp.i
+
+Optimizers/rmspropGD.s: Optimizers/rmspropGD.cpp.s
+.PHONY : Optimizers/rmspropGD.s
+
+# target to generate assembly for a file
+Optimizers/rmspropGD.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vmclib.dir/build.make CMakeFiles/Vmclib.dir/Optimizers/rmspropGD.cpp.s
+.PHONY : Optimizers/rmspropGD.cpp.s
 
 Optimizers/vanillaGD.o: Optimizers/vanillaGD.cpp.o
 .PHONY : Optimizers/vanillaGD.o
@@ -515,30 +550,6 @@ system.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vmclib.dir/build.make CMakeFiles/Vmclib.dir/system.cpp.s
 .PHONY : system.cpp.s
 
-tests.o: tests.cpp.o
-.PHONY : tests.o
-
-# target to build an object file
-tests.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/tests.dir/build.make CMakeFiles/tests.dir/tests.cpp.o
-.PHONY : tests.cpp.o
-
-tests.i: tests.cpp.i
-.PHONY : tests.i
-
-# target to preprocess a source file
-tests.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/tests.dir/build.make CMakeFiles/tests.dir/tests.cpp.i
-.PHONY : tests.cpp.i
-
-tests.s: tests.cpp.s
-.PHONY : tests.s
-
-# target to generate assembly for a file
-tests.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/tests.dir/build.make CMakeFiles/tests.dir/tests.cpp.s
-.PHONY : tests.cpp.s
-
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -549,13 +560,15 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... Vmclib"
 	@echo "... nqs"
-	@echo "... tests"
 	@echo "... Hamiltonians/harmonicoscillator.o"
 	@echo "... Hamiltonians/harmonicoscillator.i"
 	@echo "... Hamiltonians/harmonicoscillator.s"
 	@echo "... InitialStates/initialstate.o"
 	@echo "... InitialStates/initialstate.i"
 	@echo "... InitialStates/initialstate.s"
+	@echo "... Math/pcg.o"
+	@echo "... Math/pcg.i"
+	@echo "... Math/pcg.s"
 	@echo "... Optimizers/adamGD.o"
 	@echo "... Optimizers/adamGD.i"
 	@echo "... Optimizers/adamGD.s"
@@ -565,6 +578,9 @@ help:
 	@echo "... Optimizers/optimizer.o"
 	@echo "... Optimizers/optimizer.i"
 	@echo "... Optimizers/optimizer.s"
+	@echo "... Optimizers/rmspropGD.o"
+	@echo "... Optimizers/rmspropGD.i"
+	@echo "... Optimizers/rmspropGD.s"
 	@echo "... Optimizers/vanillaGD.o"
 	@echo "... Optimizers/vanillaGD.i"
 	@echo "... Optimizers/vanillaGD.s"
@@ -595,9 +611,6 @@ help:
 	@echo "... system.o"
 	@echo "... system.i"
 	@echo "... system.s"
-	@echo "... tests.o"
-	@echo "... tests.i"
-	@echo "... tests.s"
 .PHONY : help
 
 

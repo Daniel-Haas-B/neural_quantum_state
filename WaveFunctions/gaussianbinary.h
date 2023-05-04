@@ -11,9 +11,15 @@ public:
     double evaluate(std::vector<std::unique_ptr<class Particle>> &particles);
     // double evaluate_w(int proposed_particle_idx, class Particle &proposed_particle, class Particle &old_particle, std::vector<std::unique_ptr<class Particle>> &particles);
 
-    std::vector<std::vector<double>> computeVisBiasDerivative(std::vector<std::unique_ptr<class Particle>> &particles);
-    std::vector<double> computeHidBiasDerivative(std::vector<std::unique_ptr<class Particle>> &particles);
-    std::vector<std::vector<std::vector<double>>> computeWeightDerivative(std::vector<std::unique_ptr<class Particle>> &particles);
+    // std::vector<std::vector<double>> computeVisBiasDerivative(std::vector<std::unique_ptr<class Particle>> &particles);
+    // std::vector<double> computeHidBiasDerivative(std::vector<std::unique_ptr<class Particle>> &particles);
+    // std::vector<std::vector<std::vector<double>>> computeWeightDerivative(std::vector<std::unique_ptr<class Particle>> &particles);
+
+    // we can also unify all these three functions into one, as follows:
+    void computeParamDerivative(std::vector<std::unique_ptr<class Particle>> &particles,
+                                std::vector<std::vector<std::vector<double>>> &weightDeltaPsi,
+                                std::vector<std::vector<double>> &visDeltaPsi,
+                                std::vector<double> &hidDeltaPsi);
 
     // double computeDoubleDerivative(std::vector<std::unique_ptr<class Particle>> &particles);
     void quantumForce(std::vector<std::unique_ptr<class Particle>> &particles, Particle &particle, std::vector<double> &force);

@@ -27,7 +27,7 @@ def dataPath(filename):
     return filename_path
 
 
-def nqsRun(D=2, N=2, logMet=20, logEq=16, stepLength=0.6, importance=False, analytical=True, learnRate=0.1 ,interacting=False, filename="test.txt", detailed=False):
+def nqsRun(D=2, N=2, hiddenNodes=2,  logMet=20, logEq=16, stepLength=0.6, importance=False, analytical=True, learnRate=0.1 ,interacting=False, filename="test.txt", detailed=False):
     nqs_path = nqsPath()
     filename_path = dataPath(filename)
 
@@ -36,6 +36,7 @@ def nqsRun(D=2, N=2, logMet=20, logEq=16, stepLength=0.6, importance=False, anal
         nqs_path,
         D,
         N,
+        hiddenNodes,
         logMet,
         logEq,
         stepLength,
@@ -85,7 +86,7 @@ def nqsLoad(filename):
 
     df = pd.read_csv(filename_path, delim_whitespace=True)
 
-    int_cols = ["Dimensions", "Particles" ,"Metro-steps", "Imposampling", "Analytical", "Epoch", "Interaction"]
+    int_cols = ["Dimensions", "Particles", "Hidden-nodes","Metro-steps", "Imposampling", "Analytical", "Epoch", "Interaction"]
     numeric_cols = [col for col in df.columns if col not in int_cols]
     
     for col in numeric_cols:

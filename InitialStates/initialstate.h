@@ -6,25 +6,14 @@
 #include "../particle.h"
 #include "Math/random.h"
 
-
 std::vector<std::unique_ptr<Particle>> setupRandomUniformInitialState(
-            double omega,
-            unsigned int numberOfDimensions,
-            unsigned int numberOfParticles,
-            Random& randomEngine
-            );
-
-std::vector<std::unique_ptr<Particle>> setupRandomUniformInitialState(
-            double omega,
-            unsigned int numberOfDimensions,
-            unsigned int numberOfParticles,
-            Random& randomEngine,
-            double a
-            );
+    double omega,
+    unsigned int numberOfDimensions,
+    unsigned int numberOfParticles,
+    Random &randomEngine);
 
 std::vector<std::unique_ptr<Particle>> setupRandomGaussianState(
-            double omega,
-            unsigned int numberOfDimensions,
-            unsigned int numberOfParticles,
-            Random& randomEngine
-            );
+    double omega,
+    unsigned int numberOfDimensions,
+    unsigned int numberOfParticles,
+    Random &randomEngine);

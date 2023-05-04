@@ -77,35 +77,36 @@ void Sampler::sample(bool acceptedStep, System *system)
     m_numberOfAcceptedSteps += acceptedStep;
 
     // deltas and cumulatives for hidden
-    m_hidDeltaPsi = system->computeHidBiasDerivative();
-    m_visDeltaPsi = system->computeVisBiasDerivative();
-    m_weightDeltaPsi = system->computeWeightDerivative();
+
+    system->computeParamDerivative(m_weightDeltaPsi,
+                                   m_visDeltaPsi,
+                                   m_hidDeltaPsi);
+
+    // m_hidDeltaPsi = system->computeHidBiasDerivative();
+    // m_visDeltaPsi = system->computeVisBiasDerivative();
+    // m_weightDeltaPsi = system->computeWeightDerivative();
 
     // deltas and cumulatives for weights
 
-    for (int i = 0; i < m_numberOfHiddenNodes; i++)
+    unsigned int i = 0;
+    unsigned int j = 0;
+    unsigned int k = 0;
+
+    for (i = 0; i < m_numberOfHiddenNodes; i++)
     {
         m_hidDerPsiE[i] = m_hidDeltaPsi[i] * localEnergy;
         m_cumHidDeltaPsi[i] += m_hidDeltaPsi[i];
         m_cumHidDerPsiE[i] += m_hidDerPsiE[i];
     }
 
-    for (int i = 0; i < m_numberOfParticles; i++)
+    for (i = 0; i < m_numberOfParticles; i++)
     {
-        for (int j = 0; j < m_numberOfDimensions; j++)
+        for (j = 0; j < m_numberOfDimensions; j++)
         {
-
             m_visDerPsiE[i][j] = m_visDeltaPsi[i][j] * localEnergy;
             m_cumVisDeltaPsi[i][j] += m_visDeltaPsi[i][j];
             m_cumVisDerPsiE[i][j] += m_visDerPsiE[i][j];
-        }
-    }
-
-    for (int i = 0; i < m_numberOfParticles; i++)
-    {
-        for (int j = 0; j < m_numberOfDimensions; j++)
-        {
-            for (int k = 0; k < m_numberOfHiddenNodes; k++)
+            for (k = 0; k < m_numberOfHiddenNodes; k++)
             {
                 m_weightDerPsiE[i][j][k] = m_weightDeltaPsi[i][j][k] * localEnergy;
                 m_cumWeightDeltaPsi[i][j][k] += m_weightDeltaPsi[i][j][k];
@@ -115,11 +116,11 @@ void Sampler::sample(bool acceptedStep, System *system)
     }
 }
 
-void Sampler::computeAverages(double cumWeight2, double lambda_l2)
+void Sampler::computeAverages()
 {
     /* Compute the averages of the sampled quantities.
      */
-    m_energy = m_cumEnergy / m_numberOfMetropolisSteps + (lambda_l2 / 2) * cumWeight2;
+    m_energy = m_cumEnergy / m_numberOfMetropolisSteps; // + (lambda_l2 / 2) * cumWeight2;
     m_cumEnergy2 /= m_numberOfMetropolisSteps;
     m_energy_variance = (m_cumEnergy2 - m_energy * m_energy);
     m_energy_std = sqrt(m_energy_variance);
@@ -132,21 +133,13 @@ void Sampler::computeAverages(double cumWeight2, double lambda_l2)
         m_hidDeltaPsi[i] = m_cumHidDeltaPsi[i] / m_numberOfMetropolisSteps;
     }
 
-    // compute averages for visible
+    // compute averages for weights
     for (int i = 0; i < m_numberOfParticles; i++)
     {
         for (int j = 0; j < m_numberOfDimensions; j++)
         {
             m_visDerPsiE[i][j] = m_cumVisDerPsiE[i][j] / m_numberOfMetropolisSteps;
             m_visDeltaPsi[i][j] = m_cumVisDeltaPsi[i][j] / m_numberOfMetropolisSteps;
-        }
-    }
-
-    // compute averages for weights
-    for (int i = 0; i < m_numberOfParticles; i++)
-    {
-        for (int j = 0; j < m_numberOfDimensions; j++)
-        {
             for (int k = 0; k < m_numberOfHiddenNodes; k++)
             {
                 m_weightDerPsiE[i][j][k] = m_cumWeightDerPsiE[i][j][k] / m_numberOfMetropolisSteps;
@@ -156,7 +149,7 @@ void Sampler::computeAverages(double cumWeight2, double lambda_l2)
     }
 }
 
-std::vector<std::vector<double>> Sampler::getVisEnergyDer()
+std::vector<std::vector<double>> &Sampler::getVisEnergyDer()
 {
     for (int i = 0; i < m_numberOfParticles; i++) // number of particles
     {
@@ -168,7 +161,7 @@ std::vector<std::vector<double>> Sampler::getVisEnergyDer()
     return m_visEnergyDer;
 }
 
-std::vector<double> Sampler::getHidEnergyDer()
+std::vector<double> &Sampler::getHidEnergyDer()
 {
     for (int i = 0; i < m_numberOfHiddenNodes; i++) // number of hidden nodes
     {
@@ -177,7 +170,7 @@ std::vector<double> Sampler::getHidEnergyDer()
     return m_hidEnergyDer;
 }
 
-std::vector<std::vector<std::vector<double>>> Sampler::getWeightEnergyDer()
+std::vector<std::vector<std::vector<double>>> &Sampler::getWeightEnergyDer()
 {
     for (int i = 0; i < m_numberOfParticles; i++)
     {
@@ -233,6 +226,7 @@ void Sampler::writeOutToFile(System &system, std::string filename, double omega,
         outfile.open(filename, std::ios::out);
         outfile << setw(w) << "Dimensions"
                 << setw(w) << "Particles"
+                << setw(w) << "Hidden-nodes"
                 << setw(w) << "Metro-steps"
                 << setw(w) << "Omega"
                 << setw(w) << "StepLength";
@@ -255,6 +249,7 @@ void Sampler::writeOutToFile(System &system, std::string filename, double omega,
     }
     outfile << setw(w) << m_numberOfDimensions
             << setw(w) << m_numberOfParticles
+            << setw(w) << m_numberOfHiddenNodes
             << setw(w) << setprecision(5) << m_numberOfMetropolisSteps
             << setw(w) << fixed << setprecision(5) << omega
             << setw(w) << fixed << setprecision(5) << m_stepLength;
@@ -346,6 +341,7 @@ void Sampler::writeGradientSearchToFile(System &system, std::string filename, in
         outfile.open(filename, std::ios::out);
         outfile << setw(w) << "Dimensions"
                 << setw(w) << "Particles"
+                << setw(w) << "Hidden-nodes"
                 << setw(w) << "Metro-steps"
                 << setw(w) << "StepLength";
         // for (int i = 0; i < p; i++)
@@ -371,6 +367,7 @@ void Sampler::writeGradientSearchToFile(System &system, std::string filename, in
     }
     outfile << setw(w) << m_numberOfDimensions
             << setw(w) << m_numberOfParticles
+            << setw(w) << m_numberOfHiddenNodes
             << setw(w) << setprecision(5) << m_numberOfMetropolisSteps
             << setw(w) << fixed << setprecision(5) << m_stepLength
             << setw(w) << fixed << setprecision(5) << m_energy

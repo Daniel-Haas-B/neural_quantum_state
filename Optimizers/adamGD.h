@@ -17,7 +17,9 @@ public:
         int maxIter,
         double stepLength,
         int numberOfMetropolisSteps,
-        int numberOfHiddenNodes);
+        int numberOfHiddenNodes,
+        int numberOfDimensions,
+        int numberOfParticles);
 
     // optimize will return sampler
 
@@ -27,14 +29,7 @@ public:
         std::vector<std::unique_ptr<class Particle>> &particles,
         std::string filename);
 
-    std::vector<double> computeGradientNorms(
-        std::vector<double> hidEnergyDer,
-        std::vector<std::vector<double>> visEnergyDer,
-        std::vector<std::vector<std::vector<double>>> weightEnergyDer);
-
 public:
-    int m_numberOfParticles;
-    int m_numberOfDimensions;
     double m_beta1;
     double m_beta2;
     double m_epsilon;

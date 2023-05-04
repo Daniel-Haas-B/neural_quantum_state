@@ -11,9 +11,10 @@ set(CMAKE_CXX_STANDARD 14)
 # $cmake .. -DCMAKE_BUILD_TYPE=Release
 #
 # if not, set Debug as the default build type.
-if(NOT CMAKE_BUILD_TYPE)
-  set(CMAKE_BUILD_TYPE Debug)
-endif()
+# if(NOT CMAKE_BUILD_TYPE)
+# set(CMAKE_BUILD_TYPE Debug)
+# endif()
+set(CMAKE_BUILD_TYPE Debug)
 
 # Add all compiler warnings. Remember, a warning in C++ can very often lead to a bug
 # later on so _fix your warnings!_
@@ -48,6 +49,7 @@ file(
   GLOB LIB_SOURCES "Hamiltonians/*.cpp"
   GLOB LIB_SOURCES "InitialStates/*.cpp"
   GLOB LIB_SOURCES "Math/*.cpp"
+  GLOB LIB_SOURCES "Math/pcg-cpp-0.98/include/*.hpp"
   GLOB LIB_SOURCES "Solvers/*.cpp"
   GLOB LIB_SOURCES "WaveFunctions/*.cpp"
   GLOB LIB_SOURCES "Optimizers/*.cpp"
@@ -70,13 +72,16 @@ if(NOT OpenMP_CXX_FOUND)
   message(FATAL_ERROR "OpenMP not found")
 endif()
 
+# find eigen
+find_package(Eigen3 REQUIRED)
+include_directories(${EIGEN3_INCLUDE_DIR})
+
 # Create different executables
 add_executable(nqs main.cpp)
 target_link_libraries(nqs PRIVATE Vmclib)
 
-add_executable(tests tests.cpp)
-target_link_libraries(tests PRIVATE Vmclib)
-
+# add_executable(tests tests.cpp)
+# target_link_libraries(tests PRIVATE Vmclib)
 if(OpenMP_CXX_FOUND)
   target_link_libraries(nqs PUBLIC OpenMP::OpenMP_CXX)
 endif()

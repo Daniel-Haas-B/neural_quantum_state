@@ -22,14 +22,13 @@ public:
     void writeGradientSearchToFile(System &system, std::string filename, int epoch, std::vector<double> gradNormsbool, bool impoSamp, bool analytical, bool interaction, double learningRate);
 
     void output(System &system, std::string filename, double omega, bool analytical, bool importanceSampling, bool interaction);
-    void computeAverages(double cumWeight2, double lambda_l2);
+    void computeAverages();
 
-    std::vector<std::vector<double>> getVisEnergyDer();
+    std::vector<std::vector<double>> &getVisEnergyDer();
+    std::vector<double> &getHidEnergyDer();
+    std::vector<std::vector<std::vector<double>>> &getWeightEnergyDer();
 
-    std::vector<double> getHidEnergyDer();
-    std::vector<std::vector<std::vector<double>>> getWeightEnergyDer();
-
-    double getEnergy()
+    double &getEnergy()
     {
         return m_energy;
     }
@@ -56,20 +55,22 @@ private:
     double m_cumEnergy = 0;
     double m_cumEnergy2 = 0;
 
+    std::vector<std::vector<double>> m_visDeltaPsi = std::vector<std::vector<double>>(m_numberOfParticles, std::vector<double>(m_numberOfDimensions, 0));
+    std::vector<std::vector<std::vector<double>>> m_weightDeltaPsi = std::vector<std::vector<std::vector<double>>>(m_numberOfParticles, std::vector<std::vector<double>>(m_numberOfDimensions, std::vector<double>(m_numberOfHiddenNodes, 0)));
+    std::vector<double> m_hidDeltaPsi = std::vector<double>(m_numberOfHiddenNodes, 0);
+
     std::vector<std::vector<std::vector<double>>> m_cumWeightDerPsiE = std::vector<std::vector<std::vector<double>>>(m_numberOfParticles, std::vector<std::vector<double>>(m_numberOfDimensions, std::vector<double>(m_numberOfHiddenNodes, 0)));
     std::vector<std::vector<std::vector<double>>> m_cumWeightDeltaPsi = std::vector<std::vector<std::vector<double>>>(m_numberOfParticles, std::vector<std::vector<double>>(m_numberOfDimensions, std::vector<double>(m_numberOfHiddenNodes, 0)));
     std::vector<std::vector<std::vector<double>>> m_weightDerPsiE = std::vector<std::vector<std::vector<double>>>(m_numberOfParticles, std::vector<std::vector<double>>(m_numberOfDimensions, std::vector<double>(m_numberOfHiddenNodes, 0)));
-    std::vector<std::vector<std::vector<double>>> m_weightDeltaPsi = std::vector<std::vector<std::vector<double>>>(m_numberOfParticles, std::vector<std::vector<double>>(m_numberOfDimensions, std::vector<double>(m_numberOfHiddenNodes, 0)));
 
     std::vector<double> m_cumHidDerPsiE = std::vector<double>(m_numberOfHiddenNodes, 0);
     std::vector<double> m_cumHidDeltaPsi = std::vector<double>(m_numberOfHiddenNodes, 0);
     std::vector<double> m_hidDerPsiE = std::vector<double>(m_numberOfHiddenNodes, 0);
-    std::vector<double> m_hidDeltaPsi = std::vector<double>(m_numberOfHiddenNodes, 0);
 
     std::vector<std::vector<double>> m_cumVisDerPsiE = std::vector<std::vector<double>>(m_numberOfParticles, std::vector<double>(m_numberOfDimensions, 0));
     std::vector<std::vector<double>> m_cumVisDeltaPsi = std::vector<std::vector<double>>(m_numberOfParticles, std::vector<double>(m_numberOfDimensions, 0));
+
     std::vector<std::vector<double>> m_visDerPsiE = std::vector<std::vector<double>>(m_numberOfParticles, std::vector<double>(m_numberOfDimensions, 0));
-    std::vector<std::vector<double>> m_visDeltaPsi = std::vector<std::vector<double>>(m_numberOfParticles, std::vector<double>(m_numberOfDimensions, 0));
 
     int m_numberOfHiddenNodes = 0;
 

@@ -10,4 +10,6 @@ public:
     virtual double computeLocalEnergy(
         class NeuralWaveFunction &waveFunction,
         std::vector<std::unique_ptr<class Particle>> &particles) = 0;
+
+    virtual void setInteraction(bool interaction) = 0;
 };

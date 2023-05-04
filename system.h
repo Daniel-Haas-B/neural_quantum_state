@@ -31,9 +31,12 @@ public:
         double learningRate);
 
     double computeLocalEnergy();
-    std::vector<std::vector<double>> computeVisBiasDerivative();
-    std::vector<double> computeHidBiasDerivative();
-    std::vector<std::vector<std::vector<double>>> computeWeightDerivative();
+    // std::vector<std::vector<double>> computeVisBiasDerivative();
+    // std::vector<double> computeHidBiasDerivative();
+    // std::vector<std::vector<std::vector<double>>> computeWeightDerivative();
+    void computeParamDerivative(std::vector<std::vector<std::vector<double>>> &weightDeltaPsi,
+                                std::vector<std::vector<double>> &visDeltaPsi,
+                                std::vector<double> &hidDeltaPsi);
 
     void setWaveFunction(std::unique_ptr<class NeuralWaveFunction> waveFunction);
     void setSolver(std::unique_ptr<class MonteCarlo> solver);
@@ -50,6 +53,9 @@ public:
     unsigned int getNumberOfParticles() { return m_numberOfParticles; }
     unsigned int getNumberOfDimensions() { return m_numberOfDimensions; }
 
+public:
+    bool m_interaction = false;
+
 private:
     unsigned int m_numberOfParticles = 0;
     unsigned int m_numberOfDimensions = 0;
@@ -57,7 +63,6 @@ private:
 
     bool m_importSamples = false;
     bool m_analytical = false;
-    bool m_interaction = false;
 
     std::unique_ptr<class Hamiltonian> m_hamiltonian;
     std::unique_ptr<class NeuralWaveFunction> m_waveFunction;
