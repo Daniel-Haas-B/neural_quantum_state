@@ -36,6 +36,9 @@ set(CMAKE_MAKEFILE_DEPENDS
   "/opt/homebrew/lib/python3.10/site-packages/cmake/data/share/cmake-3.26/Modules/Platform/Darwin-Initialize.cmake"
   "/opt/homebrew/lib/python3.10/site-packages/cmake/data/share/cmake-3.26/Modules/Platform/Darwin.cmake"
   "/opt/homebrew/lib/python3.10/site-packages/cmake/data/share/cmake-3.26/Modules/Platform/UnixPaths.cmake"
+  "/opt/homebrew/share/eigen3/cmake/Eigen3Config.cmake"
+  "/opt/homebrew/share/eigen3/cmake/Eigen3ConfigVersion.cmake"
+  "/opt/homebrew/share/eigen3/cmake/Eigen3Targets.cmake"
   )
 
 # The corresponding makefile is:
@@ -53,5 +56,4 @@ set(CMAKE_MAKEFILE_PRODUCTS
 set(CMAKE_DEPEND_INFO_FILES
   "CMakeFiles/Vmclib.dir/DependInfo.cmake"
   "CMakeFiles/nqs.dir/DependInfo.cmake"
-  "CMakeFiles/tests.dir/DependInfo.cmake"
   )

@@ -9,7 +9,7 @@ cd build
 # Run CMake to create a Makefile and spit executable ouside of build-directory
 # export CC=/usr/bin/gcc
 # export CXX=/usr/bin/g++
-cmake ../ -DCMAKE_C_COMPILER=$CC -DCMAKE_CXX_COMPILER=$CXX  -DOpenMP_CXX_FLAGS="-Xpreprocessor -fopenmp -I$(brew --prefix libomp)/include" \
+cmake ../ -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_COMPILER=$CC -DCMAKE_CXX_COMPILER=$CXX  -DOpenMP_CXX_FLAGS="-Xpreprocessor -fopenmp -I$(brew --prefix libomp)/include" \
       -DOpenMP_CXX_LIB_NAMES="omp" \
       -DOpenMP_omp_LIBRARY=$(brew --prefix libomp)/lib/libomp.dylib \
       /Users/haas/Documents/Masters/CompPhys2/neural_quantum_state

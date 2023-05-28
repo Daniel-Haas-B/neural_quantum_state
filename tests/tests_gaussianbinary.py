@@ -43,6 +43,7 @@ class CppFunctions:
             tests_path,
             self.NumberDimensions,
             self.NumberParticles,
+            self.NumberHidden,
             int(self.interaction),
         ]
 

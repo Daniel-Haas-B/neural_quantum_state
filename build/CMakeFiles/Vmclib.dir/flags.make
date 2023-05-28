@@ -4,9 +4,9 @@
 # compile CXX with /usr/bin/g++
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/Users/haas/Documents/Masters/CompPhys2/neural_quantum_state/. -I/Users/haas/Documents/Masters/CompPhys2/neural_quantum_state/Hamiltonians -I/Users/haas/Documents/Masters/CompPhys2/neural_quantum_state/InitialStates -I/Users/haas/Documents/Masters/CompPhys2/neural_quantum_state/Math -I/Users/haas/Documents/Masters/CompPhys2/neural_quantum_state/WaveFunctions -I/Users/haas/Documents/Masters/CompPhys2/neural_quantum_state/Solvers -I/Users/haas/Documents/Masters/CompPhys2/neural_quantum_state/Optimizers
+CXX_INCLUDES = -I/Users/haas/Documents/Masters/CompPhys2/neural_quantum_state/. -I/Users/haas/Documents/Masters/CompPhys2/neural_quantum_state/Hamiltonians -I/Users/haas/Documents/Masters/CompPhys2/neural_quantum_state/InitialStates -I/Users/haas/Documents/Masters/CompPhys2/neural_quantum_state/Math -I/Users/haas/Documents/Masters/CompPhys2/neural_quantum_state/WaveFunctions -I/Users/haas/Documents/Masters/CompPhys2/neural_quantum_state/Solvers -I/Users/haas/Documents/Masters/CompPhys2/neural_quantum_state/Optimizers -I/opt/homebrew/include/eigen3
 
-CXX_FLAGSarm64 = -Wall -Wextra -g -std=gnu++14 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX12.1.sdk
+CXX_FLAGSarm64 = -Wall -Wextra -O3 -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.3.sdk
 
-CXX_FLAGS = -Wall -Wextra -g -std=gnu++14 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX12.1.sdk
+CXX_FLAGS = -Wall -Wextra -O3 -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.3.sdk
 

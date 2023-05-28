@@ -12,7 +12,9 @@ public:
         class NeuralWaveFunction &waveFunction,
         std::vector<std::unique_ptr<class Particle>> &particles);
 
+    void setInteraction(bool interaction) { m_interaction = interaction; }
+
 private:
     double m_omega;
-    bool m_interaction;
+    bool m_interaction; // public because I want to mess with it in system.cpp
 };

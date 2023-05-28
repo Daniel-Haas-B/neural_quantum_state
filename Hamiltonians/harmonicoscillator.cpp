@@ -29,7 +29,7 @@ double HarmonicOscillator::computeLocalEnergy(
     int numberOfDimensions = particles.at(0)->getNumberOfDimensions();
     int numberOfHiddenNodes = waveFunction.getNumberOfHiddenNodes();
 
-    double sum1, sum2, dlnpsi1, dlnpsi2;
+    double sum1, sum2, dlnpsi1, dlnpsi2, expQ;
     double w_kqj;
 
     std::vector<std::vector<double>> a = waveFunction.getVisibleBias();
@@ -48,18 +48,20 @@ double HarmonicOscillator::computeLocalEnergy(
             for (int j = 0; j < numberOfHiddenNodes; j++)
             {
                 w_kqj = w[k][q][j];
+                expQ = std::exp(Q[j]);
                 sum1 += w_kqj / (1 + std::exp(-Q[j]));
-                sum2 += w_kqj * w_kqj * std::exp(Q[j]) / ((1 + std::exp(Q[j])) * (1 + std::exp(Q[j])));
+                sum2 += w_kqj * w_kqj * expQ / ((1 + expQ) * (1 + expQ));
             }
 
-            dlnpsi1 = -(r - a[k][q]) / sigma2 + sum1 / sigma2;
-            dlnpsi2 = -1 / sigma2 + sum2 / (sigma2 * sigma2);
+            dlnpsi1 = (a[k][q] - r + sum1) / sigma2;
+            dlnpsi2 = (-1 + sum2 / sigma2) / sigma2;
             localEnergy += 0.5 * (-dlnpsi1 * dlnpsi1 - dlnpsi2 + r * r);
         }
     }
 
     if (m_interaction)
     {
+        assert(numParticles > 1);
         double r2_sum = 0;
         for (int k = 0; k < numParticles; k++)
         {

@@ -1,5 +1,4 @@
 /Users/haas/Documents/Masters/CompPhys2/neural_quantum_state/build/CMakeFiles/Vmclib.dir
 /Users/haas/Documents/Masters/CompPhys2/neural_quantum_state/build/CMakeFiles/nqs.dir
-/Users/haas/Documents/Masters/CompPhys2/neural_quantum_state/build/CMakeFiles/tests.dir
 /Users/haas/Documents/Masters/CompPhys2/neural_quantum_state/build/CMakeFiles/edit_cache.dir
 /Users/haas/Documents/Masters/CompPhys2/neural_quantum_state/build/CMakeFiles/rebuild_cache.dir

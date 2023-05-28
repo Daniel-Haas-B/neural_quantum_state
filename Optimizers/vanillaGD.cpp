@@ -15,13 +15,17 @@ VanillaGD::VanillaGD(double learningRate,
                      int maxIter,
                      double stepLength,
                      int numberOfMetropolisSteps,
-                     int numberOfHiddenNodes)
+                     int numberOfHiddenNodes,
+                     int numberOfDimensions,
+                     int numberOfParticles)
     : Optimizer(
           learningRate,
           maxIter,
           stepLength,
           numberOfMetropolisSteps,
-          numberOfHiddenNodes)
+          numberOfHiddenNodes,
+          numberOfDimensions,
+          numberOfParticles)
 {
 }
 
@@ -31,15 +35,11 @@ std::unique_ptr<class Sampler> VanillaGD::optimize(
     std::vector<std::unique_ptr<class Particle>> &particles,
     std::string filename)
 {
-    std::cout << " ####### INSIDE VanillaGD" << std::endl;
 
     int epoch = 0;
 
     m_numberOfDimensions = system.getNumberOfDimensions();
     m_numberOfParticles = system.getNumberOfParticles();
-
-    std::cout << "DEBUG VanillaGD, m_numberOfParticles= " << m_numberOfParticles << std::endl;
-    std::cout << "DEBUG VanillaGD, m_numberOfDimensions= " << m_numberOfDimensions << std::endl;
 
     std::vector<double> hidEnergyDer;
     std::vector<double> gradNorms;
@@ -51,7 +51,7 @@ std::unique_ptr<class Sampler> VanillaGD::optimize(
     std::vector<std::vector<std::vector<double>>> weights = waveFunction.getWeights();
 
     bool importSamples = system.getImportSamples();
-    bool analytical = system.getAnalytical();
+    std::string optimizerType = system.getOptimizerType();
     bool interaction = system.getInteraction();
 
     // declare sampler
@@ -62,20 +62,20 @@ std::unique_ptr<class Sampler> VanillaGD::optimize(
 
     while (epoch < m_maxIter)
     {
-        // gradientNorm = 0;
         /*Positions are reset to what they were after equilibration, but the parameters of the wave function should be what they were at the END of last epoch*/
         for (unsigned int i = 0; i < m_numberOfParticles; i++)
         {
             particles[i]->resetEquilibrationPosition();
         }
-
-        sampler = system.runMetropolisSteps(m_stepLength, m_numberOfMetropolisSteps);
+        sampler->reset();
+        system.runMetropolisSteps(sampler, m_stepLength, m_numberOfMetropolisSteps);
 
         visEnergyDer = sampler->getVisEnergyDer();
         hidEnergyDer = sampler->getHidEnergyDer();
         weightEnergyDer = sampler->getWeightEnergyDer();
 
         visibleBias = waveFunction.getVisibleBias();
+
         hiddenBias = waveFunction.getHiddenBias();
         weights = waveFunction.getWeights();
 
@@ -86,7 +86,7 @@ std::unique_ptr<class Sampler> VanillaGD::optimize(
             epoch,
             gradNorms,
             importSamples,
-            analytical,
+            optimizerType,
             interaction,
             m_learningRate);
 
@@ -117,59 +117,20 @@ std::unique_ptr<class Sampler> VanillaGD::optimize(
         }
 
         epoch++;
-        // if we want to stop based on gradient norm critetion, uncomment this
-        // gradNorms = computeGradientNorms(hidEnergyDer, visEnergyDer, weightEnergyDer);
-        // sampler->writeGradientSearchToFile(system, filename + "_gradient", epoch, gradNorms, m_importSamples, m_analytical, m_interaction, learningRate);
 
         // set new wave function parameters
         waveFunction.setVisibleBias(visibleBias);
         waveFunction.setHiddenBias(hiddenBias);
         waveFunction.setWeights(weights);
 
-        std::cout << "epoch: " << epoch << "\n";
-        std::cout << "energy: " << sampler->getEnergy() << "\n";
+        if (epoch % 10 == 0)
+        {
+            std::cout << "epoch: " << epoch << "\n";
+            std::cout << "energy: " << sampler->getEnergy() << "\n";
+        }
     }
+    std::cout << "Ended optimization with " << optimizerType << "\n";
+    exit(1);
+
     return sampler;
-}
-
-std::vector<double> VanillaGD::computeGradientNorms(
-    std::vector<double> hidEnergyDer,
-    std::vector<std::vector<double>> visEnergyDer,
-    std::vector<std::vector<std::vector<double>>> weightEnergyDer)
-{
-    // output norm of hidEnergyDer
-    double hidEnergyDerNorm = 0;
-    double visEnergyDerNorm = 0;
-    double weightEnergyDerNorm = 0;
-
-    for (int i = 0; i < m_numberOfHiddenNodes; i++)
-    {
-        hidEnergyDerNorm += hidEnergyDer[i] * hidEnergyDer[i];
-    }
-
-    for (int i = 0; i < m_numberOfParticles; i++)
-    {
-        for (int j = 0; j < m_numberOfDimensions; j++)
-        {
-            visEnergyDerNorm += visEnergyDer[i][j] * visEnergyDer[i][j];
-        }
-    }
-
-    // output norm of weightEnergyDer
-    for (int i = 0; i < m_numberOfParticles; i++)
-    {
-        for (int j = 0; j < m_numberOfDimensions; j++)
-        {
-            for (int k = 0; k < m_numberOfHiddenNodes; k++)
-            {
-                weightEnergyDerNorm += weightEnergyDer[i][j][k] * weightEnergyDer[i][j][k];
-            }
-        }
-    }
-
-    weightEnergyDerNorm = sqrt(weightEnergyDerNorm);
-    visEnergyDerNorm = sqrt(visEnergyDerNorm);
-    hidEnergyDerNorm = sqrt(hidEnergyDerNorm);
-
-    return {hidEnergyDerNorm, visEnergyDerNorm, weightEnergyDerNorm};
 }

@@ -65,7 +65,6 @@ CMAKE_BINARY_DIR = /Users/haas/Documents/Masters/CompPhys2/neural_quantum_state/
 # The main recursive "all" target.
 all: CMakeFiles/Vmclib.dir/all
 all: CMakeFiles/nqs.dir/all
-all: CMakeFiles/tests.dir/all
 .PHONY : all
 
 # The main recursive "preinstall" target.
@@ -75,7 +74,6 @@ preinstall:
 # The main recursive "clean" target.
 clean: CMakeFiles/Vmclib.dir/clean
 clean: CMakeFiles/nqs.dir/clean
-clean: CMakeFiles/tests.dir/clean
 .PHONY : clean
 
 #=============================================================================
@@ -85,12 +83,12 @@ clean: CMakeFiles/tests.dir/clean
 CMakeFiles/Vmclib.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vmclib.dir/build.make CMakeFiles/Vmclib.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Vmclib.dir/build.make CMakeFiles/Vmclib.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/haas/Documents/Masters/CompPhys2/neural_quantum_state/build/CMakeFiles --progress-num=1,2,3,4,5,6,7,8,9,10,11,12,13,14,15 "Built target Vmclib"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/haas/Documents/Masters/CompPhys2/neural_quantum_state/build/CMakeFiles --progress-num=1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17 "Built target Vmclib"
 .PHONY : CMakeFiles/Vmclib.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/Vmclib.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/haas/Documents/Masters/CompPhys2/neural_quantum_state/build/CMakeFiles 15
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/haas/Documents/Masters/CompPhys2/neural_quantum_state/build/CMakeFiles 17
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/Vmclib.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /Users/haas/Documents/Masters/CompPhys2/neural_quantum_state/build/CMakeFiles 0
 .PHONY : CMakeFiles/Vmclib.dir/rule
@@ -111,12 +109,12 @@ CMakeFiles/Vmclib.dir/clean:
 CMakeFiles/nqs.dir/all: CMakeFiles/Vmclib.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/nqs.dir/build.make CMakeFiles/nqs.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/nqs.dir/build.make CMakeFiles/nqs.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/haas/Documents/Masters/CompPhys2/neural_quantum_state/build/CMakeFiles --progress-num=16,17 "Built target nqs"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/haas/Documents/Masters/CompPhys2/neural_quantum_state/build/CMakeFiles --progress-num=18,19 "Built target nqs"
 .PHONY : CMakeFiles/nqs.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/nqs.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/haas/Documents/Masters/CompPhys2/neural_quantum_state/build/CMakeFiles 17
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/haas/Documents/Masters/CompPhys2/neural_quantum_state/build/CMakeFiles 19
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/nqs.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /Users/haas/Documents/Masters/CompPhys2/neural_quantum_state/build/CMakeFiles 0
 .PHONY : CMakeFiles/nqs.dir/rule
@@ -129,32 +127,6 @@ nqs: CMakeFiles/nqs.dir/rule
 CMakeFiles/nqs.dir/clean:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/nqs.dir/build.make CMakeFiles/nqs.dir/clean
 .PHONY : CMakeFiles/nqs.dir/clean
-
-#=============================================================================
-# Target rules for target CMakeFiles/tests.dir
-
-# All Build rule for target.
-CMakeFiles/tests.dir/all: CMakeFiles/Vmclib.dir/all
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/tests.dir/build.make CMakeFiles/tests.dir/depend
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/tests.dir/build.make CMakeFiles/tests.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/haas/Documents/Masters/CompPhys2/neural_quantum_state/build/CMakeFiles --progress-num=18,19 "Built target tests"
-.PHONY : CMakeFiles/tests.dir/all
-
-# Build rule for subdir invocation for target.
-CMakeFiles/tests.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/haas/Documents/Masters/CompPhys2/neural_quantum_state/build/CMakeFiles 17
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/tests.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/haas/Documents/Masters/CompPhys2/neural_quantum_state/build/CMakeFiles 0
-.PHONY : CMakeFiles/tests.dir/rule
-
-# Convenience name for target.
-tests: CMakeFiles/tests.dir/rule
-.PHONY : tests
-
-# clean rule for target.
-CMakeFiles/tests.dir/clean:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/tests.dir/build.make CMakeFiles/tests.dir/clean
-.PHONY : CMakeFiles/tests.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.
