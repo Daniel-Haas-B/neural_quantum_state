@@ -12,19 +12,16 @@
 #include <iostream>
 using namespace std;
 
-GaussianBinary::GaussianBinary(int num_particles, int num_hidden_nodes, std::unique_ptr<class Random> rng)
+GaussianBinary::GaussianBinary(int num_particles, int num_hidden_nodes, int num_dimensions, std::unique_ptr<class Random> rng)
     : NeuralWaveFunction(std::move(rng))
 {
-    m_numberOfVisibleNodes = num_particles;
     m_numberOfParticles = num_particles;
     m_numberOfHiddenNodes = num_hidden_nodes;
-    m_numberOfDimensions = 2;
-
+    m_numberOfDimensions = num_dimensions;
     m_sigma = 1.0;
-    // m_visibleBias is a matrix of size numberOfVisibleNodes x m_numberOfDimensions
 
-    double bias_random_scale = 0.0001;
-    double weight_random_scale = 1 / sqrt(m_numberOfHiddenNodes);
+    double bias_random_scale = 0.1;
+    double weight_random_scale = 0.1 / sqrt(m_numberOfHiddenNodes);
 
     // Initialize the hidden bias
     m_hiddenBias = std::vector<double>(m_numberOfHiddenNodes, 0.0);
@@ -34,10 +31,10 @@ GaussianBinary::GaussianBinary(int num_particles, int num_hidden_nodes, std::uni
     }
 
     // Initialize the weights
-    m_weights = std::vector<std::vector<std::vector<double>>>(m_numberOfVisibleNodes, std::vector<std::vector<double>>(m_numberOfDimensions, std::vector<double>(m_numberOfHiddenNodes, 0.0)));
-    m_visibleBias = std::vector<std::vector<double>>(m_numberOfVisibleNodes, std::vector<double>(m_numberOfDimensions, 0.0));
+    m_weights = std::vector<std::vector<std::vector<double>>>(m_numberOfParticles, std::vector<std::vector<double>>(m_numberOfDimensions, std::vector<double>(m_numberOfHiddenNodes, 0.0)));
+    m_visibleBias = std::vector<std::vector<double>>(m_numberOfParticles, std::vector<double>(m_numberOfDimensions, 0.0));
 
-    for (int i = 0; i < m_numberOfVisibleNodes; i++)
+    for (int i = 0; i < m_numberOfParticles; i++)
     {
         for (int j = 0; j < m_numberOfDimensions; j++)
         {
@@ -54,13 +51,6 @@ GaussianBinary::GaussianBinary(int num_particles, int num_hidden_nodes, std::uni
 
 double GaussianBinary::evaluate(std::vector<std::unique_ptr<class Particle>> &particles)
 {
-    /*
-     * w_ij is the weight matrix that connects the visible and hidden layers.
-     * b_j is the HIDDEN layer bias
-     * a_i is the VISIBLE layer bias
-     * h_j is the HIDDEN layer activation
-     * sigma_i is the sqrt of the variance of the hidden layer
-     */
     double sigma2 = m_sigma * m_sigma;
     double psi1 = 0.0;
     double psi2 = 1.0;
@@ -71,11 +61,13 @@ double GaussianBinary::evaluate(std::vector<std::unique_ptr<class Particle>> &pa
     std::vector<double> Q = Qfac(particles);
 
     // First term (gaussian part)
-    for (int i = 0; i < m_numberOfVisibleNodes; i++) // this is the same as number of particles
+    for (int i = 0; i < m_numberOfParticles; i++) // this is the same as number of particles
     {
+        auto particle_pos = particles[i]->getPosition().cbegin(); // cbegin() returns a const_iterator
+
         for (int j = 0; j < m_numberOfDimensions; j++)
         {
-            r = particles[i]->getPosition()[j];
+            r = *(particle_pos++); // increment the iterator
             a = m_visibleBias[i][j];
             psi1 += (r - a) * (r - a);
         }
@@ -101,11 +93,13 @@ std::vector<double> GaussianBinary::Qfac(std::vector<std::unique_ptr<class Parti
     static const int numberOfDimensions = particles.at(0)->getNumberOfDimensions();
 
     // Calculate the sum of the products
-    for (unsigned int i = 0; i < m_numberOfVisibleNodes; i++) // this is the same as number of particles
+    for (unsigned int i = 0; i < m_numberOfParticles; i++) // this is the same as number of particles
     {
+        auto particle_pos = particles[i]->getPosition().cbegin();
+
         for (unsigned int j = 0; j < numberOfDimensions; j++)
         {
-            r = particles[i]->getPosition()[j];
+            r = *(particle_pos++);
             for (int k = 0; k < m_numberOfHiddenNodes; k++)
             {
 
@@ -137,7 +131,6 @@ double GaussianBinary::computeWeightNorms()
             }
         }
     }
-
     return weightNorm2;
 }
 
@@ -148,16 +141,8 @@ void GaussianBinary::computeParamDerivative(std::vector<std::unique_ptr<class Pa
 {
 
     double sigma2 = m_sigma * m_sigma;
-    std::vector<double> Q = Qfac(particles);
 
-    // visible
-    for (int i = 0; i < m_numberOfParticles; i++)
-    {
-        for (int j = 0; j < m_numberOfDimensions; j++)
-        {
-            visDeltaPsi[i][j] = (particles[i]->getPosition()[j] - m_visibleBias[i][j]) / sigma2;
-        }
-    }
+    std::vector<double> Q = Qfac(particles);
 
     // hidden
     for (int i = 0; i < m_numberOfHiddenNodes; i++)
@@ -165,72 +150,23 @@ void GaussianBinary::computeParamDerivative(std::vector<std::unique_ptr<class Pa
         hidDeltaPsi[i] = 1 / (1 + exp(-Q[i]));
     }
 
-    // weights
-
     for (int i = 0; i < m_numberOfParticles; i++)
     {
+        auto particle_pos = particles[i]->getPosition().cbegin();
+
         for (int j = 0; j < m_numberOfDimensions; j++)
         {
+            double r = *(particle_pos++);
+
+            visDeltaPsi[i][j] = (r - m_visibleBias[i][j]) / sigma2;
+
             for (int k = 0; k < m_numberOfHiddenNodes; k++)
             {
-                weightDeltaPsi[i][j][k] = m_weights[i][j][k] / (sigma2 * (1 + std::exp(-Q[k])));
+                weightDeltaPsi[i][j][k] = m_weights[i][j][k] / (sigma2 * (1 + exp(-Q[k])));
             }
         }
     }
 }
-
-// std::vector<std::vector<double>> GaussianBinary::computeVisBiasDerivative(std::vector<std::unique_ptr<class Particle>> &particles)
-// {
-//     // a,b,w we already have from private, but the position needs to be passed via particles
-//     // particles will carry the old position
-
-//     std::vector<std::vector<double>> wf_der = std::vector<std::vector<double>>(m_numberOfParticles, std::vector<double>(m_numberOfDimensions, 0.0));
-//     double sigma2 = m_sigma * m_sigma;
-
-//     for (int i = 0; i < m_numberOfParticles; i++)
-//     {
-//         for (int j = 0; j < m_numberOfDimensions; j++)
-//         {
-//             wf_der[i][j] = (particles[i]->getPosition()[j] - m_visibleBias[i][j]) / sigma2;
-//         }
-//     }
-
-//     return wf_der;
-// }
-
-// std::vector<double> GaussianBinary::computeHidBiasDerivative(std::vector<std::unique_ptr<class Particle>> &old_particles)
-// {
-//     std::vector<double> wf_der = std::vector<double>(m_numberOfHiddenNodes, 0.0);
-//     std::vector<double> Q = Qfac(old_particles);
-
-//     for (int i = 0; i < m_numberOfHiddenNodes; i++)
-//     {
-//         wf_der[i] = 1 / (1 + exp(-Q[i]));
-//     }
-
-//     return wf_der;
-// }
-
-// std::vector<std::vector<std::vector<double>>> GaussianBinary::computeWeightDerivative(std::vector<std::unique_ptr<class Particle>> &old_particles)
-// {
-//     std::vector<std::vector<std::vector<double>>> wf_der = std::vector<std::vector<std::vector<double>>>(m_numberOfParticles, std::vector<std::vector<double>>(m_numberOfDimensions, std::vector<double>(m_numberOfHiddenNodes, 0.0)));
-//     std::vector<double> Q = Qfac(old_particles);
-
-//     double sigma2 = m_sigma * m_sigma;
-
-//     for (int i = 0; i < m_numberOfParticles; i++)
-//     {
-//         for (int j = 0; j < m_numberOfDimensions; j++)
-//         {
-//             for (int k = 0; k < m_numberOfHiddenNodes; k++)
-//             {
-//                 wf_der[i][j][k] = m_weights[i][j][k] / (sigma2 * (1 + std::exp(-Q[k])));
-//             }
-//         }
-//     }
-
-//     return wf_der;
-// }
 
 void GaussianBinary::quantumForce(std::vector<std::unique_ptr<class Particle>> &particles, Particle &particle, std::vector<double> &force)
 {
@@ -242,7 +178,7 @@ void GaussianBinary::quantumForce(std::vector<std::unique_ptr<class Particle>> &
 
     double sum1 = 0;
 
-    for (int i = 0; i < m_numberOfVisibleNodes; i++)
+    for (int i = 0; i < m_numberOfParticles; i++)
     {
         for (int j = 0; j < numberOfDimensions; j++)
         {

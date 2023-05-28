@@ -20,17 +20,12 @@ public:
     virtual void setWeights(std::vector<std::vector<std::vector<double>>> weights) = 0;
 
     virtual double evaluate(std::vector<std::unique_ptr<class Particle>> &particles) = 0;
-    // virtual double evaluate_w(int proposed_particle_idx, class Particle &proposed_particle, class Particle &old_particle, std::vector<std::unique_ptr<class Particle>> &particles) = 0;
 
-    // virtual std::vector<double> computeHidBiasDerivative(std::vector<std::unique_ptr<class Particle>> &particles) = 0;
-    // virtual std::vector<std::vector<double>> computeVisBiasDerivative(std::vector<std::unique_ptr<class Particle>> &particles) = 0;
-    // virtual std::vector<std::vector<std::vector<double>>> computeWeightDerivative(std::vector<std::unique_ptr<class Particle>> &particles) = 0;
     virtual void computeParamDerivative(std::vector<std::unique_ptr<class Particle>> &particles,
                                         std::vector<std::vector<std::vector<double>>> &weightDeltaPsi,
                                         std::vector<std::vector<double>> &visDeltaPsi,
                                         std::vector<double> &hidDeltaPsi) = 0;
 
-    // virtual double computeDoubleDerivative(std::vector<std::unique_ptr<class Particle>> &particles) = 0;
     virtual std::vector<double> Qfac(std::vector<std::unique_ptr<class Particle>> &particles) = 0;
     virtual void quantumForce(std::vector<std::unique_ptr<class Particle>> &particles, Particle &particle, std::vector<double> &force) = 0;
     virtual double computeWeightNorms() = 0;
@@ -38,13 +33,11 @@ public:
 protected:
     std::unique_ptr<class Random> m_rng;
     int m_numberOfHiddenNodes = 0;
-    int m_numberOfVisibleNodes = 0; // number of particles
     int m_numberOfParticles = 0;
     int m_numberOfDimensions = 0;
     double m_sigma = 0;
 
-    // m_visibleBias is a matrix of size numberOfVisibleNodes x numberOfDimensions
     std::vector<std::vector<std::vector<double>>> m_weights;
-    std::vector<std::vector<double>> m_visibleBias; // a in morten's notes
-    std::vector<double> m_hiddenBias;               // b in morten's notes
+    std::vector<std::vector<double>> m_visibleBias;
+    std::vector<double> m_hiddenBias;
 };

@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.9)
 project(project_2_fys4411)
 
 # Set CXX standard to C++14
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
 
 # Check if the user has specified a build type via the command line, e.g., (in the
 # build-directory)
@@ -11,10 +11,11 @@ set(CMAKE_CXX_STANDARD 14)
 # $cmake .. -DCMAKE_BUILD_TYPE=Release
 #
 # if not, set Debug as the default build type.
-# if(NOT CMAKE_BUILD_TYPE)
+if(NOT CMAKE_BUILD_TYPE)
+  set(CMAKE_BUILD_TYPE Debug)
+endif()
+
 # set(CMAKE_BUILD_TYPE Debug)
-# endif()
-set(CMAKE_BUILD_TYPE Debug)
 
 # Add all compiler warnings. Remember, a warning in C++ can very often lead to a bug
 # later on so _fix your warnings!_

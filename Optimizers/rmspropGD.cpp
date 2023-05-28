@@ -69,7 +69,7 @@ std::unique_ptr<class Sampler> RmspropGD::optimize(
     std::vector<std::vector<std::vector<double>>> weights = waveFunction.getWeights();
 
     bool importSamples = system.getImportSamples();
-    bool analytical = system.getAnalytical();
+    std::string optimizerType = system.getOptimizerType();
     bool interaction = system.getInteraction();
 
     // declare sampler
@@ -87,7 +87,8 @@ std::unique_ptr<class Sampler> RmspropGD::optimize(
             particles[i]->resetEquilibrationPosition();
         }
 
-        sampler = system.runMetropolisSteps(m_stepLength, m_numberOfMetropolisSteps);
+        sampler->reset();
+        system.runMetropolisSteps(sampler, m_stepLength, m_numberOfMetropolisSteps);
 
         visEnergyDer = sampler->getVisEnergyDer();
         hidEnergyDer = sampler->getHidEnergyDer();
@@ -105,18 +106,15 @@ std::unique_ptr<class Sampler> RmspropGD::optimize(
             epoch,
             gradNorms,
             importSamples,
-            analytical,
+            optimizerType,
             interaction,
             m_learningRate);
-        // before updating bias and weights, we need to update the ms
-        // update visible bias
 
+        // update visible bias
         for (int i = 0; i < m_numberOfParticles; i++)
         {
-
             for (int j = 0; j < m_numberOfDimensions; j++)
             {
-
                 m_msVisBias[i][j] = m_decayRate * m_msVisBias[i][j] + (1 - m_decayRate) * visEnergyDer[i][j] * visEnergyDer[i][j];
                 visibleBias[i][j] -= m_learningRate * visEnergyDer[i][j] / (std::sqrt(m_msVisBias[i][j]) + m_epsilon);
             }
@@ -144,17 +142,15 @@ std::unique_ptr<class Sampler> RmspropGD::optimize(
 
         epoch++;
 
-        // if we want to stop based on gradient norm critetion, uncomment this
-        // gradNorms = computeGradientNorms(hidEnergyDer, visEnergyDer, weightEnergyDer);
-        // sampler->writeGradientSearchToFile(system, filename + "_gradient", epoch, gradNorms, m_importSamples, m_analytical, m_interaction, learningRate);
-
         // set new wave function parameters
         waveFunction.setVisibleBias(visibleBias);
         waveFunction.setHiddenBias(hiddenBias);
         waveFunction.setWeights(weights);
-
-        std::cout << "epoch: " << epoch << "\n";
-        std::cout << "energy: " << sampler->getEnergy() << "\n";
+        if (epoch % 10 == 0)
+        {
+            std::cout << "epoch: " << epoch << "\n";
+            std::cout << "energy: " << sampler->getEnergy() << "\n";
+        }
     }
     return sampler;
 }

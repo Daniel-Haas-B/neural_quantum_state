@@ -36,7 +36,7 @@ public:
 public:
     double m_decayRate;
     double m_epsilon;
-    std::vector<std ::vector<double>> m_msVisBias;             // moving average of squared gradient for visible bias
-    std::vector<double> m_msHidBias;                           // moving average of squared gradient for hidden bias
-    std::vector<std::vector<std::vector<double>>> m_msWeights; // moving average of squared gradient for weights
+    std::vector<std ::vector<double>> m_msVisBias;
+    std::vector<double> m_msHidBias;
+    std::vector<std::vector<std::vector<double>>> m_msWeights;
 };

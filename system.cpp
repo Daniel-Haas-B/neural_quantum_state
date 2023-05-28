@@ -25,7 +25,7 @@ System::System(std::unique_ptr<class Hamiltonian> hamiltonian,
                std::unique_ptr<class MonteCarlo> solver,
                std::vector<std::unique_ptr<class Particle>> particles,
                bool importSamples,
-               bool analytical,
+               string optimizerType,
                bool interaction)
 {
   m_numberOfParticles = particles.size();
@@ -37,7 +37,7 @@ System::System(std::unique_ptr<class Hamiltonian> hamiltonian,
   m_particles = std::move(particles);
 
   m_importSamples = importSamples;
-  m_analytical = analytical;
+  m_optimizerType = optimizerType;
   m_interaction = interaction;
 }
 
@@ -54,38 +54,33 @@ unsigned int System::runEquilibrationSteps(
   return acceptedSteps;
 }
 
-std::unique_ptr<class Sampler> System::runMetropolisSteps(
-    double stepLength, unsigned int numberOfMetropolisSteps)
+void System::runMetropolisSteps(
+    std::unique_ptr<class Sampler> &sampler,
+    double stepLength,
+    unsigned int numberOfMetropolisSteps)
 {
-  auto sampler = std::make_unique<Sampler>(m_numberOfParticles,
-                                           m_numberOfDimensions,
-                                           m_numberOfHiddenNodes,
-                                           stepLength, numberOfMetropolisSteps);
+  // print visible bias inside the runMetropolisSteps
+  std::vector<std::vector<double>> visibleBias = m_waveFunction->getVisibleBias();
 
   if (m_saveSamples)
     sampler->openSaveSample(m_saveSamplesFilename);
 
+  bool acceptedStep;
+
   for (unsigned int i = 0; i < numberOfMetropolisSteps; i++)
   {
     /* Call solver method to do a single Monte-Carlo step.*/
-    bool acceptedStep = m_solver->step(stepLength, *m_waveFunction, m_particles);
+    acceptedStep = m_solver->step(stepLength, *m_waveFunction, m_particles);
 
     // compute local energy
-
     sampler->sample(acceptedStep, this);
-
     if (m_saveSamples)
       sampler->saveSample(i);
   }
 
-  // double lambda_l2 = 0.00001;
-  // double cumWeight = m_waveFunction->computeWeightNorms();
-
   sampler->computeAverages();
   if (m_saveSamples)
     sampler->closeSaveSample();
-
-  return sampler;
 }
 
 std::unique_ptr<class Sampler> System::optimizeMetropolis(
@@ -94,11 +89,14 @@ std::unique_ptr<class Sampler> System::optimizeMetropolis(
     double stepLength,
     unsigned int numberOfMetropolisSteps,
     unsigned int numberOfEquilibrationSteps,
+    double beta1,
+    double beta2,
     double epsilon,
-    double learningRate)
+    double learningRate,
+    std::string optimizerType)
 {
 
-  int maxiter = 20;
+  int maxiter = 600;
   // run equilibration steps and store positions into vector
   runEquilibrationSteps(stepLength, numberOfEquilibrationSteps);
 
@@ -107,92 +105,71 @@ std::unique_ptr<class Sampler> System::optimizeMetropolis(
     m_particles[i]->saveEquilibrationPosition(); // by doind this, we just need to do equilibriation once in the GD
   }
 
-  double beta1 = 0.9;
-  double beta2 = 0.999;
-  double epsilon2 = 1e-7;
-  double decayRate = 0.9;
+  double decayRate = 0.99;
   double gamma = 0.05;
 
-  // IN CASE these is interaction, we will initialize the weights and biases as the final results of the non-interacting case
-  // I will call this parameter equilibration
-  // if (m_interaction)
-  // {
-  //   std::cout << "PARAMETER EQUILIBRATION START" << std::endl;
-  //   // change interaction to false in system
-  //   m_interaction = false;
+  std::unique_ptr<class Optimizer> optimizer;
 
-  //   // change interaciton to false in hamiltonian
-  //   m_hamiltonian->setInteraction(m_interaction);
-
-  //   auto optimizer = std::make_unique<AdamGD>(
-  //       learningRate,
-  //       beta1,
-  //       beta2,
-  //       epsilon2,
-  //       maxiter,
-  //       stepLength,
-  //       numberOfMetropolisSteps,
-  //       m_numberOfHiddenNodes);
-
-  //   auto sampler = optimizer->optimize(system, *m_waveFunction, m_particles, "");
-
-  //   std::vector<double> hiddenBias = m_waveFunction->getHiddenBias();
-  //   std::vector<std::vector<double>> visibleBias = m_waveFunction->getVisibleBias();
-  //   std::vector<std::vector<std::vector<double>>> weights = m_waveFunction->getWeights();
-
-  //   // change interaction to false in system
-  //   m_interaction = true;
-
-  //   // change interaciton to false in hamiltonian
-  //   m_hamiltonian->setInteraction(m_interaction);
-
-  //   std::cout << "PARAMETER EQUILIBRATION END" << std::endl;
-  // }
-
-  // auto optimizer = std::make_unique<VanillaGD>(
-  //     learningRate,
-  //     maxiter,
-  //     stepLength,
-  //     numberOfMetropolisSteps,
-  //     m_numberOfHiddenNodes,
-  //     m_numberOfDimensions,
-  //     m_numberOfParticles);
-
-  // auto optimizer = std::make_unique<MomentumGD>(
-  //     learningRate,
-  //     gamma,
-  //     maxiter,
-  //     stepLength,
-  //     numberOfMetropolisSteps,
-  //     m_numberOfHiddenNodes,
-  //     m_numberOfDimensions,
-  //     m_numberOfParticles);
-
-  // auto optimizer = std::make_unique<RmspropGD>(
-  //     learningRate,
-  //     decayRate,
-  //     epsilon2,
-  //     maxiter,
-  //     stepLength,
-  //     numberOfMetropolisSteps,
-  //     m_numberOfHiddenNodes,
-  //     m_numberOfDimensions,
-  //     m_numberOfParticles);
-
-  auto optimizer = std::make_unique<AdamGD>(
-      learningRate,
-      beta1,
-      beta2,
-      epsilon2,
-      maxiter,
-      stepLength,
-      numberOfMetropolisSteps,
-      m_numberOfHiddenNodes,
-      m_numberOfDimensions,
-      m_numberOfParticles);
+  if (optimizerType == "vanillaGD")
+  {
+    optimizer = std::make_unique<VanillaGD>(
+        learningRate,
+        maxiter,
+        stepLength,
+        numberOfMetropolisSteps,
+        m_numberOfHiddenNodes,
+        m_numberOfDimensions,
+        m_numberOfParticles);
+  }
+  else if (optimizerType == "momentumGD")
+  {
+    optimizer = std::make_unique<MomentumGD>(
+        learningRate,
+        gamma,
+        maxiter,
+        stepLength,
+        numberOfMetropolisSteps,
+        m_numberOfHiddenNodes,
+        m_numberOfDimensions,
+        m_numberOfParticles);
+  }
+  else if (optimizerType == "rmspropGD")
+  {
+    optimizer = std::make_unique<RmspropGD>(
+        learningRate,
+        decayRate,
+        epsilon,
+        maxiter,
+        stepLength,
+        numberOfMetropolisSteps,
+        m_numberOfHiddenNodes,
+        m_numberOfDimensions,
+        m_numberOfParticles);
+  }
+  else if (optimizerType == "adamGD")
+  {
+    optimizer = std::make_unique<AdamGD>(
+        learningRate,
+        beta1,
+        beta2,
+        epsilon,
+        maxiter,
+        stepLength,
+        numberOfMetropolisSteps,
+        m_numberOfHiddenNodes,
+        m_numberOfDimensions,
+        m_numberOfParticles);
+  }
+  else
+  {
+    std::cout << "Optimizer type not recognized" << std::endl;
+    exit(1);
+  }
 
   // run optimizer
   auto sampler = optimizer->optimize(system, *m_waveFunction, m_particles, filename);
+  std::cout << "TRUE OPTIMIZER END" << std::endl;
+
   return sampler;
 }
 
@@ -200,27 +177,8 @@ void System::computeParamDerivative(std::vector<std::vector<std::vector<double>>
                                     std::vector<std::vector<double>> &visDeltaPsi,
                                     std::vector<double> &hidDeltaPsi)
 {
-  // compute the derivative of the parameters
-  // std::cout << "INSIDE HELPER m_hidDeltaPsi " << hidDeltaPsi[0] << std::endl;
   m_waveFunction->computeParamDerivative(m_particles, weightDeltaPsi, visDeltaPsi, hidDeltaPsi);
-  // std::cout << "INSIDE HELPER m_hidDeltaPsi " << hidDeltaPsi[0] << std::endl;
 }
-
-// std::vector<std::vector<double>> System::computeVisBiasDerivative()
-//{
-//   // helper function to compute the derivative of the visible bias
-//   return m_waveFunction->computeVisBiasDerivative(m_particles);
-// }
-//
-//  std::vector<double> System::computeHidBiasDerivative()
-//{
-//    return m_waveFunction->computeHidBiasDerivative(m_particles);
-//  }
-
-// std::vector<std::vector<std::vector<double>>> System::computeWeightDerivative()
-//{
-//   return m_waveFunction->computeWeightDerivative(m_particles);
-// }
 
 double System::computeLocalEnergy()
 {

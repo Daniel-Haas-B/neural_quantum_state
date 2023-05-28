@@ -1,0 +1,2 @@
+          Dimensions           Particles        Hidden-nodes         Metro-steps               Omega          StepLength              Energy          Energy_std          Energy_var       Accept_number        Accept_ratio        Imposampling       optimizerType         Interaction
+                   2                   2                   2               65536             1.00000             0.60000             3.27644            10.19391           103.91587               43234             0.65970                   1              adamGD                   1

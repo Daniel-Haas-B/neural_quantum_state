@@ -53,7 +53,7 @@ std::vector<std::unique_ptr<Particle>> setupRandomGaussianState(
         {
             double q = rng.nextGaussian(0.0, 1.0) * characteristicLength;
             position.push_back(q);
-                }
+        }
 
         particles.push_back(std::make_unique<Particle>(position));
     }

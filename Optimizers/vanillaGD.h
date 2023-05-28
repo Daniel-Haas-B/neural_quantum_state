@@ -19,7 +19,6 @@ public:
         int numberOfParticles);
 
     // optimize will return sampler
-
     std::unique_ptr<class Sampler> optimize(
         System &system,
         class NeuralWaveFunction &waveFunction,

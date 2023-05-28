@@ -29,64 +29,20 @@ def block(x):
 
 if __name__ == "__main__":
     """
-    X = cpp_utils.binaryLoad("Part_10_parallel_eliptical_9_blocking_samples.dat")
-    print(X)
-
-    mu_X, error_X = np.mean(X), np.std(X)/np.sqrt(len(X))
-    print("No blocking")
-    print(f"{mu_X = }, {error_X = }")
-
-    mu_block_X, var_block_X = block(X)
-    err_block_X = np.sqrt(var_block_X)
-    print("Blocking")
-    print(f"{mu_block_X = }, err_block = {err_block_X}")
+    Here we use the blocking method to estimate the error in the mean of the energy.
     """
-    parts = [10, 50, 100]
-    walkers = 8
-
-    for part in parts:
-        print(f"#### Part {part}")
-        print(">>>>>blocking error of the eliptical with interaction")
+    for grad in ["vanilla", "momentum", "rms", "adam"]:
+        print(f">>>>> {grad} gradient")
+        print(">>>>>blocking error with interaction")
         X = np.array([])
-        for i in range(walkers):
-            X = np.append(X, cpp_utils.binaryLoad(f"Part_{part}_parallel_eliptical_{i}_blocking_samples.dat"))
+        X = cpp_utils.binaryLoad(f"blocking/{grad}_N=2_D=2_int=1_imp=1_step=0.6_blocking.dat")
 
         mu_X, error_X = np.mean(X), np.std(X)/np.sqrt(len(X))
-        #print(">>>>>>> No blocking")
-        #print(f"{mu_X/part = }, {error_X/part = }")
+        print(">>>>>>> No blocking")
+        print(f"{mu_X = }, {error_X = }")
         mu_block_X, var_block_X = block(X)
-        err_block_X = np.sqrt(var_block_X)
+        err_block_X = np.sqrt(var_block_X) 
         print(">>>>>>> Blocking")
-        print(f"{mu_block_X/part = }, err_block/part = {err_block_X/part}")
+        print(f"{mu_block_X = }, err_block = {err_block_X}")
+        print("###########################################")
 
-
-        print(">>>>>blocking error of the eliptical without interaction")
-        X = np.array([])
-        for i in range(walkers):
-            X = np.append(X, cpp_utils.binaryLoad(f"Part_{part}_parallel_eliptical_no_interaction_{i}_blocking_samples.dat"))
-
-
-        mu_X, error_X = np.mean(X), np.std(X)/np.sqrt(len(X))
-        #print(">>>>>>> No blocking")
-        #print(f"{mu_X/part = }, {error_X/part = }")
-    #
-        mu_block_X, var_block_X = block(X)
-        err_block_X = np.sqrt(var_block_X)
-        print(">>>>>>> Blocking")
-        print(f"{mu_block_X/part = }, err_block/part = {err_block_X/part}")
-
-        print(">>>>> blocking error of the harmonic oscillator with interaction")
-
-        X = np.array([])
-        for i in range(walkers):
-            X = np.append(X, cpp_utils.binaryLoad(f"Part_{part}_parallel_spherical_{i}_blocking_samples.dat"))
-
-
-        mu_X, error_X = np.mean(X), np.std(X)/np.sqrt(len(X))
-        #print(">>>>>>> No blocking")
-        #print(f"{mu_X/part = }, {error_X/part = }")
-
-        mu_block_X, var_block_X = block(X)
-        err_block_X = np.sqrt(var_block_X)
-        print(">>>>>>> Blocking")
-        print(f"{mu_block_X/part = }, err_block/part = {err_block_X/part}")

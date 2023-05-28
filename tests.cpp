@@ -29,7 +29,7 @@ int main(int argv, char **argc)
 
     // double dx = 1e-4;
     bool importanceSampling = false;
-    bool analytical = true;
+    string optimizerType = "vanillaGD";
     double D = 0.5;
     string filename = "";
     string filename_samples = "";
@@ -65,7 +65,7 @@ int main(int argv, char **argc)
 
     std::unique_ptr<class NeuralWaveFunction> wavefunction; // Empty wavefunction pointer constructor (can only be moved once)
 
-    wavefunction = std::make_unique<GaussianBinary>(numberOfParticles, numberOfHiddenNodes, std::move(state_rng));
+    wavefunction = std::make_unique<GaussianBinary>(numberOfParticles, numberOfHiddenNodes, numberOfDimensions, std::move(state_rng));
 
     // set specific parameters for the neural network
 
@@ -156,9 +156,9 @@ int main(int argv, char **argc)
         Qfile << Q[i] << endl;
     }
     Qfile.close();
-    ///////// END TEST QFAC
+    // END TEST QFAC
 
-    ///////// TEST WF EVAL
+    // TEST WF EVAL
 
     // evaluate(std::vector<std::unique_ptr<class Particle>> &particles)
     double wf = wavefunction->evaluate(particles);
@@ -168,13 +168,11 @@ int main(int argv, char **argc)
     wf_file.precision(16);
 
     wf_file << wf << endl;
-
     wf_file.close();
 
-    ///////// END TEST WF EVAL
+    // END TEST WF EVAL
 
-    ///////// TEST GRADIENT
-    // std::vector<double> GaussianBinary::computeHidBiasDerivative(std::vector<std::unique_ptr<class Particle>> &old_particles)
+    // TEST GRADIENT
 
     std::vector<double> hidBiasDer = wavefunction->computeHidBiasDerivative(particles);
     std::vector<std::vector<double>> visBiasDer = wavefunction->computeVisBiasDerivative(particles);
@@ -222,10 +220,10 @@ int main(int argv, char **argc)
     }
     weightsDer_file.close();
 
-    ///// END TEST GRADIENT
+    // END TEST GRADIENT
 
-    //// test local energu
-    // Empty solver pointer, since it uses "rng" in its constructor
+    // test local energy
+    //  Empty solver pointer, since it uses "rng" in its constructor
     std::unique_ptr<class MonteCarlo> solver;
 
     // Set what solver to use, pass on rng and additional parameters
@@ -250,7 +248,7 @@ int main(int argv, char **argc)
         std::move(particles),
         // pass additional parameters
         importanceSampling,
-        analytical,
+        optimizerType,
         interaction);
     double localEnergy = system->computeLocalEnergy();
 
@@ -261,45 +259,6 @@ int main(int argv, char **argc)
     localEnergy_file << localEnergy << endl;
 
     localEnergy_file.close();
-
-    // // Empty solver pointer, since it uses "rng" in its constructor
-    // std::unique_ptr<class MonteCarlo> solver;
-
-    // // Set what solver to use, pass on rng and additional parameters
-    // if (importanceSampling)
-    // {
-    //     solver = std::make_unique<MetropolisHastings>(std::move(solver_rng), stepLength, D);
-    // }
-    // else
-    // {
-    //     solver = std::make_unique<Metropolis>(std::move(solver_rng));
-    // }
-
-    // // Create system pointer, passing in all classes.
-    // auto system = std::make_unique<System>(
-    //     // Construct unique_ptr to Hamiltonian
-    //     std::move(hamiltonian),
-    //     // Construct unique_ptr to wave function
-    //     std::move(wavefunction),
-    //     // Construct unique_ptr to solver, and move rng
-    //     std::move(solver),
-    //     // Move the vector of particles to system
-    //     std::move(particles),
-    //     // pass additional parameters
-    //     importanceSampling,
-    //     analytical,
-    //     interaction);
-
-    // // Run steps to equilibrate particles
-
-    // system->runEquilibrationSteps(stepLength, numberOfEquilibrationSteps);
-
-    // // Run the Metropolis algorithm
-    // std::unique_ptr<class Sampler> sampler;
-
-    // sampler = system->optimizeMetropolis(
-    //     *system, filename, stepLength, numberOfMetropolisSteps, numberOfEquilibrationSteps, epsilon, lr);
-    // // Output information from the simulation, either as file or print
 
     return 0;
 }

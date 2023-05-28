@@ -54,14 +54,15 @@ std::unique_ptr<class Sampler> AdamGD::optimize(
     std::vector<std::vector<std::vector<double>>> weights = waveFunction.getWeights();
 
     bool importSamples = system.getImportSamples();
-    bool analytical = system.getAnalytical();
+    std::string optimizerType = system.getOptimizerType();
     bool interaction = system.getInteraction();
 
     // declare sampler
     auto sampler = std::make_unique<Sampler>(m_numberOfParticles,
                                              m_numberOfDimensions,
                                              m_numberOfHiddenNodes,
-                                             m_stepLength, m_numberOfMetropolisSteps);
+                                             m_stepLength,
+                                             m_numberOfMetropolisSteps);
 
     // now we use ADAM
     std::vector<std::vector<std::vector<double>>> m_t_weights(weights.size(), std::vector<std::vector<double>>(weights[0].size(), std::vector<double>(weights[0][0].size(), 0)));
@@ -79,17 +80,12 @@ std::unique_ptr<class Sampler> AdamGD::optimize(
     std::vector<std::vector<std::vector<double>>> s_t_hat_weights(weights.size(), std::vector<std::vector<double>>(weights[0].size(), std::vector<double>(weights[0][0].size(), 0)));
     std::vector<std::vector<double>> s_t_hat_vis(visibleBias.size(), std::vector<double>(visibleBias[0].size(), 0));
     std::vector<double> s_t_hat_hid(hiddenBias.size(), 0);
-
     while (epoch < m_maxIter)
     {
-        // gradientNorm = 0;
-        /*Positions are reset to what they were after equilibration, but the parameters of the wave function should be what they were at the END of last epoch*/
-        for (unsigned int i = 0; i < m_numberOfParticles; i++)
-        {
-            particles[i]->resetEquilibrationPosition();
-        }
 
-        sampler = system.runMetropolisSteps(m_stepLength, m_numberOfMetropolisSteps);
+        sampler->reset();
+
+        system.runMetropolisSteps(sampler, m_stepLength, m_numberOfMetropolisSteps);
 
         visEnergyDer = sampler->getVisEnergyDer();
         hidEnergyDer = sampler->getHidEnergyDer();
@@ -106,7 +102,7 @@ std::unique_ptr<class Sampler> AdamGD::optimize(
             epoch,
             gradNorms,
             importSamples,
-            analytical,
+            optimizerType,
             interaction,
             m_learningRate);
 
@@ -141,10 +137,9 @@ std::unique_ptr<class Sampler> AdamGD::optimize(
         }
 
         // update weights
-
         double w_decay;
 
-        // double l2_lambda = 0.0001;
+        double l2_lambda = 0.99;
         for (i = 0; i < m_numberOfParticles; i++)
         {
             for (j = 0; j < m_numberOfDimensions; j++)
@@ -159,27 +154,23 @@ std::unique_ptr<class Sampler> AdamGD::optimize(
 
                     // L2 REGULARIZATION
 
-                    w_decay = 0; // l2_lambda * weights[i][j][k];
-
+                    w_decay = l2_lambda * weights[i][j][k];
                     weights[i][j][k] -= m_learningRate * (m_t_hat_weights[i][j][k] / (sqrt(s_t_hat_weights[i][j][k]) + m_epsilon) + w_decay);
                 }
             }
         }
 
         epoch++;
-        // if we want to stop based on gradient norm critetion, uncomment this
-        // gradNorms = computeGradientNorms(hidEnergyDer, visEnergyDer, weightEnergyDer);
-        // sampler->writeGradientSearchToFile(system, filename + "_gradient", epoch, gradNorms, m_importSamples, m_analytical, m_interaction, learningRate);
-
         // set new wave function parameters
         waveFunction.setVisibleBias(visibleBias);
         waveFunction.setHiddenBias(hiddenBias);
         waveFunction.setWeights(weights);
 
-        std::cout << "epoch: " << epoch << "\n";
-        std::cout << "energy: " << sampler->getEnergy() << "\n";
-
-        // m_learningRate *= 0.99;
+        if (epoch % 10 == 0)
+        {
+            std::cout << "epoch: " << epoch << "\n";
+            std::cout << "energy: " << sampler->getEnergy() << "\n";
+        }
     }
     return sampler;
 }

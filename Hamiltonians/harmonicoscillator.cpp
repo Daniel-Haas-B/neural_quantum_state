@@ -53,14 +53,15 @@ double HarmonicOscillator::computeLocalEnergy(
                 sum2 += w_kqj * w_kqj * expQ / ((1 + expQ) * (1 + expQ));
             }
 
-            dlnpsi1 = -(r - a[k][q]) / sigma2 + sum1 / sigma2;
-            dlnpsi2 = -1 / sigma2 + sum2 / (sigma2 * sigma2);
+            dlnpsi1 = (a[k][q] - r + sum1) / sigma2;
+            dlnpsi2 = (-1 + sum2 / sigma2) / sigma2;
             localEnergy += 0.5 * (-dlnpsi1 * dlnpsi1 - dlnpsi2 + r * r);
         }
     }
 
     if (m_interaction)
     {
+        assert(numParticles > 1);
         double r2_sum = 0;
         for (int k = 0; k < numParticles; k++)
         {

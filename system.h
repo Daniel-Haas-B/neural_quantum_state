@@ -12,14 +12,16 @@ public:
            std::unique_ptr<class MonteCarlo> solver,
            std::vector<std::unique_ptr<class Particle>> particles,
            bool importSamples,
-           bool analytical,
+           std::string optimizerType,
            bool interaction);
 
     unsigned int runEquilibrationSteps(double stepLength,
                                        unsigned int numberOfEquilibrationSteps);
 
-    std::unique_ptr<class Sampler> runMetropolisSteps(
-        double stepLength, unsigned int numberOfMetropolisSteps);
+    void runMetropolisSteps(
+        std::unique_ptr<class Sampler> &sampler,
+        double stepLength,
+        unsigned int numberOfMetropolisSteps);
 
     std::unique_ptr<class Sampler> optimizeMetropolis(
         System &system,
@@ -27,13 +29,14 @@ public:
         double stepLength,
         unsigned int numberOfMetropolisSteps,
         unsigned int numberOfEquilibrationSteps,
+        double beta1,
+        double beta2,
         double epsilon,
-        double learningRate);
+        double learningRate,
+        std::string optimizerType);
 
     double computeLocalEnergy();
-    // std::vector<std::vector<double>> computeVisBiasDerivative();
-    // std::vector<double> computeHidBiasDerivative();
-    // std::vector<std::vector<std::vector<double>>> computeWeightDerivative();
+
     void computeParamDerivative(std::vector<std::vector<std::vector<double>>> &weightDeltaPsi,
                                 std::vector<std::vector<double>> &visDeltaPsi,
                                 std::vector<double> &hidDeltaPsi);
@@ -46,14 +49,14 @@ public:
     void saveFinalState(std::string filename);
 
     bool &getImportSamples() { return m_importSamples; }
-    bool &getAnalytical() { return m_analytical; }
+    std::string &getOptimizerType() { return m_optimizerType; }
     bool &getInteraction() { return m_interaction; }
 
     // Getters
     unsigned int getNumberOfParticles() { return m_numberOfParticles; }
     unsigned int getNumberOfDimensions() { return m_numberOfDimensions; }
 
-public:
+protected:
     bool m_interaction = false;
 
 private:
@@ -62,7 +65,7 @@ private:
     unsigned int m_numberOfHiddenNodes = 0;
 
     bool m_importSamples = false;
-    bool m_analytical = false;
+    std::string m_optimizerType = "vanillaGD";
 
     std::unique_ptr<class Hamiltonian> m_hamiltonian;
     std::unique_ptr<class NeuralWaveFunction> m_waveFunction;

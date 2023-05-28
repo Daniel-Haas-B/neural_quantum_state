@@ -60,11 +60,6 @@ bool MetropolisHastings::step(
     double w = (Psi_new * Psi_new) / (Psi_old * Psi_old); // Metropolis test
     w *= G_ratio;                                         // multiply with the ratio of the Greens functions
 
-    // FAST OPTION
-    // double w = G_ratio * waveFunction.evaluate_w(proposed_particle_idx, // this is a fast way of doing things
-    //                                              proposed_particle,
-    //                                              old_particle,
-    //                                              particles); // Metropolis test
     if (w >= m_rng->nextDouble()) // Accept the step
     {
         return true;
