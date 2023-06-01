@@ -86,6 +86,3 @@ target_link_libraries(nqs PRIVATE Vmclib)
 if(OpenMP_CXX_FOUND)
   target_link_libraries(nqs PUBLIC OpenMP::OpenMP_CXX)
 endif()
-
-# add_executable(timing timing.cpp)
-# target_link_libraries(timing PRIVATE Vmclib)

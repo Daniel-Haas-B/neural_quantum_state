@@ -14,7 +14,6 @@
 #include "particle.h"
 #include "sampler.h"
 #include "system.h"
-#include <omp.h>
 
 using namespace std;
 
@@ -48,9 +47,9 @@ int main(int argv, char **argc)
     if (argv == 1)
     {
         cout << "Hello! Usage:" << endl;
-        cout << "./vmc #dims #particles #log10(metropolis-steps) "
-                "#log10(equilibriation-steps) stepLength "
-                "importanceSampling? analytical? detailed? filename"
+        cout << "./nqs #dims #particles #log2(metropolis-steps) "
+                "#log2(equilibriation-steps) stepLength "
+                "importanceSampling? optimizerType, learningrate, interaction? filename, detailed?"
              << endl;
         cout << "#dims, int: Number of dimensions" << endl;
         cout << "#particles, int: Number of particles" << endl;
@@ -59,6 +58,7 @@ int main(int argv, char **argc)
         cout << "stepLenght, double: How far should I move a particle at each MC cycle?" << endl;
         cout << "Importantce sampling?, bool: If the Metropolis Hasting algorithm is used. Then stepLength serves as Delta t" << endl;
         cout << "optimizerType, string: What optimizer to use. Options are vanillaGD, momentumGD, adamGD, rmspropGD" << endl;
+        cout << "Learning rate, double: Learning rate for the optimizer. Defaults to 0.01" << endl;
         cout << "interaction?, bool: If the interacting gaussian should be used. Defaults to false" << endl;
         cout << "filename, string: If the results should be dumped to a file, give the file name. If none is given, a simple print is performed." << endl;
         cout << "detailed?, bool: If the results should be printed in detail. Defaults to false" << endl;
@@ -69,31 +69,22 @@ int main(int argv, char **argc)
         numberOfDimensions = (unsigned int)atoi(argc[1]);
     if (argv >= 3)
         numberOfParticles = (unsigned int)atoi(argc[2]);
-
     if (argv >= 4)
         numberOfHiddenNodes = (unsigned int)atoi(argc[3]);
-
     if (argv >= 5)
         numberOfMetropolisSteps = (unsigned int)pow(2, atof(argc[4]));
-
     if (argv >= 6)
         numberOfEquilibrationSteps = (unsigned int)pow(2, atof(argc[5]));
-
     if (argv >= 7)
         stepLength = (double)atof(argc[6]);
-
     if (argv >= 8)
         importanceSampling = (bool)atoi(argc[7]);
-
     if (argv >= 9)
         optimizerType = argc[8];
-
     if (argv >= 10)
         lr = (double)atof(argc[9]);
-
     if (argv >= 11)
         interaction = (bool)atoi(argc[10]);
-
     if (argv >= 12)
         filename = argc[11];
     if (argv >= 13)
@@ -105,11 +96,8 @@ int main(int argv, char **argc)
     if (argv >= 16)
         eps = (double)atof(argc[15]);
 
-    // start timing
-    double start = omp_get_wtime();
-
     // Seed for the random number generator
-    int seed = 42;
+    // int seed = 42;
 
     auto state_rng = std::make_unique<Random>(rngType);
     auto solver_rng = std::make_unique<Random>(rngType);
@@ -176,9 +164,6 @@ int main(int argv, char **argc)
     {
         system->saveFinalState(filename + "_Rs.txt");
     }
-    // end timing
-    double end = omp_get_wtime();
-    std::cout << "Time elapsed " << rngType << ": " << end - start << std::endl;
 
     return 0;
 }
