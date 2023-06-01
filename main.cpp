@@ -47,9 +47,9 @@ int main(int argv, char **argc)
     if (argv == 1)
     {
         cout << "Hello! Usage:" << endl;
-        cout << "./vmc #dims #particles #log10(metropolis-steps) "
-                "#log10(equilibriation-steps) stepLength "
-                "importanceSampling? analytical? detailed? filename"
+        cout << "./nqs #dims #particles #log2(metropolis-steps) "
+                "#log2(equilibriation-steps) stepLength "
+                "importanceSampling? optimizerType, learningrate, interaction? filename, detailed?"
              << endl;
         cout << "#dims, int: Number of dimensions" << endl;
         cout << "#particles, int: Number of particles" << endl;
@@ -58,6 +58,7 @@ int main(int argv, char **argc)
         cout << "stepLenght, double: How far should I move a particle at each MC cycle?" << endl;
         cout << "Importantce sampling?, bool: If the Metropolis Hasting algorithm is used. Then stepLength serves as Delta t" << endl;
         cout << "optimizerType, string: What optimizer to use. Options are vanillaGD, momentumGD, adamGD, rmspropGD" << endl;
+        cout << "Learning rate, double: Learning rate for the optimizer. Defaults to 0.01" << endl;
         cout << "interaction?, bool: If the interacting gaussian should be used. Defaults to false" << endl;
         cout << "filename, string: If the results should be dumped to a file, give the file name. If none is given, a simple print is performed." << endl;
         cout << "detailed?, bool: If the results should be printed in detail. Defaults to false" << endl;
