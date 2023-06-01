@@ -18,7 +18,6 @@ public:
     void sample(bool acceptedStep, class System *system);
     void printOutputToTerminal(class System &system);
     void writeOutToFile(class System &system, std::string filename, double omega, std::string optimizerType, bool importanceSampling, bool interaction);
-    void WriteTimingToFiles(System &system, std::string filename, std::string optimizerType, unsigned int numberOfEquilibrationSteps, double timing);
     void writeGradientSearchToFile(System &system, std::string filename, int epoch, std::vector<double> gradNormsbool, bool impoSamp, std::string optimizerType, bool interaction, double learningRate);
 
     void output(System &system, std::string filename, double omega, std::string optimizerType, bool importanceSampling, bool interaction);

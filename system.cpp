@@ -102,7 +102,7 @@ std::unique_ptr<class Sampler> System::optimizeMetropolis(
 
   for (unsigned int i = 0; i < m_numberOfParticles; i++)
   {
-    m_particles[i]->saveEquilibrationPosition(); // by doind this, we just need to do equilibriation once in the GD
+    m_particles[i]->saveEquilibrationPosition();
   }
 
   double decayRate = 0.99;

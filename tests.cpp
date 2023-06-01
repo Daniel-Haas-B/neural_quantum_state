@@ -156,10 +156,9 @@ int main(int argv, char **argc)
         Qfile << Q[i] << endl;
     }
     Qfile.close();
-    // END TEST QFAC
+    // End test Qfac
 
-    // TEST WF EVAL
-
+    // Test WF eval
     // evaluate(std::vector<std::unique_ptr<class Particle>> &particles)
     double wf = wavefunction->evaluate(particles);
 
@@ -170,10 +169,9 @@ int main(int argv, char **argc)
     wf_file << wf << endl;
     wf_file.close();
 
-    // END TEST WF EVAL
+    // End test WF eval
 
-    // TEST GRADIENT
-
+    // Test gradient
     std::vector<double> hidBiasDer = wavefunction->computeHidBiasDerivative(particles);
     std::vector<std::vector<double>> visBiasDer = wavefunction->computeVisBiasDerivative(particles);
     std::vector<std::vector<std::vector<double>>> weightsDer = wavefunction->computeWeightDerivative(particles);
@@ -220,10 +218,9 @@ int main(int argv, char **argc)
     }
     weightsDer_file.close();
 
-    // END TEST GRADIENT
+    // End test gradient
 
     // test local energy
-    //  Empty solver pointer, since it uses "rng" in its constructor
     std::unique_ptr<class MonteCarlo> solver;
 
     // Set what solver to use, pass on rng and additional parameters
