@@ -1,4 +1,4 @@
-# Neural Quantum States: Using RBMs and NNs to simualate quantum mechanical systems
+# Neural networks as quantum wave functions: exploring simple bosonic states
 The code structure is based on this [template](https://github.com/mortele/variational-monte-carlo-fys4411) (thank you).
 
 In this project we have tried to simulate a bosonic system of two bosons in a harmonic oscillator trap, and find the lowest energy state for this system. To do this, we have used tools such as Variational Monte Carlo and Restricted Bolzmann Machines, making use also of the Blocking Method to generate the statistics. This file will show how to navigate our repository and use the programs. The main calculations are written in ``C++14``, with analysis, plotting and statistical analysis performed using ``Python3``.
